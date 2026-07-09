@@ -172,7 +172,7 @@
         data-duration="5.2"
       >
         <div
-          id="01-deadline-survives-ground"
+          id="f01-ground"
           class="clip scene-ground"
           data-start="0"
           data-duration="4.8"
@@ -180,7 +180,7 @@
         ></div>
 
         <section
-          id="01-deadline-survives-content"
+          id="f01-content"
           class="clip content-plane"
           data-start="0"
           data-duration="4.8"
@@ -188,23 +188,23 @@
         >
           <div class="safe-stage">
             <div class="setup-line" aria-label="When one agent">
-              <span id="01-deadline-survives-when" class="setup-word">WHEN</span>
-              <span id="01-deadline-survives-one" class="setup-word">ONE</span>
-              <span id="01-deadline-survives-agent" class="setup-word">AGENT</span>
+              <span id="f01-when" class="setup-word">WHEN</span>
+              <span id="f01-one" class="setup-word">ONE</span>
+              <span id="f01-agent" class="setup-word">AGENT</span>
             </div>
 
             <div class="variable-anchor">
-              <span id="01-deadline-survives-token" class="variable-token">IS READY</span>
+              <span id="f01-token" class="variable-token">IS READY</span>
               <span
-                id="01-deadline-survives-underline"
+                id="f01-underline"
                 class="resolve-underline"
                 aria-hidden="true"
               ></span>
             </div>
 
-            <div id="01-deadline-survives-deadline-strip" class="deadline-strip">
+            <div id="f01-deadline-strip" class="deadline-strip">
               <span class="deadline-edge" aria-hidden="true"></span>
-              <span id="01-deadline-survives-deadline-copy" class="deadline-copy"
+              <span id="f01-deadline-copy" class="deadline-copy"
                 >YOUR DELIVERY DEADLINE</span
               >
             </div>
@@ -218,7 +218,7 @@
         const tl = gsap.timeline({ paused: true });
         const BEATS = [0.06, 0.28, 0.52, 1.1, 1.46, 2.4, 3.8];
 
-        const tokenEl = document.getElementById("01-deadline-survives-token");
+        const tokenEl = document.getElementById("f01-token");
         const TOKEN_STATES = [
           { t: 0, text: "IS READY" },
           { t: BEATS[4], text: "GOES DOWN" },
@@ -252,46 +252,46 @@
         );
 
         tl.fromTo(
-          "#01-deadline-survives-when",
+          "#f01-when",
           { y: 34, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.38, ease: "power4.out" },
           BEATS[0],
         );
         tl.fromTo(
-          "#01-deadline-survives-one",
+          "#f01-one",
           { scale: 0.82, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.38, ease: "expo.out" },
           BEATS[1],
         );
         tl.fromTo(
-          "#01-deadline-survives-agent",
+          "#f01-agent",
           { y: -24, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.42, ease: "circ.out" },
           BEATS[2],
         );
 
         tl.fromTo(
-          "#01-deadline-survives-token",
+          "#f01-token",
           { scale: 0.88, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.36, ease: "power4.out" },
           BEATS[3],
         );
 
         tl.fromTo(
-          "#01-deadline-survives-deadline-strip",
+          "#f01-deadline-strip",
           { scale: 1.1, y: 28, opacity: 0 },
           { scale: 1, y: 0, opacity: 1, duration: 0.5, ease: "expo.out" },
           BEATS[5],
         );
         tl.fromTo(
-          "#01-deadline-survives-deadline-copy",
+          "#f01-deadline-copy",
           { x: 120, opacity: 0 },
           { x: 0, opacity: 1, duration: 0.46, ease: "circ.out" },
           BEATS[5] + 0.04,
         );
 
         tl.fromTo(
-          "#01-deadline-survives-underline",
+          "#f01-underline",
           { scaleX: 0, opacity: 0 },
           { scaleX: 1, opacity: 1, duration: 0.5, ease: "power2.out" },
           BEATS[6] + 0.06,
