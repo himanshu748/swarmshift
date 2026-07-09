@@ -1,0 +1,14 @@
+{
+  "tasks": [
+    {"id": "research", "duration_minutes": 22, "requires": ["research"], "depends_on": [], "priority": 5},
+    {"id": "build", "duration_minutes": 36, "requires": ["code"], "depends_on": ["research"], "priority": 5},
+    {"id": "verify", "duration_minutes": 12, "requires": ["qa"], "depends_on": ["build"], "priority": 4},
+    {"id": "ship", "duration_minutes": 10, "requires": ["research"], "depends_on": ["verify"], "priority": 3}
+  ],
+  "agents": [
+    {"id": "Scout", "capabilities": ["research"], "cost_per_hour": 0.55},
+    {"id": "Builder", "capabilities": ["code"], "cost_per_hour": 0.85},
+    {"id": "Reviewer", "capabilities": ["qa", "code"], "cost_per_hour": 1.20}
+  ],
+  "objective": {"mode": "balanced", "cost_weight": 0.35, "deadline_minutes": 90}
+}
