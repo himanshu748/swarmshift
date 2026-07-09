@@ -4,6 +4,10 @@ SwarmShift is a deterministic scheduling service for AI-agent teams. Give it tas
 
 It is designed for agents to use directly from [`SKILL.md`](./SKILL.md): no account, API key, model, database, or paid dependency is required.
 
+[**Try the live incident demo**](https://swarmshift.vercel.app) · [Agent instructions](https://swarmshift.vercel.app/skill.md) · [OpenAPI docs](https://swarmshift.vercel.app/docs)
+
+<img src="demo-video/assets/swarmshift-v2-incident.png" alt="SwarmShift preserving completed research and reassigning work after the Builder agent fails at minute 22" width="1200">
+
 ## Why it exists
 
 Multi-agent systems are good at splitting work but bad at answering three operational questions consistently:
@@ -95,4 +99,3 @@ Plan + waves + metrics + explanations + SHA-256 hash
 ## License
 
 Apache-2.0. See [LICENSE](./LICENSE).
-
