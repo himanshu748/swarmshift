@@ -14,3 +14,4 @@ output/
 demo-video/node_modules/
 demo-video/renders/
 demo-video/snapshots/
+.vercel
