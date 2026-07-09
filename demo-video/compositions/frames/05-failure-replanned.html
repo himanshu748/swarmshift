@@ -9,6 +9,7 @@
           src: url("assets/fonts/Inter-400.woff2") format("woff2");
           font-weight: 400;
           font-style: normal;
+          font-display: swap;
         }
 
         @font-face {
@@ -16,6 +17,7 @@
           src: url("assets/fonts/Inter-500.woff2") format("woff2");
           font-weight: 500;
           font-style: normal;
+          font-display: swap;
         }
 
         @font-face {
@@ -23,13 +25,15 @@
           src: url("assets/fonts/Inter-700.woff2") format("woff2");
           font-weight: 700;
           font-style: normal;
+          font-display: swap;
         }
 
         @font-face {
           font-family: "Inter";
-          src: url("assets/fonts/Inter-800.woff2") format("woff2");
-          font-weight: 800;
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-weight: 900;
           font-style: normal;
+          font-display: swap;
         }
 
         #root {
@@ -38,9 +42,9 @@
           width: 1920px;
           height: 1080px;
           overflow: hidden;
-          color: #0b0d10;
-          font-family: "Inter", sans-serif;
           container-type: size;
+          color: #f7f7f3;
+          font-family: "Inter", sans-serif;
         }
 
         *,
@@ -49,410 +53,500 @@
           box-sizing: border-box;
         }
 
-        .frame-ground {
+        .f05-ground {
           position: absolute;
           inset: 0;
           z-index: 0;
-          background: #ffffff;
+          overflow: hidden;
+          background: #0b0d10;
         }
 
-        .stage {
+        .f05-grid {
+          position: absolute;
+          inset: -48px;
+          opacity: 0.38;
+          background-image:
+            linear-gradient(rgba(244, 91, 11, 0.13) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(244, 91, 11, 0.13) 1px, transparent 1px);
+          background-size: 64px 64px;
+          mask-image: radial-gradient(circle at 50% 42%, black 0%, transparent 72%);
+          will-change: transform;
+        }
+
+        .f05-glow {
+          position: absolute;
+          right: -230px;
+          top: -280px;
+          width: 1040px;
+          height: 1040px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(244, 91, 11, 0.2) 0%, rgba(244, 91, 11, 0) 70%);
+          opacity: 0.72;
+          will-change: transform, opacity;
+        }
+
+        .f05-ghost-minute {
+          position: absolute;
+          right: 36px;
+          top: -115px;
+          color: rgba(244, 91, 11, 0.075);
+          font-size: 520px;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.09em;
+          user-select: none;
+        }
+
+        .f05-stage {
           position: absolute;
           inset: 0;
           z-index: 1;
           overflow: hidden;
         }
 
-        .surface-shell {
+        .f05-header {
           position: absolute;
-          top: 64px;
           left: 82px;
-          width: 1225px;
-          height: 768px;
-          overflow: hidden;
-          background: #ffffff;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 14px;
-          transform-origin: 50% 50%;
-          will-change: transform, opacity;
-        }
-
-        .surface-image {
-          --dof: 0px;
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-          filter: blur(var(--dof));
-          opacity: 1;
-          will-change: filter, opacity;
-        }
-
-        .surface-sheen {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-          pointer-events: none;
-          border: 1px solid rgba(255, 255, 255, 0.7);
-          border-radius: 13px;
-        }
-
-        .builder-row-state {
-          position: absolute;
-          left: 34px;
-          top: 594px;
-          z-index: 8;
+          right: 82px;
+          top: 46px;
+          z-index: 20;
           display: flex;
-          width: 326px;
-          height: 48px;
           align-items: center;
           justify-content: space-between;
-          padding: 0 14px 0 16px;
-          color: #dc2626;
-          background: rgba(255, 255, 255, 0.94);
-          border: 1px solid rgba(220, 38, 38, 0.22);
-          border-left: 4px solid #dc2626;
-          border-radius: 10px;
-          font-size: 18px;
-          font-weight: 800;
-          letter-spacing: 0.035em;
-          will-change: transform, opacity;
         }
 
-        .builder-row-state .state-time {
-          color: #6b6b6b;
-          font-size: 14px;
-          font-weight: 500;
-          font-variant-numeric: tabular-nums;
-        }
-
-        .alert-rule {
-          position: absolute;
-          left: 34px;
-          top: 651px;
-          z-index: 8;
-          display: block;
-          width: 326px;
-          height: 4px;
-          background: #f45b0b;
-          border-radius: 2px;
-          transform-origin: 0 50%;
-          will-change: transform, opacity;
-        }
-
-        .research-lock {
-          position: absolute;
-          left: 493px;
-          top: 384px;
-          z-index: 9;
+        .f05-header-left {
           display: flex;
-          width: 176px;
-          height: 50px;
           align-items: center;
-          justify-content: center;
-          color: #059669;
-          background: rgba(255, 255, 255, 0.96);
-          border: 1.5px solid rgba(5, 150, 105, 0.26);
-          border-radius: 100px;
-          font-size: 17px;
-          font-weight: 800;
-          letter-spacing: 0.035em;
-          transform-origin: 50% 50%;
-          will-change: transform, opacity, text-shadow;
+          gap: 18px;
         }
 
-        .assignment-swap {
-          position: absolute;
-          left: 681px;
-          top: 410px;
-          z-index: 7;
-          width: 275px;
-          height: 62px;
-        }
-
-        .assignment-card {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: center;
-          gap: 3px;
-          padding: 8px 15px;
-          background: rgba(255, 255, 255, 0.97);
-          border: 2px solid #f45b0b;
-          border-radius: 10px;
-          transform-origin: 50% 50%;
-          will-change: transform, opacity;
-        }
-
-        .assignment-card.outgoing {
-          z-index: 1;
-        }
-
-        .assignment-card.incoming {
-          z-index: 2;
-          border-color: rgba(244, 91, 11, 0.72);
-        }
-
-        .assignment-name {
+        .f05-index {
+          display: grid;
+          width: 48px;
+          height: 48px;
+          place-items: center;
+          border-radius: 50%;
+          background: #f45b0b;
           color: #0b0d10;
-          font-size: 17px;
+          font-size: 20px;
+          font-weight: 900;
+        }
+
+        .f05-eyebrow {
+          color: #f7f7f3;
+          font-size: 20px;
           font-weight: 800;
-          line-height: 1;
-        }
-
-        .assignment-meta {
-          color: #6b6b6b;
-          font-size: 14px;
-          font-weight: 500;
-          font-variant-numeric: tabular-nums;
-          line-height: 1;
-        }
-
-        .future-mask {
-          position: absolute;
-          z-index: 6;
-          display: block;
-          background: rgba(255, 255, 255, 0.97);
-          border-radius: 9px;
-          will-change: opacity;
-        }
-
-        .future-mask.verify {
-          left: 954px;
-          top: 498px;
-          width: 96px;
-          height: 62px;
-        }
-
-        .future-mask.ship {
-          left: 1047px;
-          top: 568px;
-          width: 86px;
-          height: 62px;
-        }
-
-        .sequence-bar {
-          position: absolute;
-          z-index: 7;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          gap: 2px;
-          height: 58px;
-          padding: 7px 9px;
-          background: rgba(255, 255, 255, 0.98);
-          border: 2px solid rgba(244, 91, 11, 0.72);
-          border-radius: 10px;
-          transform-origin: 50% 50%;
-          will-change: transform, opacity;
-        }
-
-        .sequence-bar.verify {
-          left: 954px;
-          top: 500px;
-          width: 94px;
-        }
-
-        .sequence-bar.ship {
-          left: 1048px;
-          top: 570px;
-          width: 82px;
-          border-color: rgba(5, 150, 105, 0.72);
-        }
-
-        .sequence-bar strong {
-          font-size: 13px;
-          font-weight: 800;
-          line-height: 1;
-        }
-
-        .sequence-bar span {
-          color: #6b6b6b;
-          font-size: 11px;
-          font-weight: 500;
-          font-variant-numeric: tabular-nums;
-          white-space: nowrap;
-        }
-
-        .proof-rail {
-          position: absolute;
-          top: 64px;
-          right: 82px;
-          width: 440px;
-          height: 768px;
-          padding-left: 36px;
-        }
-
-        .proof-rail::before {
-          position: absolute;
-          top: 2px;
-          bottom: 2px;
-          left: 0;
-          width: 1.5px;
-          content: "";
-          background: rgba(244, 91, 11, 0.2);
-        }
-
-        .rail-eyebrow {
-          margin: 8px 0 16px;
-          color: #f45b0b;
-          font-size: 16px;
-          font-weight: 700;
-          letter-spacing: 0.11em;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
         }
 
-        .minute-card {
+        .f05-live {
           display: flex;
-          min-height: 154px;
-          flex-direction: column;
-          justify-content: center;
-          padding: 22px 26px;
-          background: rgba(244, 91, 11, 0.04);
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 14px;
+          align-items: center;
+          gap: 12px;
+          color: #f7f7f3;
+          font-size: 18px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
         }
 
-        .minute-label {
-          color: #6b6b6b;
-          font-size: 17px;
+        .f05-live-dot {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #dc2626;
+        }
+
+        .f05-title-band {
+          position: absolute;
+          left: 82px;
+          right: 82px;
+          top: 116px;
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 56px;
+        }
+
+        .f05-title {
+          margin: 0;
+          color: #f7f7f3;
+          font-size: 68px;
           font-weight: 700;
+          line-height: 1;
+          letter-spacing: -0.045em;
+        }
+
+        .f05-title strong {
+          color: #f45b0b;
+          font-weight: 800;
+        }
+
+        .f05-clock {
+          display: flex;
+          min-width: 330px;
+          height: 88px;
+          align-items: center;
+          justify-content: center;
+          gap: 16px;
+          border: 2px solid rgba(244, 91, 11, 0.55);
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.12);
+          transform-origin: 100% 50%;
+          will-change: transform, opacity;
+        }
+
+        .f05-clock-label {
+          color: #d1d3d7;
+          font-size: 18px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .f05-clock-value {
+          min-width: 80px;
+          color: #f45b0b;
+          font-size: 58px;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.05em;
+          font-variant-numeric: tabular-nums;
+          text-align: right;
+        }
+
+        .f05-plan-compare {
+          position: absolute;
+          left: 82px;
+          right: 82px;
+          top: 238px;
+          display: grid;
+          height: 384px;
+          grid-template-columns: 1fr 126px 1fr;
+          align-items: stretch;
+          gap: 20px;
+        }
+
+        .f05-plan-card {
+          position: relative;
+          overflow: hidden;
+          padding: 24px 26px;
+          border: 2px solid rgba(255, 255, 255, 0.14);
+          border-radius: 14px;
+          background: rgba(255, 255, 255, 0.045);
+          will-change: transform, opacity;
+        }
+
+        .f05-plan-card::before {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          height: 5px;
+          content: "";
+          background: #dc2626;
+          transform-origin: 0 50%;
+        }
+
+        .f05-plan-card.after {
+          border-color: rgba(244, 91, 11, 0.46);
+          background: rgba(244, 91, 11, 0.075);
+        }
+
+        .f05-plan-card.after::before {
+          background: #059669;
+        }
+
+        .f05-plan-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 18px;
+        }
+
+        .f05-plan-kicker {
+          color: #f7f7f3;
+          font-size: 20px;
+          font-weight: 900;
           letter-spacing: 0.1em;
           text-transform: uppercase;
         }
 
-        .minute-value-wrap {
-          display: flex;
-          width: 220px;
-          min-height: 78px;
-          align-items: baseline;
-          gap: 12px;
-          margin-top: 8px;
-        }
-
-        .minute-value {
-          display: inline-block;
-          min-width: 94px;
-          color: #f45b0b;
-          font-size: 72px;
-          font-weight: 800;
-          font-variant-numeric: tabular-nums;
-          letter-spacing: -0.03em;
-          line-height: 1;
-          transform-origin: 0 80%;
-          will-change: transform;
-        }
-
-        .minute-unit {
-          color: #9a9a9a;
+        .f05-plan-state {
+          padding: 9px 14px;
+          border-radius: 100px;
+          color: #f7f7f3;
+          background: rgba(220, 38, 38, 0.18);
           font-size: 17px;
-          font-weight: 500;
+          font-weight: 900;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
         }
 
-        .status-stack {
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
-          margin-top: 28px;
+        .f05-plan-card.after .f05-plan-state {
+          background: rgba(5, 150, 105, 0.22);
         }
 
-        .status-line {
-          display: flex;
-          min-height: 52px;
+        .f05-task-list {
+          display: grid;
+          gap: 10px;
+        }
+
+        .f05-task-row {
+          position: relative;
+          display: grid;
+          height: 66px;
+          grid-template-columns: 150px 1fr 132px;
           align-items: center;
-          gap: 13px;
-          padding: 0 15px;
-          color: #0b0d10;
-          background: rgba(244, 91, 11, 0.04);
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 12px;
+          overflow: hidden;
+          padding: 0 16px;
+          border: 1.5px solid rgba(255, 255, 255, 0.12);
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.035);
+          color: #f7f7f3;
+        }
+
+        .f05-task-name {
+          font-size: 22px;
+          font-weight: 900;
+          letter-spacing: -0.02em;
+        }
+
+        .f05-task-agent {
+          color: #c2c4ca;
           font-size: 18px;
           font-weight: 700;
-          letter-spacing: 0.02em;
+        }
+
+        .f05-task-time {
+          color: #c2c4ca;
+          font-size: 18px;
+          font-weight: 800;
+          font-variant-numeric: tabular-nums;
+          text-align: right;
+        }
+
+        .f05-task-row.locked {
+          border-color: rgba(5, 150, 105, 0.54);
+          background: rgba(5, 150, 105, 0.13);
+        }
+
+        .f05-task-row.failed {
+          border-color: rgba(220, 38, 38, 0.58);
+          background: rgba(220, 38, 38, 0.13);
+        }
+
+        .f05-task-row.waiting {
+          opacity: 0.58;
+        }
+
+        .f05-lock-chip,
+        .f05-fail-chip {
+          position: absolute;
+          right: 16px;
+          display: flex;
+          height: 38px;
+          align-items: center;
+          padding: 0 13px;
+          border-radius: 100px;
+          color: #ffffff;
+          font-size: 16px;
+          font-weight: 900;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          transform-origin: 100% 50%;
           will-change: transform, opacity;
         }
 
-        .status-dot {
-          display: block;
-          width: 10px;
-          height: 10px;
-          flex: 0 0 auto;
-          background: #f45b0b;
-          border-radius: 50%;
-        }
-
-        .status-line.failure {
-          color: #dc2626;
-        }
-
-        .status-line.failure .status-dot {
-          background: #dc2626;
-        }
-
-        .status-line.fixed {
-          color: #059669;
-        }
-
-        .status-line.fixed .status-dot {
+        .f05-lock-chip {
           background: #059669;
         }
 
-        .final-metrics {
-          margin-top: 28px;
-          color: #f45b0b;
-          font-size: 26px;
-          font-weight: 800;
-          font-variant-numeric: tabular-nums;
-          letter-spacing: -0.015em;
-          line-height: 1.1;
+        .f05-fail-chip {
+          background: #dc2626;
+        }
+
+        .f05-after-row {
           will-change: transform, opacity;
         }
 
-        .deadline-proof {
+        .f05-after-row.reviewer {
+          border-color: rgba(244, 91, 11, 0.5);
+          background: rgba(244, 91, 11, 0.1);
+        }
+
+        .f05-after-row .f05-task-agent strong {
+          color: #f45b0b;
+          font-weight: 900;
+        }
+
+        .f05-replan-bridge {
+          position: relative;
           display: flex;
-          min-height: 118px;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .f05-flow-line {
+          position: absolute;
+          left: -20px;
+          right: -20px;
+          top: 50%;
+          height: 4px;
+          background: #f45b0b;
+          transform-origin: 0 50%;
+          will-change: transform, opacity;
+        }
+
+        .f05-replan-node {
+          position: relative;
+          z-index: 2;
+          display: grid;
+          width: 94px;
+          height: 94px;
+          place-items: center;
+          border: 3px solid #f45b0b;
+          border-radius: 50%;
+          background: #0b0d10;
+          color: #f45b0b;
+          font-size: 42px;
+          font-weight: 900;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .f05-replan-label {
+          position: absolute;
+          top: calc(50% + 62px);
+          color: #f7f7f3;
+          font-size: 17px;
+          font-weight: 900;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .f05-metrics {
+          position: absolute;
+          left: 82px;
+          right: 82px;
+          top: 650px;
+          display: grid;
+          grid-template-columns: 1fr 0.84fr 1.14fr;
+          gap: 20px;
+        }
+
+        .f05-metric {
+          position: relative;
+          display: flex;
+          height: 192px;
           flex-direction: column;
           justify-content: center;
-          margin-top: 18px;
-          padding: 20px 24px;
-          color: #059669;
-          background: rgba(5, 150, 105, 0.05);
-          border: 1.5px solid rgba(5, 150, 105, 0.26);
+          overflow: hidden;
+          padding: 24px 30px;
+          border: 2px solid rgba(255, 255, 255, 0.15);
           border-radius: 14px;
+          background: rgba(255, 255, 255, 0.05);
           will-change: transform, opacity;
         }
 
-        .deadline-proof .proof-value {
-          font-size: 42px;
-          font-weight: 800;
-          font-variant-numeric: tabular-nums;
-          letter-spacing: -0.03em;
-          line-height: 1;
-        }
-
-        .deadline-proof .proof-label {
-          margin-top: 9px;
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-        }
-
-        .progress-track {
+        .f05-metric::after {
           position: absolute;
-          top: 884px;
-          left: 82px;
-          z-index: 2;
-          width: 1756px;
-          height: 3px;
-          overflow: hidden;
-          background: rgba(244, 91, 11, 0.08);
+          right: -48px;
+          bottom: -72px;
+          width: 188px;
+          height: 188px;
+          border: 24px solid rgba(244, 91, 11, 0.12);
+          border-radius: 50%;
+          content: "";
         }
 
-        .progress-fill {
-          display: block;
+        .f05-metric-label {
+          position: relative;
+          z-index: 2;
+          color: #c2c4ca;
+          font-size: 18px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .f05-metric-value {
+          position: relative;
+          z-index: 2;
+          margin-top: 12px;
+          color: #f45b0b;
+          font-size: 68px;
+          font-weight: 900;
+          line-height: 0.94;
+          letter-spacing: -0.055em;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .f05-metric-value small {
+          margin-left: 8px;
+          color: #f7f7f3;
+          font-size: 24px;
+          font-weight: 800;
+          letter-spacing: 0;
+        }
+
+        .f05-metric-note {
+          position: relative;
+          z-index: 2;
+          margin-top: 11px;
+          color: #c2c4ca;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .f05-metric.deadline {
+          border-color: rgba(5, 150, 105, 0.62);
+          background: rgba(5, 150, 105, 0.14);
+        }
+
+        .f05-metric.deadline::after {
+          border-color: rgba(5, 150, 105, 0.17);
+        }
+
+        .f05-metric.deadline .f05-metric-value {
+          color: #f7f7f3;
+          font-size: 49px;
+          letter-spacing: -0.035em;
+        }
+
+        .f05-deadline-rule {
+          position: absolute;
+          left: 0;
+          bottom: 0;
           width: 100%;
+          height: 7px;
+          background: #059669;
+          transform-origin: 0 50%;
+          will-change: transform;
+        }
+
+        .f05-footer {
+          position: absolute;
+          left: 82px;
+          right: 82px;
+          top: 876px;
+          height: 16px;
+        }
+
+        .f05-progress-track {
+          position: absolute;
+          inset: 6px 0 auto;
+          height: 4px;
+          overflow: hidden;
+          border-radius: 2px;
+          background: rgba(255, 255, 255, 0.12);
+        }
+
+        .f05-progress-fill {
+          display: block;
+          width: 83.3333%;
           height: 100%;
           background: #f45b0b;
           transform-origin: 0 50%;
@@ -469,325 +563,273 @@
       >
         <div
           id="f05-ground"
-          class="clip frame-ground"
+          class="clip f05-ground"
           data-start="0"
           data-duration="11.776"
           data-track-index="0"
-        ></div>
+        >
+          <div id="f05-grid" class="f05-grid"></div>
+          <div id="f05-glow" class="f05-glow"></div>
+          <div class="f05-ghost-minute">22</div>
+        </div>
 
-        <div
+        <section
           id="f05-stage"
-          class="clip stage"
+          class="clip f05-stage"
           data-start="0"
           data-duration="11.776"
           data-track-index="1"
         >
-          <div class="surface-shell" id="f05-surface-shell">
-            <img
-              class="surface-image"
-              id="f05-surface-image"
-              src="assets/swarmshift-incident.png"
-              alt="SwarmShift incident planner with recovered schedule"
-            />
-            <div class="surface-sheen"></div>
-
-            <div class="builder-row-state" id="f05-builder-row-state">
-              <span id="f05-failure-text">BUILDER FAILED</span>
-              <span class="state-time">22m</span>
+          <header id="f05-header" class="f05-header">
+            <div class="f05-header-left">
+              <div class="f05-index">05</div>
+              <div class="f05-eyebrow">Failure → recovery</div>
             </div>
-            <div class="alert-rule" id="f05-alert-rule"></div>
+            <div class="f05-live"><span class="f05-live-dot"></span>live incident</div>
+          </header>
 
-            <div class="research-lock" id="f05-research-lock">RESEARCH FIXED ✓</div>
-
-            <div class="assignment-swap">
-              <div class="assignment-card outgoing" id="f05-assignment-builder">
-                <span class="assignment-name" id="f05-assignment-builder-name">Builder</span>
-                <span class="assignment-meta">22–58 min · $0.51</span>
-              </div>
-              <div class="assignment-card incoming" id="f05-assignment-reviewer">
-                <span class="assignment-name">Reviewer</span>
-                <span class="assignment-meta">22–58 min · $0.72</span>
-              </div>
-            </div>
-
-            <div class="future-mask verify" id="f05-verify-mask"></div>
-            <div class="future-mask ship" id="f05-ship-mask"></div>
-            <div class="sequence-bar verify" id="f05-verify-bar">
-              <strong>Reviewer</strong>
-              <span>58–70 min</span>
-            </div>
-            <div class="sequence-bar ship" id="f05-ship-bar">
-              <strong>Scout</strong>
-              <span>70–80 min</span>
+          <div class="f05-title-band">
+            <h1 id="f05-title" class="f05-title">Agent failed. <strong>Deadline didn't.</strong></h1>
+            <div id="f05-clock" class="f05-clock">
+              <span class="f05-clock-label">Incident minute</span>
+              <span id="f05-clock-value" class="f05-clock-value">0</span>
             </div>
           </div>
 
-          <aside class="proof-rail" id="f05-proof-rail">
-            <div class="rail-eyebrow" id="f05-rail-eyebrow">Incident replan</div>
-            <div class="minute-card" id="f05-minute-card">
-              <div class="minute-label" id="f05-minute-label">Minute</div>
-              <div class="minute-value-wrap">
-                <span class="minute-value" id="f05-minute-value">0</span>
-                <span class="minute-unit">of 90</span>
+          <div class="f05-plan-compare">
+            <article id="f05-before" class="f05-plan-card before">
+              <div class="f05-plan-head">
+                <div class="f05-plan-kicker">Before · original plan</div>
+                <div class="f05-plan-state">blocked</div>
               </div>
+              <div class="f05-task-list">
+                <div class="f05-task-row locked">
+                  <span class="f05-task-name">Research</span>
+                  <span class="f05-task-agent">Scout</span>
+                  <span class="f05-task-time">0–22 min</span>
+                  <span id="f05-research-lock" class="f05-lock-chip">Locked ✓</span>
+                </div>
+                <div class="f05-task-row failed">
+                  <span class="f05-task-name">Build</span>
+                  <span class="f05-task-agent">Builder</span>
+                  <span class="f05-task-time">22 min</span>
+                  <span id="f05-builder-fail" class="f05-fail-chip">Failed ×</span>
+                </div>
+                <div class="f05-task-row waiting">
+                  <span class="f05-task-name">Verify</span>
+                  <span class="f05-task-agent">Waiting</span>
+                  <span class="f05-task-time">—</span>
+                </div>
+                <div class="f05-task-row waiting">
+                  <span class="f05-task-name">Ship</span>
+                  <span class="f05-task-agent">Waiting</span>
+                  <span class="f05-task-time">—</span>
+                </div>
+              </div>
+            </article>
+
+            <div class="f05-replan-bridge">
+              <div id="f05-flow-line" class="f05-flow-line"></div>
+              <div id="f05-replan-node" class="f05-replan-node">→</div>
+              <div id="f05-replan-label" class="f05-replan-label">replan</div>
             </div>
 
-            <div class="status-stack">
-              <div class="status-line failure" id="f05-status-failure">
-                <span class="status-dot"></span>
-                <span>Builder failed</span>
+            <article id="f05-after" class="f05-plan-card after">
+              <div class="f05-plan-head">
+                <div class="f05-plan-kicker">After · recovered plan</div>
+                <div class="f05-plan-state">feasible</div>
               </div>
-              <div class="status-line fixed" id="f05-status-fixed">
-                <span class="status-dot"></span>
-                <span>Research fixed</span>
+              <div class="f05-task-list">
+                <div id="f05-after-research" class="f05-task-row locked f05-after-row">
+                  <span class="f05-task-name">Research</span>
+                  <span class="f05-task-agent">Scout · fixed</span>
+                  <span class="f05-task-time">0–22 min</span>
+                </div>
+                <div id="f05-after-build" class="f05-task-row reviewer f05-after-row">
+                  <span class="f05-task-name">Build</span>
+                  <span class="f05-task-agent"><strong>Reviewer</strong> takes code</span>
+                  <span class="f05-task-time">22–58 min</span>
+                </div>
+                <div id="f05-after-verify" class="f05-task-row reviewer f05-after-row">
+                  <span class="f05-task-name">Verify</span>
+                  <span class="f05-task-agent"><strong>Reviewer</strong></span>
+                  <span class="f05-task-time">58–70 min</span>
+                </div>
+                <div id="f05-after-ship" class="f05-task-row reviewer f05-after-row">
+                  <span class="f05-task-name">Ship</span>
+                  <span class="f05-task-agent"><strong>Reviewer</strong></span>
+                  <span class="f05-task-time">70–80 min</span>
+                </div>
               </div>
-              <div class="status-line" id="f05-status-reviewer">
-                <span class="status-dot"></span>
-                <span>Reviewer → Build</span>
-              </div>
-            </div>
-
-            <div class="final-metrics" id="f05-final-metrics">58 MIN REMAINING · $1.05</div>
-            <div class="deadline-proof" id="f05-deadline-proof">
-              <div class="proof-value">90 MIN</div>
-              <div class="proof-label">DEADLINE MET</div>
-            </div>
-          </aside>
-
-          <div class="progress-track">
-            <span class="progress-fill" id="f05-progress-fill"></span>
+            </article>
           </div>
-        </div>
+
+          <div class="f05-metrics">
+            <article id="f05-metric-remaining" class="f05-metric">
+              <div class="f05-metric-label">Recovery runway</div>
+              <div class="f05-metric-value">58<small>MIN REMAINING</small></div>
+              <div class="f05-metric-note">From incident to scheduled finish</div>
+            </article>
+            <article id="f05-metric-cost" class="f05-metric">
+              <div class="f05-metric-label">Replanned cost</div>
+              <div class="f05-metric-value">$1.05</div>
+              <div class="f05-metric-note">Feasible with Reviewer takeover</div>
+            </article>
+            <article id="f05-metric-deadline" class="f05-metric deadline">
+              <div class="f05-metric-label">Outcome</div>
+              <div class="f05-metric-value">90 MIN DEADLINE MET</div>
+              <div class="f05-metric-note">Recovered schedule finishes at minute 80</div>
+              <div id="f05-deadline-rule" class="f05-deadline-rule"></div>
+            </article>
+          </div>
+
+          <footer class="f05-footer">
+            <div class="f05-progress-track"><span id="f05-progress-fill" class="f05-progress-fill"></span></div>
+          </footer>
+        </section>
 
         <script>
           window.__timelines = window.__timelines || {};
           const tl = gsap.timeline({ paused: true });
 
-          // Scene 1 — establish the persistent planner surface and count into minute 22.
           tl.fromTo(
-            "#f05-surface-shell",
-            { x: -42, y: 12, scale: 0.965, opacity: 0.22 },
-            { x: 0, y: 0, scale: 1, opacity: 1, duration: 0.72, ease: "power3.out" },
-            0.04,
-          );
-          tl.fromTo(
-            "#f05-proof-rail",
-            { x: 28, opacity: 0.25 },
-            { x: 0, opacity: 1, duration: 0.58, ease: "power3.out" },
+            "#f05-header",
+            { opacity: 0, y: -18 },
+            { opacity: 1, y: 0, duration: 0.44, ease: "power3.out" },
             0.12,
           );
           tl.fromTo(
-            "#f05-rail-eyebrow, #f05-minute-label",
-            { y: 12, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.46, ease: "power2.out", stagger: 0.08 },
-            0.18,
+            "#f05-title",
+            { opacity: 0, x: -52 },
+            { opacity: 1, x: 0, duration: 0.58, ease: "expo.out" },
+            0.2,
+          );
+          tl.fromTo(
+            "#f05-clock",
+            { opacity: 0, scale: 0.82 },
+            { opacity: 1, scale: 1, duration: 0.52, ease: "back.out(1.4)" },
+            0.32,
+          );
+          tl.fromTo(
+            "#f05-before",
+            { opacity: 0, x: -58 },
+            { opacity: 1, x: 0, duration: 0.62, ease: "power4.out" },
+            0.46,
           );
 
           const minuteState = { value: 0 };
-          const minuteValue = document.getElementById("f05-minute-value");
+          const minuteValue = document.getElementById("f05-clock-value");
           tl.to(
             minuteState,
             {
               value: 22,
-              duration: 1.48,
+              duration: 2.18,
               ease: "power3.out",
               onUpdate: () => {
                 minuteValue.textContent = String(Math.round(minuteState.value));
               },
             },
-            0.24,
-          );
-          tl.fromTo(
-            "#f05-minute-value",
-            { scale: 0.58 },
-            { scale: 1, duration: 1.48, ease: "power3.out" },
-            0.24,
+            0.44,
           );
 
-          // The captured image is already the recovered state. These explicit covers reconstruct
-          // the prior state until their corresponding dependency beat arrives.
-          tl.set("#f05-assignment-builder", { opacity: 0 }, 0);
           tl.fromTo(
-            "#f05-assignment-reviewer",
-            { scale: 0.72, opacity: 0 },
-            { scale: 0.72, opacity: 0, duration: 0.01, ease: "none" },
-            0,
+            "#f05-builder-fail",
+            { opacity: 0, scale: 0.72 },
+            { opacity: 1, scale: 1, duration: 0.38, ease: "back.out(1.55)" },
+            0.84,
           );
           tl.fromTo(
-            "#f05-verify-bar, #f05-ship-bar",
-            { x: 42, scale: 0.9, opacity: 0 },
-            { x: 42, scale: 0.9, opacity: 0, duration: 0.01, ease: "none" },
-            0,
-          );
-          tl.fromTo(
-            "#f05-builder-row-state, #f05-alert-rule, #f05-research-lock, #f05-status-failure, #f05-status-fixed, #f05-status-reviewer, #f05-final-metrics, #f05-deadline-proof",
-            { opacity: 0 },
-            { opacity: 0, duration: 0.01, ease: "none" },
-            0,
+            "#f05-research-lock",
+            { opacity: 0, scale: 0.76 },
+            { opacity: 1, scale: 1, duration: 0.44, ease: "power3.out" },
+            2.94,
           );
 
-          // Scene 2 — a discrete UI-state stamp: Builder becomes failed, and the alert rule draws.
-          const failureSequence = [
-            { t: 0, text: "Builder" },
-            { t: 2.2, text: "Builder" },
-            { t: 2.32, text: "BUILDER FAILED" },
+          tl.fromTo(
+            "#f05-flow-line",
+            { opacity: 0, scaleX: 0 },
+            { opacity: 1, scaleX: 1, duration: 0.46, ease: "power3.out" },
+            5.18,
+          );
+          tl.fromTo(
+            "#f05-replan-node",
+            { opacity: 0, scale: 0.6, rotation: -90 },
+            { opacity: 1, scale: 1, rotation: 0, duration: 0.56, ease: "back.out(1.45)" },
+            5.34,
+          );
+          tl.fromTo(
+            "#f05-replan-label",
+            { opacity: 0, y: 10 },
+            { opacity: 1, y: 0, duration: 0.34, ease: "power2.out" },
+            5.5,
+          );
+          tl.fromTo(
+            "#f05-after",
+            { opacity: 0, x: 72 },
+            { opacity: 1, x: 0, duration: 0.68, ease: "expo.out" },
+            5.42,
+          );
+
+          const recoveryCues = [
+            ["#f05-after-research", 5.58],
+            ["#f05-after-build", 6.02],
+            ["#f05-after-verify", 7.18],
+            ["#f05-after-ship", 7.82],
           ];
-          const failureDriver = { t: 0 };
-          const assignmentBuilderName = document.getElementById("f05-assignment-builder-name");
-          const failureText = document.getElementById("f05-failure-text");
-          function failureTextAt(time) {
-            for (let i = failureSequence.length - 1; i >= 0; i -= 1) {
-              if (time >= failureSequence[i].t) return failureSequence[i].text;
-            }
-            return "Builder";
-          }
-          tl.to(
-            failureDriver,
-            {
-              t: 11.776,
-              duration: 11.776,
-              ease: "none",
-              onUpdate: () => {
-                const state = failureTextAt(failureDriver.t);
-                assignmentBuilderName.textContent = state;
-                failureText.textContent = state;
+          recoveryCues.forEach(([selector, start], index) => {
+            tl.fromTo(
+              selector,
+              { opacity: 0, x: 42 },
+              {
+                opacity: 1,
+                x: 0,
+                duration: index === 1 ? 0.58 : 0.42,
+                ease: index === 1 ? "back.out(1.25)" : "power3.out",
               },
-            },
-            0,
-          );
-          tl.fromTo(
-            "#f05-builder-row-state",
-            { scale: 0.84, opacity: 0 },
-            { scale: 1, opacity: 1, duration: 0.38, ease: "back.out(1.45)" },
-            2.22,
-          );
-          tl.fromTo(
-            "#f05-assignment-builder",
-            { scale: 0.94, opacity: 0 },
-            { scale: 1, opacity: 0.62, duration: 0.34, ease: "power2.out" },
-            2.22,
-          );
-          tl.fromTo(
-            "#f05-alert-rule",
-            { scaleX: 0, opacity: 1 },
-            { scaleX: 1, opacity: 1, duration: 0.5, ease: "power2.out" },
-            2.28,
-          );
-          tl.fromTo(
-            "#f05-status-failure",
-            { y: 16, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.44, ease: "power3.out" },
-            2.46,
-          );
-
-          // Scene 3 — preserve completed research and selectively defocus the surrounding surface.
-          tl.to(
-            "#f05-surface-image",
-            { "--dof": "5px", opacity: 0.55, duration: 0.7, ease: "power2.inOut" },
-            4.2,
-          );
-          tl.fromTo(
-            "#f05-research-lock",
-            { y: 12, scale: 0.94, opacity: 0 },
-            { y: 0, scale: 1, opacity: 1, duration: 0.42, ease: "power3.out" },
-            4.28,
-          );
-          tl.to(
-            "#f05-research-lock",
-            {
-              scale: 1.045,
-              textShadow: "0 0 28px rgba(5,150,105,0.58)",
-              duration: 0.22,
-              ease: "power2.out",
-            },
-            4.7,
-          );
-          tl.to(
-            "#f05-research-lock",
-            {
-              scale: 1,
-              textShadow: "0 0 8px rgba(5,150,105,0.22)",
-              duration: 0.54,
-              ease: "power2.out",
-            },
-            4.92,
-          );
-          tl.fromTo(
-            "#f05-status-fixed",
-            { y: 16, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.44, ease: "power3.out" },
-            4.74,
-          );
-
-          // Scene 4 — rack focus to the recovered plan, then perform the blueprint's
-          // signature same-footprint shrink-out / pop-in scale swap.
-          tl.to(
-            "#f05-surface-image",
-            { "--dof": "2px", opacity: 0.84, duration: 0.72, ease: "power2.inOut" },
-            6.3,
-          );
-          tl.to(
-            "#f05-assignment-builder",
-            { scale: 0.72, opacity: 0, duration: 0.4, ease: "power2.in" },
-            6.34,
-          );
-          tl.to(
-            "#f05-assignment-reviewer",
-            { scale: 1, opacity: 1, duration: 0.62, ease: "back.out(1.55)" },
-            6.58,
-          );
-          tl.fromTo(
-            "#f05-status-reviewer",
-            { y: 16, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.44, ease: "power3.out" },
-            6.7,
-          );
-
-          // Content-aware dependency sequencing: each remaining bar receives a duration
-          // derived from its label length, then reveals in task order.
-          const dependencySequence = [
-            { selector: "#f05-verify-bar", mask: "#f05-verify-mask", label: "VERIFY", hold: 0.18 },
-            { selector: "#f05-ship-bar", mask: "#f05-ship-mask", label: "SHIP", hold: 0.26 },
-          ];
-          let dependencyCursor = 7.18;
-          const dependencyTimeline = dependencySequence.map((item) => {
-            const duration = 0.28 + item.label.length * 0.018 + item.hold;
-            const start = dependencyCursor;
-            dependencyCursor += duration;
-            return { ...item, start, duration };
-          });
-          dependencyTimeline.forEach((item) => {
-            tl.to(item.mask, { opacity: 0, duration: 0.26, ease: "power2.out" }, item.start);
-            tl.to(
-              item.selector,
-              { x: 0, scale: 1, opacity: 1, duration: item.duration, ease: "power3.out" },
-              item.start,
+              start,
             );
           });
 
-          // Scene 5 — full recovered surface sharpens, proof arrives in two beats, then holds still.
-          tl.to(
-            "#f05-surface-image",
-            { "--dof": "0px", opacity: 1, duration: 0.56, ease: "power2.inOut" },
-            9.0,
+          tl.fromTo(
+            "#f05-metric-remaining",
+            { opacity: 0, x: -46 },
+            { opacity: 1, x: 0, duration: 0.54, ease: "power4.out" },
+            8.78,
           );
           tl.fromTo(
-            "#f05-final-metrics",
-            { y: 18, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.46, ease: "power3.out" },
-            9.24,
+            "#f05-metric-cost",
+            { opacity: 0, y: 34 },
+            { opacity: 1, y: 0, duration: 0.5, ease: "back.out(1.3)" },
+            9.22,
           );
           tl.fromTo(
-            "#f05-deadline-proof",
-            { y: 18, scale: 0.96, opacity: 0 },
-            { y: 0, scale: 1, opacity: 1, duration: 0.54, ease: "power3.out" },
-            9.72,
+            "#f05-metric-deadline",
+            { opacity: 0, x: 46 },
+            { opacity: 1, x: 0, duration: 0.62, ease: "expo.out" },
+            9.68,
           );
+          tl.fromTo(
+            "#f05-deadline-rule",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 0.54, ease: "power3.out" },
+            10.08,
+          );
+
           tl.fromTo(
             "#f05-progress-fill",
             { scaleX: 0 },
-            { scaleX: 1, duration: 10.3, ease: "none" },
-            0,
+            { scaleX: 1, duration: 10.8, ease: "none" },
+            0.18,
+          );
+          tl.to(
+            "#f05-grid",
+            { x: 48, y: 24, duration: 11.4, ease: "none" },
+            0.18,
+          );
+          tl.to(
+            "#f05-glow",
+            { scale: 1.1, opacity: 0.9, duration: 11.2, ease: "sine.inOut" },
+            0.18,
           );
 
           window.__timelines["05-failure-replanned"] = tl;

@@ -9,7 +9,7 @@
           src: url("assets/fonts/Inter-400.woff2") format("woff2");
           font-style: normal;
           font-weight: 400;
-          font-display: swap;
+          font-display: block;
         }
 
         @font-face {
@@ -17,7 +17,7 @@
           src: url("assets/fonts/Inter-700.woff2") format("woff2");
           font-style: normal;
           font-weight: 700;
-          font-display: swap;
+          font-display: block;
         }
 
         @font-face {
@@ -25,7 +25,7 @@
           src: url("assets/fonts/Inter-800.woff2") format("woff2");
           font-style: normal;
           font-weight: 800;
-          font-display: swap;
+          font-display: block;
         }
 
         #root {
@@ -35,132 +35,392 @@
           height: 1080px;
           overflow: hidden;
           container-type: size;
-          color: #0b0d10;
+          color: #f7f8fa;
           font-family: "Inter", sans-serif;
+        }
+
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
         }
 
         .clip {
           position: absolute;
           inset: 0;
-          width: 100%;
-          height: 100%;
-          box-sizing: border-box;
+          width: 1920px;
+          height: 1080px;
         }
 
-        .scene-ground {
-          background: #ffffff;
+        .incident-ground {
           z-index: 0;
+          overflow: hidden;
+          background:
+            radial-gradient(circle at 26% 42%, rgba(220, 38, 38, 0.13), transparent 30%),
+            radial-gradient(circle at 86% 58%, rgba(5, 150, 105, 0.09), transparent 28%),
+            #080a0e;
         }
 
-        .content-plane {
+        .incident-ground::after {
+          position: absolute;
+          inset: 0;
+          content: "";
+          background:
+            linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+          background-size: 64px 64px;
+          opacity: 0.55;
+        }
+
+        .incident-content {
           z-index: 1;
+          overflow: hidden;
         }
 
         .safe-stage {
           position: relative;
-          width: 100%;
+          width: 1920px;
           height: 896px;
           overflow: hidden;
         }
 
-        .setup-line {
+        .top-rail {
           position: absolute;
-          top: 15cqh;
-          left: 0;
-          width: 100%;
+          top: 42px;
+          left: 88px;
+          right: 88px;
+          height: 42px;
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 1.15cqw;
-          box-sizing: border-box;
-          color: #0b0d10;
-          font-size: 2.4cqw;
+          justify-content: space-between;
+        }
+
+        .incident-id,
+        .window-id {
+          display: flex;
+          align-items: center;
+          gap: 13px;
+          color: #a7adb8;
+          font-size: 16px;
           font-weight: 700;
-          line-height: 1;
-          letter-spacing: -0.02em;
-          text-align: center;
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+        }
+
+        .incident-light {
+          width: 10px;
+          height: 10px;
+          flex: 0 0 auto;
+          border-radius: 50%;
+          background: #dc2626;
+        }
+
+        .window-id {
+          color: #d8dce3;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .window-id strong {
+          color: #ffffff;
+          font-weight: 800;
+        }
+
+        .hero-copy {
+          position: absolute;
+          top: 112px;
+          left: 88px;
+          right: 88px;
+          height: 278px;
+        }
+
+        .hero-line {
+          display: flex;
+          align-items: baseline;
+          gap: 0.34em;
+          margin: 0;
+          font-size: 82px;
+          font-weight: 800;
+          line-height: 0.98;
+          letter-spacing: -0.055em;
           white-space: nowrap;
         }
 
-        .setup-word {
+        .hero-line + .hero-line {
+          margin-top: 24px;
+          font-size: 108px;
+        }
+
+        .hero-word {
           display: inline-block;
           min-width: 2px;
         }
 
-        .variable-anchor {
+        .failure-word {
+          color: #ef4444;
+        }
+
+        .survival-word {
+          position: relative;
+          color: #42d39a;
+        }
+
+        .survival-word::after {
           position: absolute;
-          top: 27.5cqh;
           left: 0;
-          width: 100%;
-          min-height: 15cqh;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          gap: 1.25cqh;
-          box-sizing: border-box;
-          text-align: center;
-        }
-
-        .variable-token {
-          display: block;
-          width: 100%;
-          min-height: 6.2cqw;
-          color: #f45b0b;
-          font-size: 5.9cqw;
-          font-weight: 800;
-          line-height: 1;
-          letter-spacing: -0.035em;
-          white-space: nowrap;
-        }
-
-        .resolve-underline {
-          display: block;
-          width: 34cqw;
-          height: 10px;
-          border-radius: 6px;
-          background: #f45b0b;
+          right: 0;
+          bottom: -11px;
+          height: 7px;
+          border-radius: 7px;
+          background: #059669;
+          content: "";
+          transform: scaleX(var(--hold-line, 0));
           transform-origin: left center;
         }
 
-        .deadline-strip {
+        .timeline-card {
           position: absolute;
-          top: 48cqh;
-          left: 4.7cqw;
-          width: 90.6cqw;
-          height: 21.5cqh;
+          left: 88px;
+          right: 88px;
+          top: 420px;
+          height: 352px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 14px;
+          background: rgba(17, 20, 27, 0.94);
+        }
+
+        .timeline-head {
+          position: absolute;
+          top: 24px;
+          left: 30px;
+          right: 30px;
+          height: 42px;
           display: flex;
           align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          box-sizing: border-box;
-          padding: 0 3.1cqw;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 14px;
-          background: rgba(244, 91, 11, 0.04);
+          justify-content: space-between;
         }
 
-        .deadline-edge {
-          position: absolute;
-          top: 1.7cqh;
-          bottom: 1.7cqh;
-          left: 1.25cqw;
-          display: block;
-          width: 6px;
-          border-radius: 6px;
-          background: #f45b0b;
-        }
-
-        .deadline-copy {
-          display: block;
-          width: 100%;
-          color: #0b0d10;
-          font-size: 6cqw;
+        .timeline-title {
+          color: #ffffff;
+          font-size: 19px;
           font-weight: 800;
-          line-height: 0.94;
-          letter-spacing: -0.045em;
-          text-align: center;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .deadline-lock {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 9px 14px;
+          border: 1px solid rgba(66, 211, 154, 0.36);
+          border-radius: 100px;
+          background: rgba(5, 150, 105, 0.1);
+          color: #69e3b4;
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .lock-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #42d39a;
+        }
+
+        .track-area {
+          position: absolute;
+          left: 152px;
+          right: 74px;
+          top: 94px;
+          height: 214px;
+        }
+
+        .tick-grid {
+          position: absolute;
+          inset: 0;
+          background-image: repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.07) 0,
+            rgba(255, 255, 255, 0.07) 1px,
+            transparent 1px,
+            transparent 10%
+          );
+        }
+
+        .track-row {
+          position: absolute;
+          left: 0;
+          right: 0;
+          height: 46px;
+        }
+
+        .builder-row {
+          top: 40px;
+        }
+
+        .deadline-row {
+          top: 132px;
+        }
+
+        .track-name {
+          position: absolute;
+          right: calc(100% + 22px);
+          top: 12px;
+          width: 112px;
+          color: #a7adb8;
+          font-size: 15px;
+          font-weight: 800;
+          letter-spacing: 0.09em;
+          text-align: right;
+          text-transform: uppercase;
           white-space: nowrap;
+        }
+
+        .track-base {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 21px;
+          height: 4px;
+          border-radius: 4px;
+          background: rgba(255, 255, 255, 0.09);
+        }
+
+        .builder-live,
+        .deadline-live {
+          position: absolute;
+          left: 0;
+          top: 18px;
+          height: 10px;
+          border-radius: 10px;
+          transform-origin: left center;
+        }
+
+        .builder-live {
+          width: 24.444%;
+          background: #dc2626;
+        }
+
+        .builder-tail {
+          position: absolute;
+          left: 24.444%;
+          right: 0;
+          top: 21px;
+          height: 0;
+          border-top: 4px dashed rgba(220, 38, 38, 0.32);
+        }
+
+        .deadline-live {
+          width: 100%;
+          background: #059669;
+        }
+
+        .start-node,
+        .incident-node,
+        .deadline-node {
+          position: absolute;
+          top: 14px;
+          width: 18px;
+          height: 18px;
+          border: 4px solid #11141b;
+          border-radius: 50%;
+        }
+
+        .start-node {
+          left: -9px;
+          background: #e6e9ee;
+        }
+
+        .incident-node {
+          left: calc(24.444% - 9px);
+          background: #ef4444;
+        }
+
+        .deadline-node {
+          right: -9px;
+          background: #42d39a;
+        }
+
+        .incident-marker {
+          position: absolute;
+          left: 24.444%;
+          top: 12px;
+          bottom: 10px;
+          width: 2px;
+          background: rgba(239, 68, 68, 0.58);
+          transform-origin: center top;
+        }
+
+        .minute-label {
+          position: absolute;
+          top: 0;
+          color: #7f8794;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .minute-zero {
+          left: 0;
+        }
+
+        .minute-incident {
+          left: 24.444%;
+          color: #ff7272;
+          transform: translateX(-50%);
+        }
+
+        .minute-end {
+          right: 0;
+          color: #69e3b4;
+        }
+
+        .incident-badge {
+          position: absolute;
+          left: 24.444%;
+          top: 71px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          padding: 8px 12px;
+          border: 1px solid rgba(239, 68, 68, 0.38);
+          border-radius: 100px;
+          background: rgba(220, 38, 38, 0.12);
+          color: #ff8585;
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          white-space: nowrap;
+          transform: translateX(-50%);
+        }
+
+        .incident-badge strong {
+          color: #ffffff;
+        }
+
+        .deadline-badge {
+          position: absolute;
+          right: 0;
+          bottom: 0;
+          color: #69e3b4;
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .progress-line {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #dc2626 0 24.444%, #059669 24.444% 100%);
         }
       </style>
 
@@ -173,7 +433,7 @@
       >
         <div
           id="f01-ground"
-          class="clip scene-ground"
+          class="clip incident-ground"
           data-start="0"
           data-duration="4.8"
           data-track-index="0"
@@ -181,33 +441,70 @@
 
         <section
           id="f01-content"
-          class="clip content-plane"
+          class="clip incident-content"
           data-start="0"
           data-duration="4.8"
           data-track-index="1"
         >
           <div class="safe-stage">
-            <div class="setup-line" aria-label="When one agent">
-              <span id="f01-when" class="setup-word">WHEN</span>
-              <span id="f01-one" class="setup-word">ONE</span>
-              <span id="f01-agent" class="setup-word">AGENT</span>
+            <div class="top-rail">
+              <div id="f01-incident-id" class="incident-id">
+                <span class="incident-light"></span><span>Live mission incident</span>
+              </div>
+              <div id="f01-window-id" class="window-id"><strong>90</strong> minute delivery window</div>
             </div>
 
-            <div class="variable-anchor">
-              <span id="f01-token" class="variable-token">IS READY</span>
-              <span
-                id="f01-underline"
-                class="resolve-underline"
-                aria-hidden="true"
-              ></span>
+            <div class="hero-copy">
+              <p class="hero-line" aria-label="The agent fails">
+                <span id="f01-the-agent" class="hero-word">THE AGENT</span>
+                <span id="f01-fails" class="hero-word failure-word">FAILS</span>
+              </p>
+              <p class="hero-line" aria-label="The deadline stays">
+                <span id="f01-the-deadline" class="hero-word">THE DEADLINE</span>
+                <span id="f01-stays" class="hero-word survival-word">STAYS</span>
+              </p>
             </div>
 
-            <div id="f01-deadline-strip" class="deadline-strip">
-              <span class="deadline-edge" aria-hidden="true"></span>
-              <span id="f01-deadline-copy" class="deadline-copy"
-                >YOUR DELIVERY DEADLINE</span
-              >
+            <div id="f01-timeline-card" class="timeline-card">
+              <div class="timeline-head">
+                <div class="timeline-title">Incident timeline</div>
+                <div id="f01-deadline-lock" class="deadline-lock">
+                  <span class="lock-dot"></span><span>Deadline fixed</span>
+                </div>
+              </div>
+
+              <div class="track-area">
+                <div id="f01-tick-grid" class="tick-grid"></div>
+                <span class="minute-label minute-zero">0 min</span>
+                <span class="minute-label minute-incident">22 min</span>
+                <span class="minute-label minute-end">90 min</span>
+                <span id="f01-incident-marker" class="incident-marker"></span>
+
+                <div class="track-row builder-row">
+                  <span class="track-name">Builder</span>
+                  <span class="track-base"></span>
+                  <span id="f01-builder-line" class="builder-live"></span>
+                  <span id="f01-builder-tail" class="builder-tail"></span>
+                  <span class="start-node"></span>
+                  <span id="f01-incident-node" class="incident-node"></span>
+                </div>
+
+                <div class="track-row deadline-row">
+                  <span class="track-name">Delivery</span>
+                  <span class="track-base"></span>
+                  <span id="f01-deadline-line" class="deadline-live"></span>
+                  <span class="start-node"></span>
+                  <span id="f01-deadline-node" class="deadline-node"></span>
+                </div>
+
+                <div id="f01-incident-badge" class="incident-badge">
+                  <strong>Builder</strong><span>dropped out</span>
+                </div>
+                <div id="f01-deadline-badge" class="deadline-badge">90 min · unchanged</div>
+              </div>
             </div>
+
+            <div class="progress-line"></div>
           </div>
         </section>
       </div>
@@ -216,85 +513,105 @@
         window.__timelines = window.__timelines || {};
 
         const tl = gsap.timeline({ paused: true });
-        const BEATS = [0.06, 0.28, 0.52, 1.1, 1.46, 2.4, 3.8];
 
-        const tokenEl = document.getElementById("f01-token");
-        const TOKEN_STATES = [
-          { t: 0, text: "IS READY" },
-          { t: BEATS[4], text: "GOES DOWN" },
-          { t: BEATS[6], text: "SHOULD NOT" },
-        ];
-        const tokenDriver = { t: 0 };
-        let lastToken = "IS READY";
-
-        function tokenAt(time) {
-          for (let i = TOKEN_STATES.length - 1; i >= 0; i -= 1) {
-            if (time >= TOKEN_STATES[i].t) return TOKEN_STATES[i].text;
-          }
-          return TOKEN_STATES[0].text;
-        }
-
-        tl.to(
-          tokenDriver,
-          {
-            t: 4.8,
-            duration: 4.8,
-            ease: "none",
-            onUpdate: () => {
-              const nextToken = tokenAt(tokenDriver.t);
-              if (nextToken !== lastToken) {
-                tokenEl.textContent = nextToken;
-                lastToken = nextToken;
-              }
-            },
-          },
-          0,
+        tl.fromTo(
+          ["#f01-incident-id", "#f01-window-id"],
+          { y: -16, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.42, stagger: 0.08, ease: "power3.out" },
+          0.04,
         );
 
         tl.fromTo(
-          "#f01-when",
+          "#f01-the-agent",
           { y: 34, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.38, ease: "power4.out" },
-          BEATS[0],
+          { y: 0, opacity: 1, duration: 0.46, ease: "power4.out" },
+          0.16,
         );
         tl.fromTo(
-          "#f01-one",
-          { scale: 0.82, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.38, ease: "expo.out" },
-          BEATS[1],
-        );
-        tl.fromTo(
-          "#f01-agent",
-          { y: -24, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.42, ease: "circ.out" },
-          BEATS[2],
+          "#f01-fails",
+          { x: 44, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.42, ease: "power4.out" },
+          0.48,
         );
 
         tl.fromTo(
-          "#f01-token",
-          { scale: 0.88, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.36, ease: "power4.out" },
-          BEATS[3],
+          "#f01-timeline-card",
+          { y: 34, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.56, ease: "power3.out" },
+          0.54,
+        );
+        tl.fromTo(
+          "#f01-tick-grid",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.42, ease: "power2.out" },
+          0.86,
+        );
+        tl.fromTo(
+          "#f01-builder-line",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.78, ease: "power2.inOut" },
+          0.82,
         );
 
         tl.fromTo(
-          "#f01-deadline-strip",
-          { scale: 1.1, y: 28, opacity: 0 },
-          { scale: 1, y: 0, opacity: 1, duration: 0.5, ease: "expo.out" },
-          BEATS[5],
+          "#f01-incident-marker",
+          { scaleY: 0, opacity: 0 },
+          { scaleY: 1, opacity: 1, duration: 0.34, ease: "power2.out" },
+          1.42,
         );
         tl.fromTo(
-          "#f01-deadline-copy",
-          { x: 120, opacity: 0 },
-          { x: 0, opacity: 1, duration: 0.46, ease: "circ.out" },
-          BEATS[5] + 0.04,
+          "#f01-incident-node",
+          { scale: 0.4, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.38, ease: "back.out(1.8)" },
+          1.48,
+        );
+        tl.fromTo(
+          "#f01-builder-tail",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.32, ease: "power2.out" },
+          1.54,
+        );
+        tl.fromTo(
+          "#f01-incident-badge",
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
+          1.64,
         );
 
         tl.fromTo(
-          "#f01-underline",
-          { scaleX: 0, opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 0.5, ease: "power2.out" },
-          BEATS[6] + 0.06,
+          "#f01-the-deadline",
+          { y: 42, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.52, ease: "power4.out" },
+          2.05,
+        );
+        tl.fromTo(
+          "#f01-deadline-line",
+          { scaleX: 0 },
+          { scaleX: 1, duration: 1.04, ease: "power2.inOut" },
+          2.18,
+        );
+        tl.fromTo(
+          "#f01-deadline-node",
+          { scale: 0.45, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.36, ease: "back.out(1.7)" },
+          3.08,
+        );
+        tl.fromTo(
+          "#f01-stays",
+          { x: 54, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.5, ease: "power4.out" },
+          2.68,
+        );
+        tl.to(
+          "#f01-stays",
+          { "--hold-line": 1, duration: 0.54, ease: "power2.out" },
+          3.14,
+        );
+        tl.fromTo(
+          ["#f01-deadline-lock", "#f01-deadline-badge"],
+          { y: 10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.42, stagger: 0.09, ease: "power3.out" },
+          3.22,
         );
 
         window.__timelines["01-deadline-survives"] = tl;

@@ -7,6 +7,7 @@
       font-style: normal;
       font-display: block;
     }
+
     @font-face {
       font-family: "Inter";
       src: url("assets/fonts/Inter-500.woff2") format("woff2");
@@ -14,6 +15,7 @@
       font-style: normal;
       font-display: block;
     }
+
     @font-face {
       font-family: "Inter";
       src: url("assets/fonts/Inter-700.woff2") format("woff2");
@@ -21,17 +23,11 @@
       font-style: normal;
       font-display: block;
     }
+
     @font-face {
       font-family: "Inter";
       src: url("assets/fonts/Inter-800.woff2") format("woff2");
       font-weight: 800;
-      font-style: normal;
-      font-display: block;
-    }
-    @font-face {
-      font-family: "Inter";
-      src: url("assets/fonts/Inter-900.woff2") format("woff2");
-      font-weight: 900;
       font-style: normal;
       font-display: block;
     }
@@ -43,9 +39,8 @@
       height: 1080px;
       overflow: hidden;
       container-type: size;
-      font-family: "Inter";
       color: #0b0d10;
-      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
     }
 
     *,
@@ -61,26 +56,24 @@
       height: 1080px;
     }
 
-    .ground {
+    .editorial-ground {
       z-index: 0;
       overflow: hidden;
       background:
-        radial-gradient(circle at 18% 20%, rgba(244, 91, 11, 0.07), transparent 30%),
-        linear-gradient(rgba(244, 91, 11, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(244, 91, 11, 0.025) 1px, transparent 1px),
+        radial-gradient(circle at 16% 74%, rgba(244, 91, 11, 0.055), transparent 26%),
+        linear-gradient(rgba(244, 91, 11, 0.024) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(244, 91, 11, 0.024) 1px, transparent 1px),
         #ffffff;
       background-size: auto, 64px 64px, 64px 64px, auto;
     }
 
-    .content {
+    .editorial-content {
       z-index: 1;
-      background: transparent;
       overflow: hidden;
     }
 
     .safe-stage {
-      position: absolute;
-      inset: 0 0 auto 0;
+      position: relative;
       width: 1920px;
       height: 896px;
       overflow: hidden;
@@ -88,545 +81,468 @@
 
     .frame-header {
       position: absolute;
-      top: 34px;
+      top: 28px;
       left: 78px;
       right: 78px;
-      height: 56px;
+      height: 90px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: space-between;
+    }
+
+    .header-copy {
+      min-width: 0;
     }
 
     .eyebrow {
       display: flex;
       align-items: center;
-      gap: 18px;
+      gap: 16px;
+      margin-bottom: 10px;
       color: #f45b0b;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
-      letter-spacing: 0.13em;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
     }
 
     .eyebrow-line {
-      display: block;
-      width: 60px;
+      width: 56px;
       height: 4px;
-      border-radius: 2px;
+      border-radius: 4px;
       background: #f45b0b;
     }
 
     .frame-title {
       margin: 0;
-      font-size: 32px;
-      line-height: 1.1;
-      font-weight: 700;
-      letter-spacing: -0.03em;
       color: #0b0d10;
+      font-size: 45px;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -0.045em;
     }
 
-    .mission-panel {
-      position: absolute;
-      left: 78px;
-      top: 112px;
-      width: 1100px;
-      height: 692px;
-      overflow: hidden;
-      border: 1.5px solid rgba(244, 91, 11, 0.2);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.97);
-      box-shadow: none;
-    }
-
-    .panel-toolbar {
-      position: relative;
-      z-index: 4;
-      height: 64px;
-      padding: 0 28px;
+    .header-proof {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid rgba(244, 91, 11, 0.15);
-      background: #ffffff;
-    }
-
-    .panel-name {
-      font-size: 27px;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-    }
-
-    .panel-pill {
-      padding: 9px 14px;
-      border-radius: 100px;
-      background: rgba(244, 91, 11, 0.08);
-      color: #f45b0b;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
-    }
-
-    .mission-viewport {
-      position: absolute;
-      inset: 64px 0 0;
-      overflow: hidden;
-    }
-
-    .mission-world {
-      position: relative;
-      width: 100%;
-      min-height: 900px;
-      padding: 22px 28px 58px;
-    }
-
-    .input-section + .input-section {
-      margin-top: 24px;
-    }
-
-    .section-head {
-      height: 30px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .section-label {
-      color: #0b0d10;
-      font-size: 23px;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .section-meta {
-      color: #9a9a9a;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .task-list,
-    .agent-list {
-      position: relative;
-      display: grid;
-      gap: 8px;
-    }
-
-    .task-row,
-    .agent-row {
-      position: relative;
-      width: 100%;
-      border: 1.5px solid rgba(244, 91, 11, 0.2);
-      border-radius: 12px;
-      background: rgba(244, 91, 11, 0.04);
-      box-shadow: none;
-    }
-
-    .task-row {
-      height: 52px;
-      padding: 0 16px;
-      display: grid;
-      grid-template-columns: 36px 1fr auto;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .row-index {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: rgba(244, 91, 11, 0.1);
-      color: #f45b0b;
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .task-name,
-    .agent-name {
-      min-width: 0;
-      color: #0b0d10;
-      font-size: 20px;
-      font-weight: 600;
-      letter-spacing: -0.012em;
-    }
-
-    .chip {
-      display: inline-flex;
-      align-items: center;
-      min-height: 28px;
-      padding: 4px 10px;
+      gap: 15px;
+      height: 46px;
+      padding: 0 18px;
       border: 1px solid rgba(244, 91, 11, 0.2);
       border-radius: 100px;
-      background: rgba(244, 91, 11, 0.08);
-      color: #f45b0b;
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      white-space: nowrap;
-    }
-
-    .dependency-drawing {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 232px;
-      overflow: visible;
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    .dependency-drawing path {
-      fill: none;
-      stroke: #f45b0b;
-      stroke-width: 3;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      opacity: 0.9;
-    }
-
-    .helper-line {
-      height: 30px;
-      margin-top: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #6b6b6b;
-      font-size: 17px;
-      font-weight: 500;
-    }
-
-    .helper-key {
-      display: inline-block;
-      color: #f45b0b;
-      font-weight: 800;
-      transform-origin: 50% 50%;
-      will-change: transform, text-shadow;
-    }
-
-    .agent-row {
-      height: 58px;
-      padding: 0 16px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 150px;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .agent-identity {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .agent-dot {
-      width: 12px;
-      height: 12px;
-      flex: 0 0 auto;
-      border-radius: 50%;
-      background: #f45b0b;
-    }
-
-    .capability-set {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      min-width: 0;
-    }
-
-    .price {
-      justify-self: end;
-      color: #0b0d10;
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .price small {
-      color: #6b6b6b;
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .controls-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .control-card {
-      position: relative;
-      min-width: 0;
-      padding: 16px;
-      border: 1.5px solid rgba(244, 91, 11, 0.2);
-      border-radius: 14px;
       background: rgba(244, 91, 11, 0.04);
-      box-shadow: none;
-    }
-
-    .control-label {
-      margin-bottom: 12px;
       color: #6b6b6b;
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
-    .segmented {
-      height: 64px;
-      padding: 5px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
-      border-radius: 12px;
-      background: #ffffff;
-      border: 1px solid rgba(244, 91, 11, 0.15);
-    }
-
-    .segment {
-      display: grid;
-      place-items: center;
-      border-radius: 9px;
-      color: #6b6b6b;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .balanced {
+    .header-proof strong {
       color: #f45b0b;
-      background: rgba(244, 91, 11, 0.08);
-    }
-
-    .deadline-wrap {
-      position: relative;
-      height: 64px;
-      display: grid;
-      place-items: center;
-    }
-
-    .deadline-burst {
-      position: absolute;
-      z-index: 1;
-      inset: 8px 24px;
-      border-radius: 100px;
-      background: radial-gradient(circle, rgba(244, 91, 11, 0.72), rgba(244, 91, 11, 0));
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .deadline {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      border: 1.5px solid rgba(244, 91, 11, 0.3);
-      border-radius: 100px;
-      background: #ffffff;
-      color: #0b0d10;
-      font-family: "Inter";
       font-size: 18px;
-      font-weight: 700;
-      box-shadow: none;
-      appearance: none;
-      transform-origin: 50% 50%;
-      will-change: transform;
+      font-weight: 800;
     }
 
-    .deadline strong {
-      color: #f45b0b;
-      font-size: 27px;
-      font-weight: 900;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .context-card {
+    .graph-shell,
+    .agents-shell {
       position: absolute;
-      top: 112px;
-      right: 78px;
-      width: 612px;
-      height: 356px;
+      top: 142px;
+      height: 668px;
       overflow: hidden;
       border: 1.5px solid rgba(244, 91, 11, 0.2);
       border-radius: 14px;
-      background: rgba(244, 91, 11, 0.04);
-      box-shadow: none;
+      background: rgba(255, 255, 255, 0.91);
     }
 
-    .context-shot {
+    .graph-shell {
+      left: 78px;
+      width: 1082px;
+    }
+
+    .agents-shell {
+      left: 1210px;
+      width: 632px;
+    }
+
+    .panel-head {
       position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: 50% 50%;
-      filter: saturate(0.38) contrast(0.92) brightness(1.05);
+      top: 24px;
+      left: 28px;
+      right: 28px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
-    .context-veil {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.22));
-    }
-
-    .context-label {
-      position: absolute;
-      top: 18px;
-      left: 18px;
-      z-index: 3;
-      padding: 9px 14px;
-      border-radius: 100px;
-      background: #f45b0b;
-      color: #ffffff;
-      font-size: 13px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .context-focus {
-      position: absolute;
-      left: 11px;
-      top: 104px;
-      z-index: 2;
-      width: 182px;
-      height: 214px;
-      border: 4px solid #f45b0b;
-      border-radius: 12px;
-      background: rgba(244, 91, 11, 0.04);
-      transform-origin: 50% 50%;
-    }
-
-    .constraint-summary {
-      position: absolute;
-      top: 492px;
-      right: 78px;
-      width: 612px;
-      height: 312px;
-      padding: 22px 24px;
-      border: 1.5px solid rgba(244, 91, 11, 0.2);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.97);
-      box-shadow: none;
-    }
-
-    .summary-heading {
-      margin-bottom: 14px;
-      color: #f45b0b;
-      font-size: 14px;
+    .panel-label {
+      color: #0b0d10;
+      font-size: 19px;
       font-weight: 800;
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
-    .summary-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px 12px;
+    .panel-meta {
+      color: #9a9a9a;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
-    .summary-row {
-      height: 66px;
-      padding: 0 13px;
+    .dag-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 1082px;
+      height: 668px;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .dag-path {
+      fill: none;
+      stroke: #f45b0b;
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .task-node {
+      position: absolute;
+      z-index: 3;
+      width: 220px;
+      height: 120px;
+      overflow: hidden;
+      border: 1.5px solid rgba(244, 91, 11, 0.24);
+      border-radius: 14px;
+      background: #ffffff;
+    }
+
+    .task-node::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 5px;
+      background: #f45b0b;
+      content: "";
+    }
+
+    .task-research {
+      left: 42px;
+      top: 142px;
+    }
+
+    .task-build {
+      left: 312px;
+      top: 310px;
+    }
+
+    .task-verify {
+      left: 582px;
+      top: 142px;
+    }
+
+    .task-ship {
+      left: 850px;
+      top: 310px;
+      width: 190px;
+    }
+
+    .task-index {
+      position: absolute;
+      left: 18px;
+      top: 14px;
+      color: #f45b0b;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .task-name {
+      position: absolute;
+      left: 18px;
+      right: 16px;
+      top: 42px;
+      color: #0b0d10;
+      font-size: 25px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      white-space: nowrap;
+    }
+
+    .task-capability {
+      position: absolute;
+      left: 18px;
+      bottom: 14px;
       display: flex;
       align-items: center;
-      gap: 12px;
-      border: 1px solid rgba(244, 91, 11, 0.15);
-      border-radius: 10px;
-      background: rgba(244, 91, 11, 0.04);
+      gap: 8px;
+      color: #6b6b6b;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
     }
 
-    .summary-check {
-      width: 23px;
-      height: 23px;
-      flex: 0 0 auto;
+    .capability-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f45b0b;
+    }
+
+    .constraint-rail {
+      position: absolute;
+      z-index: 3;
+      left: 42px;
+      right: 42px;
+      bottom: 34px;
+      height: 100px;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 1.12fr;
+      gap: 12px;
+    }
+
+    .constraint-card {
+      position: relative;
+      min-width: 0;
+      overflow: hidden;
+      border: 1.5px solid rgba(244, 91, 11, 0.18);
+      border-radius: 12px;
+      background: rgba(244, 91, 11, 0.04);
+      padding: 16px 18px;
+    }
+
+    .constraint-label {
+      color: #6b6b6b;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .constraint-value {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 11px;
+      color: #0b0d10;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      white-space: nowrap;
+    }
+
+    .order-icon {
+      width: 26px;
+      height: 26px;
       display: grid;
       place-items: center;
       border-radius: 50%;
       background: #f45b0b;
       color: #ffffff;
-      font-size: 14px;
-      font-weight: 900;
+      font-size: 15px;
+      font-weight: 800;
     }
 
-    .summary-copy {
+    .balanced-pill {
+      display: inline-flex;
+      align-items: center;
+      height: 34px;
+      padding: 0 13px;
+      border-radius: 100px;
+      background: #f45b0b;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .deadline-card {
+      border-color: rgba(5, 150, 105, 0.26);
+      background: rgba(5, 150, 105, 0.055);
+    }
+
+    .deadline-card .constraint-label {
+      color: #047857;
+    }
+
+    .deadline-card .constraint-value {
+      color: #059669;
+      font-size: 31px;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .deadline-card small {
+      color: #047857;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .agent-card {
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      height: 120px;
+      display: grid;
+      grid-template-columns: 58px 1fr auto;
+      align-items: center;
+      gap: 15px;
+      padding: 0 20px;
+      border: 1.5px solid rgba(244, 91, 11, 0.18);
+      border-radius: 12px;
+      background: rgba(244, 91, 11, 0.04);
+    }
+
+    .agent-scout {
+      top: 98px;
+    }
+
+    .agent-builder {
+      top: 236px;
+    }
+
+    .agent-reviewer {
+      top: 374px;
+    }
+
+    .agent-port {
+      position: absolute;
+      left: -8px;
+      top: calc(50% - 8px);
+      width: 16px;
+      height: 16px;
+      border: 4px solid #ffffff;
+      border-radius: 50%;
+      background: #f45b0b;
+    }
+
+    .agent-avatar {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: #f45b0b;
+      color: #ffffff;
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .agent-copy {
       min-width: 0;
     }
 
-    .summary-copy strong {
-      display: block;
-      color: #0b0d10;
-      font-size: 16px;
-      font-weight: 800;
-      letter-spacing: -0.01em;
-    }
-
-    .summary-copy span {
-      display: block;
-      margin-top: 3px;
-      color: #6b6b6b;
-      font-size: 13px;
-      font-weight: 500;
-    }
-
-    .custom-cursor {
-      position: absolute;
-      left: 0;
-      top: 0;
-      z-index: 20;
-      width: 42px;
-      height: 50px;
-      pointer-events: none;
-      transform-origin: 8px 7px;
-      will-change: transform, opacity;
-    }
-
-    .custom-cursor svg {
-      display: block;
-      width: 42px;
-      height: 50px;
-      overflow: visible;
-    }
-
-    .cursor-core {
-      position: absolute;
-      left: 4px;
-      top: 4px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      background: rgba(244, 91, 11, 0.24);
-      transform-origin: 50% 50%;
-    }
-
-    .closing-line {
-      position: absolute;
-      left: 78px;
-      right: 78px;
-      bottom: 22px;
-      height: 42px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 13px;
+    .agent-name {
       color: #0b0d10;
       font-size: 23px;
       font-weight: 800;
-      letter-spacing: 0.11em;
-      text-transform: uppercase;
-      white-space: nowrap;
+      letter-spacing: -0.025em;
     }
 
-    .closing-line .accent-word {
+    .agent-capabilities {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 9px;
+    }
+
+    .agent-capability {
+      display: inline-flex;
+      align-items: center;
+      height: 25px;
+      padding: 0 9px;
+      border: 1px solid rgba(244, 91, 11, 0.2);
+      border-radius: 100px;
+      background: rgba(244, 91, 11, 0.08);
       color: #f45b0b;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .rate {
+      color: #0b0d10;
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: -0.045em;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .rate small {
+      display: block;
+      margin-top: 4px;
+      color: #6b6b6b;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .match-proof {
+      position: absolute;
+      left: 26px;
+      right: 26px;
+      bottom: 34px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      border: 1.5px solid rgba(244, 91, 11, 0.2);
+      border-radius: 12px;
+      background: #ffffff;
+    }
+
+    .match-label {
+      color: #6b6b6b;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .match-copy {
+      margin-top: 6px;
+      color: #0b0d10;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .match-score {
+      color: #f45b0b;
+      font-size: 43px;
+      font-weight: 800;
+      letter-spacing: -0.055em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .capability-network {
+      position: absolute;
+      inset: 0;
+      z-index: 4;
+      width: 1920px;
+      height: 896px;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .capability-path {
+      fill: none;
+      stroke: rgba(244, 91, 11, 0.6);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .progress-line {
@@ -648,7 +564,7 @@
   >
     <section
       id="f03-ground"
-      class="clip ground"
+      class="clip editorial-ground"
       data-start="0"
       data-duration="11.285"
       data-track-index="0"
@@ -657,152 +573,118 @@
 
     <section
       id="f03-content"
-      class="clip content"
+      class="clip editorial-content"
       data-start="0"
       data-duration="11.285"
       data-track-index="1"
     >
       <div class="safe-stage">
         <header class="frame-header">
-          <div class="eyebrow"><span class="eyebrow-line"></span><span>Mission constraints</span></div>
-          <h2 class="frame-title">Give the planner the real inputs.</h2>
+          <div class="header-copy">
+            <div id="f03-eyebrow" class="eyebrow">
+              <span class="eyebrow-line"></span><span>Constraints, not prompts</span>
+            </div>
+            <h2 id="f03-title" class="frame-title">The plan starts with hard facts.</h2>
+          </div>
+          <div id="f03-header-proof" class="header-proof"><strong>6</strong><span>explicit inputs</span></div>
         </header>
 
-        <div id="f03-mission-panel" class="mission-panel">
-          <div class="panel-toolbar">
-            <div class="panel-name">Mission</div>
-            <div class="panel-pill">Explicit inputs</div>
+        <section id="f03-graph-shell" class="graph-shell" aria-label="Mission dependency graph">
+          <div class="panel-head">
+            <span class="panel-label">Mission DAG</span><span class="panel-meta">Dependency order</span>
           </div>
 
-          <div class="mission-viewport">
-            <div id="f03-mission-world" class="mission-world">
-              <section class="input-section">
-                <div class="section-head">
-                  <div class="section-label">Tasks</div>
-                  <div class="section-meta">Four linked steps</div>
-                </div>
-                <div class="task-list">
-                  <div id="f03-task-1" class="task-row">
-                    <span class="row-index">1</span><span class="task-name">Research API surface</span><span class="chip">research</span>
-                  </div>
-                  <div id="f03-task-2" class="task-row">
-                    <span class="row-index">2</span><span class="task-name">Build integration</span><span class="chip">code</span>
-                  </div>
-                  <div id="f03-task-3" class="task-row">
-                    <span class="row-index">3</span><span class="task-name">Verify edge cases</span><span class="chip">qa</span>
-                  </div>
-                  <div id="f03-task-4" class="task-row">
-                    <span class="row-index">4</span><span class="task-name">Ship release</span><span class="chip">research</span>
-                  </div>
-
-                  <svg class="dependency-drawing" viewBox="0 0 1044 232" aria-hidden="true">
-                    <path id="f03-dep-1" d="M 30 31 C 8 31, 8 89, 30 89" />
-                    <path id="f03-dep-2" d="M 30 89 C 8 89, 8 147, 30 147" />
-                    <path id="f03-dep-3" d="M 30 147 C 8 147, 8 205, 30 205" />
-                  </svg>
-                </div>
-                <div class="helper-line">
-                  <span id="f03-helper-key" class="helper-key">Dependencies</span>
-                  <span>are enforced</span>
-                </div>
-              </section>
-
-              <section class="input-section">
-                <div class="section-head">
-                  <div class="section-label">Agents</div>
-                  <div class="section-meta">Capability · hourly rate</div>
-                </div>
-                <div class="agent-list">
-                  <div id="f03-agent-1" class="agent-row">
-                    <div class="agent-identity"><span class="agent-dot"></span><span class="agent-name">Scout</span></div>
-                    <div class="capability-set"><span class="chip">research</span></div>
-                    <div class="price">$0.55 <small>/ hr</small></div>
-                  </div>
-                  <div id="f03-agent-2" class="agent-row">
-                    <div class="agent-identity"><span class="agent-dot"></span><span class="agent-name">Builder</span></div>
-                    <div class="capability-set"><span class="chip">code</span></div>
-                    <div class="price">$0.85 <small>/ hr</small></div>
-                  </div>
-                  <div id="f03-agent-3" class="agent-row">
-                    <div class="agent-identity"><span class="agent-dot"></span><span class="agent-name">Reviewer</span></div>
-                    <div class="capability-set"><span class="chip">qa</span><span class="chip">code</span></div>
-                    <div class="price">$1.20 <small>/ hr</small></div>
-                  </div>
-                </div>
-              </section>
-
-              <section class="input-section">
-                <div class="section-head">
-                  <div class="section-label">Plan controls</div>
-                  <div class="section-meta">One shared objective</div>
-                </div>
-                <div class="controls-grid">
-                  <div class="control-card">
-                    <div class="control-label">Optimization mode</div>
-                    <div class="segmented">
-                      <div class="segment">Fastest</div>
-                      <div class="segment">Cheapest</div>
-                      <div id="f03-balanced" class="segment balanced">Balanced</div>
-                    </div>
-                  </div>
-                  <div class="control-card">
-                    <div class="control-label">Deadline</div>
-                    <div class="deadline-wrap">
-                      <div id="f03-deadline-burst" class="deadline-burst"></div>
-                      <button id="f03-deadline" class="deadline" type="button"><strong>90</strong><span>minutes</span></button>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-          </div>
-        </div>
-
-        <aside id="f03-context-card" class="context-card">
-          <img class="context-shot" src="assets/swarmshift-atlas.png" alt="SwarmShift planning interface" />
-          <div class="context-veil"></div>
-          <div class="context-label">Live product surface</div>
-          <div id="f03-context-focus" class="context-focus"></div>
-        </aside>
-
-        <aside class="constraint-summary">
-          <div class="summary-heading">Constraint set</div>
-          <div class="summary-grid">
-            <div id="f03-summary-task" class="summary-row">
-              <span class="summary-check">✓</span><div class="summary-copy"><strong>Task graph</strong><span>Four linked steps</span></div>
-            </div>
-            <div id="f03-summary-dep" class="summary-row">
-              <span class="summary-check">✓</span><div class="summary-copy"><strong>Dependencies</strong><span>Order enforced</span></div>
-            </div>
-            <div id="f03-summary-cap" class="summary-row">
-              <span class="summary-check">✓</span><div class="summary-copy"><strong>Capabilities</strong><span>Agent match</span></div>
-            </div>
-            <div id="f03-summary-cost" class="summary-row">
-              <span class="summary-check">✓</span><div class="summary-copy"><strong>Hourly costs</strong><span>Source-backed</span></div>
-            </div>
-            <div id="f03-summary-mode" class="summary-row">
-              <span class="summary-check">✓</span><div class="summary-copy"><strong>Balanced</strong><span>Optimization</span></div>
-            </div>
-            <div id="f03-summary-deadline" class="summary-row">
-              <span class="summary-check">✓</span><div class="summary-copy"><strong>90 minutes</strong><span>Shared deadline</span></div>
-            </div>
-          </div>
-        </aside>
-
-        <div id="f03-cursor" class="custom-cursor" aria-hidden="true">
-          <span id="f03-cursor-core" class="cursor-core"></span>
-          <svg viewBox="0 0 42 50" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 4 L5 38 L14 30 L21 46 L28 42 L20 27 L32 26 Z" fill="#f45b0b" stroke="#ffffff" stroke-width="3" stroke-linejoin="round" />
+          <svg class="dag-canvas" viewBox="0 0 1082 668" aria-hidden="true">
+            <defs>
+              <marker id="f03-arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#f45b0b"></path>
+              </marker>
+            </defs>
+            <path id="f03-dag-1" class="dag-path" marker-end="url(#f03-arrowhead)" d="M262 202 C286 202 288 370 312 370"></path>
+            <path id="f03-dag-2" class="dag-path" marker-end="url(#f03-arrowhead)" d="M532 370 C556 370 558 202 582 202"></path>
+            <path id="f03-dag-3" class="dag-path" marker-end="url(#f03-arrowhead)" d="M802 202 C826 202 826 370 850 370"></path>
           </svg>
-        </div>
 
-        <div id="f03-closing-line" class="closing-line">
-          <span class="f03-final-word accent-word">Explicit</span>
-          <span class="f03-final-word">inputs</span>
-          <span class="f03-final-word">·</span>
-          <span class="f03-final-word accent-word">deterministic</span>
-          <span class="f03-final-word">output</span>
-        </div>
+          <article id="f03-task-research" class="task-node task-research">
+            <span class="task-index">01</span><strong class="task-name">Research</strong>
+            <span class="task-capability"><span class="capability-dot"></span>research</span>
+          </article>
+          <article id="f03-task-build" class="task-node task-build">
+            <span class="task-index">02</span><strong class="task-name">Build</strong>
+            <span class="task-capability"><span class="capability-dot"></span>code</span>
+          </article>
+          <article id="f03-task-verify" class="task-node task-verify">
+            <span class="task-index">03</span><strong class="task-name">Verify</strong>
+            <span class="task-capability"><span class="capability-dot"></span>qa</span>
+          </article>
+          <article id="f03-task-ship" class="task-node task-ship">
+            <span class="task-index">04</span><strong class="task-name">Ship</strong>
+            <span class="task-capability"><span class="capability-dot"></span>research</span>
+          </article>
+
+          <div class="constraint-rail">
+            <div id="f03-order-card" class="constraint-card">
+              <div class="constraint-label">Dependencies</div>
+              <div class="constraint-value"><span class="order-icon">✓</span><span>Order enforced</span></div>
+            </div>
+            <div id="f03-mode-card" class="constraint-card">
+              <div class="constraint-label">Optimization mode</div>
+              <div class="constraint-value"><span id="f03-balanced" class="balanced-pill">Balanced</span></div>
+            </div>
+            <div id="f03-deadline-card" class="constraint-card deadline-card">
+              <div class="constraint-label">Shared deadline</div>
+              <div class="constraint-value"><span>90 MIN</span><small>hard limit</small></div>
+            </div>
+          </div>
+        </section>
+
+        <aside id="f03-agents-shell" class="agents-shell" aria-label="Available agents and hourly rates">
+          <div class="panel-head">
+            <span class="panel-label">Matched agents</span><span class="panel-meta">Capability · rate</span>
+          </div>
+
+          <article id="f03-agent-scout" class="agent-card agent-scout">
+            <span class="agent-port"></span><span class="agent-avatar">S</span>
+            <div class="agent-copy">
+              <div class="agent-name">Scout</div>
+              <div class="agent-capabilities"><span id="f03-cap-chip-research" class="agent-capability">research</span></div>
+            </div>
+            <div id="f03-rate-scout" class="rate">$0.55<small>per hour</small></div>
+          </article>
+
+          <article id="f03-agent-builder" class="agent-card agent-builder">
+            <span class="agent-port"></span><span class="agent-avatar">B</span>
+            <div class="agent-copy">
+              <div class="agent-name">Builder</div>
+              <div class="agent-capabilities"><span id="f03-cap-chip-code" class="agent-capability">code</span></div>
+            </div>
+            <div id="f03-rate-builder" class="rate">$0.85<small>per hour</small></div>
+          </article>
+
+          <article id="f03-agent-reviewer" class="agent-card agent-reviewer">
+            <span class="agent-port"></span><span class="agent-avatar">R</span>
+            <div class="agent-copy">
+              <div class="agent-name">Reviewer</div>
+              <div class="agent-capabilities">
+                <span class="agent-capability">code</span><span id="f03-cap-chip-qa" class="agent-capability">qa</span>
+              </div>
+            </div>
+            <div id="f03-rate-reviewer" class="rate">$1.20<small>per hour</small></div>
+          </article>
+
+          <div id="f03-match-proof" class="match-proof">
+            <div><div class="match-label">Capability routing</div><div class="match-copy">Every task has an owner</div></div>
+            <div class="match-score">4 / 4</div>
+          </div>
+        </aside>
+
+        <svg class="capability-network" viewBox="0 0 1920 896" aria-hidden="true">
+          <path id="f03-cap-research" class="capability-path" d="M340 352 C340 250 1110 250 1236 308"></path>
+          <path id="f03-cap-code" class="capability-path" d="M610 520 C610 650 1110 650 1236 446"></path>
+          <path id="f03-cap-qa" class="capability-path" d="M880 352 C1110 352 1110 584 1236 584"></path>
+          <path id="f03-cap-ship" class="capability-path" d="M1118 520 C1182 520 1172 308 1236 308"></path>
+        </svg>
+
         <div class="progress-line"></div>
       </div>
     </section>
@@ -812,197 +694,134 @@
   <script>
     window.__timelines = window.__timelines || {};
 
-    const DURATION = 11.285;
     const tl = gsap.timeline({ paused: true });
-
-    // SVG self-draw: real path lengths establish the dash geometry.
-    const dependencyPaths = ["f03-dep-1", "f03-dep-2", "f03-dep-3"].map((id) =>
+    const dagPaths = ["f03-dag-1", "f03-dag-2", "f03-dag-3"].map((id) => document.getElementById(id));
+    const capabilityPaths = ["f03-cap-research", "f03-cap-code", "f03-cap-qa", "f03-cap-ship"].map((id) =>
       document.getElementById(id),
     );
-    dependencyPaths.forEach((path) => {
+
+    [...dagPaths, ...capabilityPaths].forEach((path) => {
       const length = path.getTotalLength();
       path.style.strokeDasharray = String(length);
       path.style.strokeDashoffset = String(length);
     });
 
-    // Establish the real product surface and make the cursor the actor immediately.
     tl.fromTo(
-      "#f03-mission-panel",
-      { y: 24, opacity: 0.72 },
-      { y: 0, opacity: 1, duration: 0.52, ease: "power3.out" },
-      0.02,
-    );
-    tl.fromTo(
-      "#f03-context-card",
-      { x: 34, opacity: 0.45 },
-      { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" },
+      "#f03-eyebrow",
+      { x: -26, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
       0.04,
     );
     tl.fromTo(
-      "#f03-cursor",
-      { x: 880, y: 142, scale: 0.82, opacity: 0 },
-      { x: 344, y: 206, scale: 1, opacity: 1, duration: 0.44, ease: "power3.out" },
-      0.1,
+      "#f03-title",
+      { y: 22, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.52, ease: "power4.out" },
+      0.16,
+    );
+    tl.fromTo(
+      "#f03-header-proof",
+      { x: 24, opacity: 0 },
+      { x: 0, opacity: 1, duration: 0.46, ease: "power3.out" },
+      0.28,
+    );
+    tl.fromTo(
+      ["#f03-graph-shell", "#f03-agents-shell"],
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, stagger: 0.08, ease: "power3.out" },
+      0.34,
     );
 
-    // Scene 1 — task rows arrive as a content-length-aware sequence.
-    const taskItems = ["#f03-task-1", "#f03-task-2", "#f03-task-3", "#f03-task-4"];
-    const taskLabels = ["Research API surface", "Build integration", "Verify edge cases", "Ship release"];
-    let taskStart = 0.34;
-    taskItems.forEach((selector, index) => {
-      const itemDuration = 0.26 + taskLabels[index].length * 0.008;
+    const taskNodes = ["#f03-task-research", "#f03-task-build", "#f03-task-verify", "#f03-task-ship"];
+    taskNodes.forEach((selector, index) => {
       tl.fromTo(
         selector,
-        { y: 22, opacity: 0 },
-        { y: 0, opacity: 1, duration: itemDuration, ease: "power3.out" },
-        taskStart,
-      );
-      taskStart += 0.32;
-    });
-    tl.to("#f03-cursor", { x: 312, y: 245, duration: 0.42, ease: "power2.inOut" }, 0.72);
-    tl.fromTo(
-      "#f03-cursor-core",
-      { scale: 0.7, opacity: 0.3 },
-      { scale: 1.9, opacity: 0, duration: 0.34, ease: "power2.out" },
-      1.08,
-    );
-    tl.fromTo(
-      "#f03-summary-task",
-      { y: 12, opacity: 0.2 },
-      { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
-      1.36,
-    );
-
-    // Scene 2 — connectors draw continuously, then the dependency cue glows.
-    [2.08, 2.44, 2.8].forEach((start, index) => {
-      tl.to(
-        dependencyPaths[index],
-        { strokeDashoffset: 0, duration: index === 2 ? 0.46 : 0.58, ease: "power2.out" },
-        start,
+        { y: 24, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.44, ease: "power3.out" },
+        0.62 + index * 0.42,
       );
     });
-    tl.to("#f03-cursor", { x: 226, y: 477, duration: 0.72, ease: "power3.inOut" }, 2.02);
+
+    dagPaths.forEach((path, index) => {
+      tl.to(path, { strokeDashoffset: 0, duration: 0.7, ease: "power2.inOut" }, 1.18 + index * 0.62);
+    });
     tl.fromTo(
-      "#f03-summary-dep",
-      { y: 12, opacity: 0.2 },
-      { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
-      3.06,
+      "#f03-order-card",
+      { y: 18, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.48, ease: "power3.out" },
+      2.74,
     );
 
-    // ASR-style attack/sustain/release envelope for the spoken helper keyword.
-    const helper = document.getElementById("f03-helper-key");
-    const glowDriver = { t: 0 };
-    function helperEnvelope(time) {
-      const start = 2.62;
-      const end = 3.46;
-      const attack = 0.16;
-      const release = 0.38;
-      const rest = 0.18;
-      if (time < start) return 0;
-      if (time < end) return Math.min((time - start) / attack, 1);
-      if (time < end + release) return 1 - ((time - end) / release) * (1 - rest);
-      return rest;
-    }
-    tl.to(
-      glowDriver,
-      {
-        t: DURATION,
-        duration: DURATION,
-        ease: "none",
-        onUpdate: () => {
-          const envelope = helperEnvelope(glowDriver.t);
-          helper.style.textShadow = `0 0 ${22 * envelope}px rgba(244, 91, 11, ${0.12 + 0.5 * envelope})`;
-          helper.style.transform = `scale(${1 + 0.07 * envelope})`;
-        },
-      },
-      0,
-    );
-
-    // Scene 3 — the camera and cursor chase down to capabilities and source-backed rates.
-    tl.to(
-      "#f03-mission-world",
-      { y: -265, duration: 0.9, ease: "power3.inOut" },
-      4.02,
-    );
-    tl.to("#f03-cursor", { x: 356, y: 352, duration: 0.9, ease: "power3.inOut" }, 4.02);
-    tl.to("#f03-context-focus", { y: 48, scale: 1.08, duration: 0.9, ease: "power3.inOut" }, 4.02);
-
-    ["#f03-agent-1", "#f03-agent-2", "#f03-agent-3"].forEach((selector, index) => {
+    const agentCards = ["#f03-agent-scout", "#f03-agent-builder", "#f03-agent-reviewer"];
+    agentCards.forEach((selector, index) => {
       tl.fromTo(
         selector,
-        { x: -26, opacity: 0 },
+        { x: 26, opacity: 0 },
         { x: 0, opacity: 1, duration: 0.46, ease: "power3.out" },
-        4.38 + index * 0.48,
+        3.28 + index * 0.48,
       );
     });
-    tl.to("#f03-cursor", { x: 855, y: 335, duration: 0.64, ease: "power2.inOut" }, 5.03);
-    tl.fromTo(
-      "#f03-summary-cap",
-      { y: 12, opacity: 0.2 },
-      { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
-      4.86,
-    );
-    tl.fromTo(
-      "#f03-summary-cost",
-      { y: 12, opacity: 0.2 },
-      { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
-      5.62,
-    );
 
-    // Scene 4 — select Balanced, then press and release the shared deadline control.
-    tl.to("#f03-cursor", { x: 768, y: 594, duration: 0.72, ease: "power3.inOut" }, 6.44);
+    capabilityPaths.forEach((path, index) => {
+      tl.to(path, { strokeDashoffset: 0, duration: 0.72, ease: "power2.inOut" }, 3.68 + index * 0.58);
+    });
+
+    ["#f03-cap-chip-research", "#f03-cap-chip-code", "#f03-cap-chip-qa"].forEach((selector, index) => {
+      tl.fromTo(
+        selector,
+        { backgroundColor: "rgba(244, 91, 11, 0.08)", scale: 0.92 },
+        { backgroundColor: "rgba(244, 91, 11, 0.18)", scale: 1, duration: 0.38, ease: "back.out(1.5)" },
+        4.22 + index * 0.58,
+      );
+    });
+
+    ["#f03-rate-scout", "#f03-rate-builder", "#f03-rate-reviewer"].forEach((selector, index) => {
+      tl.fromTo(
+        selector,
+        { y: 16, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.4, ease: "power3.out" },
+        5.54 + index * 0.46,
+      );
+    });
+
+    tl.fromTo(
+      "#f03-mode-card",
+      { y: 18, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.46, ease: "power3.out" },
+      7.2,
+    );
     tl.fromTo(
       "#f03-balanced",
-      { backgroundColor: "#ffffff", color: "#6b6b6b", scale: 0.97 },
-      {
-        backgroundColor: "rgba(244, 91, 11, 0.15)",
-        color: "#f45b0b",
-        scale: 1,
-        duration: 0.46,
-        ease: "back.out(1.5)",
-      },
-      6.92,
-    );
-    tl.fromTo(
-      "#f03-summary-mode",
-      { y: 12, opacity: 0.2 },
-      { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
-      7.08,
-    );
-    tl.to("#f03-cursor", { x: 934, y: 739, duration: 0.76, ease: "power3.inOut" }, 7.48);
-    tl.to("#f03-deadline", { scale: 0.94, duration: 0.16, ease: "power1.in" }, 8.02);
-    tl.to("#f03-cursor", { scale: 0.9, duration: 0.16, ease: "power1.in" }, 8.02);
-    tl.to("#f03-deadline", { scale: 1, duration: 0.54, ease: "back.out(1.7)" }, 8.18);
-    tl.to("#f03-cursor", { scale: 1, duration: 0.44, ease: "back.out(1.6)" }, 8.18);
-    tl.fromTo(
-      "#f03-deadline-burst",
-      { scale: 1, opacity: 0 },
-      { scale: 5, opacity: 0.52, duration: 0.48, ease: "power2.out" },
-      8.18,
-    );
-    tl.to("#f03-deadline-burst", { opacity: 0, duration: 0.46, ease: "power2.in" }, 8.66);
-    tl.fromTo(
-      "#f03-summary-deadline",
-      { y: 12, opacity: 0.2 },
-      { y: 0, opacity: 1, duration: 0.42, ease: "power3.out" },
-      8.24,
+      { scale: 0.78, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.46, ease: "back.out(1.55)" },
+      7.5,
     );
 
-    // Scene 5 — content-aware per-word reveal, then a static proof-state hold.
-    const closingWords = Array.from(document.querySelectorAll(".f03-final-word"));
-    let wordStart = 8.82;
-    closingWords.forEach((word) => {
-      const wordDuration = 0.16 + word.textContent.length * 0.016;
-      tl.fromTo(
-        word,
-        { y: 18, opacity: 0 },
-        { y: 0, opacity: 1, duration: wordDuration, ease: "power3.out" },
-        wordStart,
-      );
-      wordStart += 0.14;
-    });
+    tl.fromTo(
+      "#f03-deadline-card",
+      { y: 18, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+      8.38,
+    );
+    tl.fromTo(
+      "#f03-deadline-card .constraint-value",
+      { scale: 0.86, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.48, ease: "back.out(1.5)" },
+      8.7,
+    );
 
-    // No authored exit: the registered driver spans the duration and the proof state holds.
+    tl.fromTo(
+      "#f03-match-proof",
+      { y: 18, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: "power3.out" },
+      9.48,
+    );
+    tl.fromTo(
+      ".match-score",
+      { scale: 0.82, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.48, ease: "back.out(1.45)" },
+      9.74,
+    );
+
     window.__timelines["03-constraints"] = tl;
   </script>
 </template>

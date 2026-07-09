@@ -1,12 +1,8 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
-    <title>SwarmShift — A plan you can verify</title>
-  </head>
   <body>
     <template>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
       <style>
         @font-face {
           font-family: "Inter";
@@ -40,14 +36,6 @@
           font-display: swap;
         }
 
-        @font-face {
-          font-family: "FrameMono";
-          src: url("assets/fonts/Inter-500.woff2") format("woff2");
-          font-weight: 500;
-          font-style: normal;
-          font-display: swap;
-        }
-
         #root {
           position: absolute;
           inset: 0;
@@ -56,8 +44,7 @@
           overflow: hidden;
           container-type: size;
           color: #0b0d10;
-          font-family: "Inter";
-          box-sizing: border-box;
+          font-family: "Inter", sans-serif;
         }
 
         *,
@@ -66,575 +53,645 @@
           box-sizing: border-box;
         }
 
-        .frame-ground {
+        .f04-ground {
           position: absolute;
           inset: 0;
           z-index: 0;
-          background:
-            radial-gradient(circle at 83% 18%, rgba(244, 91, 11, 0.075), transparent 31%),
-            linear-gradient(180deg, #ffffff 0%, #ffffff 83%, #fffaf7 100%);
+          overflow: hidden;
+          background: #ffffff;
         }
 
-        .scene-layer {
+        .f04-ground-grid {
+          position: absolute;
+          inset: 0;
+          opacity: 0.68;
+          background-image:
+            linear-gradient(rgba(244, 91, 11, 0.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(244, 91, 11, 0.045) 1px, transparent 1px);
+          background-size: 48px 48px;
+          mask-image: linear-gradient(to bottom, black 0%, black 76%, transparent 94%);
+        }
+
+        .f04-ground-number {
+          position: absolute;
+          right: 70px;
+          top: -92px;
+          color: rgba(244, 91, 11, 0.055);
+          font-size: 470px;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.08em;
+          user-select: none;
+        }
+
+        .f04-scene {
           position: absolute;
           inset: 0;
           z-index: 1;
           overflow: hidden;
         }
 
-        .top-chrome {
+        .f04-header {
           position: absolute;
           left: 96px;
           right: 96px;
           top: 54px;
-          z-index: 40;
+          z-index: 20;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          pointer-events: none;
         }
 
-        .chrome-eyebrow {
-          color: #f45b0b;
-          font-size: 16px;
+        .f04-header-left {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+        }
+
+        .f04-index {
+          display: grid;
+          width: 46px;
+          height: 46px;
+          place-items: center;
+          border-radius: 50%;
+          background: #f45b0b;
+          color: #0b0d10;
+          font-size: 19px;
+          font-weight: 900;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .f04-eyebrow {
+          color: #0b0d10;
+          font-size: 20px;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        .f04-run-meta {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          color: #0b0d10;
+          font-size: 18px;
           font-weight: 700;
+          letter-spacing: 0.04em;
+        }
+
+        .f04-live-dot {
+          width: 11px;
+          height: 11px;
+          border-radius: 50%;
+          background: #059669;
+        }
+
+        .f04-plan-stage,
+        .f04-repro-stage {
+          position: absolute;
+          left: 96px;
+          right: 96px;
+          top: 126px;
+          height: 728px;
+        }
+
+        .f04-repro-stage {
+          opacity: 0;
+        }
+
+        .f04-title-row {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 64px;
+        }
+
+        .f04-title {
+          margin: 0;
+          max-width: 1080px;
+          color: #0b0d10;
+          font-size: 68px;
+          font-weight: 700;
+          line-height: 1.03;
+          letter-spacing: -0.045em;
+        }
+
+        .f04-title-accent {
+          color: #f45b0b;
+        }
+
+        .f04-objective {
+          min-width: 380px;
+          padding: 16px 20px;
+          border: 2px solid rgba(244, 91, 11, 0.22);
+          border-radius: 100px;
+          background: rgba(244, 91, 11, 0.07);
+          color: #0b0d10;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-align: center;
+          text-transform: uppercase;
+        }
+
+        .f04-schedule {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 148px;
+          height: 294px;
+          overflow: hidden;
+          padding: 30px 34px 26px;
+          border: 2px solid rgba(244, 91, 11, 0.22);
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.035);
+        }
+
+        .f04-schedule-head {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: #0b0d10;
+          font-size: 20px;
+          font-weight: 800;
           letter-spacing: 0.08em;
           text-transform: uppercase;
         }
 
-        .chrome-tag {
-          padding: 10px 18px;
-          border-radius: 100px;
-          background: rgba(244, 91, 11, 0.08);
-          color: #f45b0b;
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
+        .f04-critical-label {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+          font-size: 18px;
+          letter-spacing: 0.04em;
         }
 
-        .surface-card {
+        .f04-critical-label::before {
+          width: 32px;
+          height: 4px;
+          border-radius: 2px;
+          background: #f45b0b;
+          content: "";
+        }
+
+        .f04-axis {
           position: absolute;
-          left: 300px;
-          top: 38px;
-          z-index: 8;
-          width: 1320px;
-          height: 828px;
+          left: 34px;
+          right: 34px;
+          top: 78px;
+          height: 32px;
+          color: #6b6b6b;
+          font-size: 17px;
+          font-weight: 700;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .f04-tick {
+          position: absolute;
+          top: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 7px;
+          transform: translateX(-50%);
+        }
+
+        .f04-tick::after {
+          width: 2px;
+          height: 18px;
+          background: rgba(11, 13, 16, 0.22);
+          content: "";
+        }
+
+        .f04-tick:first-child {
+          transform: none;
+        }
+
+        .f04-tick:last-child {
+          transform: translateX(-100%);
+        }
+
+        .f04-task-track {
+          position: absolute;
+          left: 34px;
+          right: 34px;
+          top: 122px;
+          height: 98px;
           overflow: hidden;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 14px;
+          border: 2px solid rgba(244, 91, 11, 0.22);
+          border-radius: 12px;
           background: #ffffff;
-          transform-origin: 50% 50%;
+        }
+
+        .f04-task {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 7px;
+          padding: 0 18px;
+          overflow: hidden;
+          border-right: 2px solid #ffffff;
+          color: #0b0d10;
+          transform-origin: 0 50%;
           will-change: transform, opacity;
         }
 
-        .surface-card > img {
-          display: block;
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
+        .f04-task strong {
+          font-size: 24px;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.02em;
+          white-space: nowrap;
         }
 
-        .plan-overlay {
+        .f04-task span {
+          font-size: 17px;
+          font-weight: 700;
+          line-height: 1;
+          white-space: nowrap;
+        }
+
+        .f04-task-research {
+          left: 0;
+          width: 24.4444%;
+          background: rgba(244, 91, 11, 0.14);
+        }
+
+        .f04-task-build {
+          left: 24.4444%;
+          width: 40%;
+          background: #f45b0b;
+        }
+
+        .f04-task-verify {
+          left: 64.4444%;
+          width: 13.3333%;
+          background: rgba(244, 91, 11, 0.28);
+        }
+
+        .f04-task-ship {
+          left: 77.7777%;
+          width: 11.1111%;
+          background: rgba(244, 91, 11, 0.18);
+        }
+
+        .f04-buffer {
           position: absolute;
-          left: 445px;
-          top: 309px;
-          width: 844px;
-          height: 486px;
-          padding: 22px 24px;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 12px;
-          background: rgba(255, 255, 255, 0.975);
-          overflow: hidden;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          display: flex;
+          width: 11.1112%;
+          align-items: center;
+          justify-content: center;
+          color: #6b6b6b;
+          background-image: repeating-linear-gradient(
+            -45deg,
+            rgba(244, 91, 11, 0.04) 0,
+            rgba(244, 91, 11, 0.04) 10px,
+            rgba(244, 91, 11, 0.11) 10px,
+            rgba(244, 91, 11, 0.11) 12px
+          );
+          font-size: 16px;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
         }
 
-        .plan-overlay-header {
+        .f04-deadline-line {
+          position: absolute;
+          right: 34px;
+          top: 103px;
+          width: 3px;
+          height: 136px;
+          border-radius: 2px;
+          background: #0b0d10;
+          transform-origin: 50% 0;
+          will-change: transform, opacity;
+        }
+
+        .f04-trace {
+          position: absolute;
+          left: 34px;
+          right: 34px;
+          bottom: 22px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-          height: 48px;
-          color: #0b0d10;
-          font-size: 21px;
-          font-weight: 700;
+          gap: 16px;
         }
 
-        .plan-overlay-header span:last-child {
-          padding: 7px 12px;
-          border-radius: 100px;
-          background: rgba(244, 91, 11, 0.08);
-          color: #f45b0b;
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-        }
-
-        .plan-rows {
-          display: grid;
-          gap: 0;
-          height: 390px;
-        }
-
-        .plan-row {
-          display: grid;
-          grid-template-columns: 110px 1fr;
+        .f04-trace-step {
+          display: flex;
+          flex: 1;
           align-items: center;
-          border-top: 1px solid rgba(11, 13, 16, 0.08);
+          gap: 12px;
+          color: #0b0d10;
+          font-size: 18px;
+          font-weight: 800;
+          letter-spacing: 0.035em;
+          text-transform: uppercase;
+          will-change: transform, opacity;
         }
 
-        .plan-row-label {
+        .f04-trace-step:not(:last-child)::after {
+          height: 2px;
+          flex: 1;
+          background: rgba(244, 91, 11, 0.3);
+          content: "";
+        }
+
+        .f04-trace-check {
+          display: grid;
+          width: 28px;
+          height: 28px;
+          flex: 0 0 auto;
+          place-items: center;
+          border-radius: 50%;
+          background: #059669;
+          color: #ffffff;
+          font-size: 17px;
+          font-weight: 900;
+        }
+
+        .f04-metrics {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 466px;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1.08fr;
+          gap: 24px;
+        }
+
+        .f04-metric {
+          position: relative;
+          height: 202px;
+          overflow: hidden;
+          padding: 30px 34px;
+          border: 2px solid rgba(244, 91, 11, 0.22);
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.045);
+          will-change: transform, opacity;
+        }
+
+        .f04-metric::after {
+          position: absolute;
+          right: -40px;
+          bottom: -72px;
+          width: 190px;
+          height: 190px;
+          border: 26px solid rgba(244, 91, 11, 0.09);
+          border-radius: 50%;
+          content: "";
+        }
+
+        .f04-metric-label {
+          color: #0b0d10;
+          font-size: 18px;
+          font-weight: 800;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .f04-metric-value {
+          position: relative;
+          z-index: 2;
+          margin-top: 12px;
+          color: #f45b0b;
+          font-size: 76px;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.055em;
+          font-variant-numeric: tabular-nums;
+        }
+
+        .f04-metric-value small {
+          margin-left: 9px;
+          color: #0b0d10;
+          font-size: 25px;
+          font-weight: 800;
+          letter-spacing: 0;
+        }
+
+        .f04-metric-note {
+          position: relative;
+          z-index: 2;
+          margin-top: 12px;
           color: #6b6b6b;
-          font-size: 14px;
+          font-size: 18px;
+          font-weight: 600;
+        }
+
+        .f04-metric-deadline {
+          border-color: rgba(5, 150, 105, 0.34);
+          background: rgba(5, 150, 105, 0.06);
+        }
+
+        .f04-metric-deadline::after {
+          border-color: rgba(5, 150, 105, 0.1);
+        }
+
+        .f04-metric-deadline .f04-metric-value {
+          color: #059669;
+          font-size: 57px;
+          letter-spacing: -0.035em;
+        }
+
+        .f04-repro-kicker {
+          color: #0b0d10;
+          font-size: 20px;
+          font-weight: 800;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        .f04-repro-title {
+          margin: 18px 0 0;
+          color: #0b0d10;
+          font-size: 74px;
+          font-weight: 700;
+          line-height: 1.02;
+          letter-spacing: -0.045em;
+        }
+
+        .f04-run-stack {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 190px;
+          display: grid;
+          gap: 20px;
+        }
+
+        .f04-run-row {
+          position: relative;
+          display: grid;
+          height: 148px;
+          grid-template-columns: 180px 270px 1fr 170px;
+          align-items: center;
+          overflow: hidden;
+          padding: 0 30px;
+          border: 2px solid rgba(244, 91, 11, 0.24);
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.04);
+          will-change: transform, opacity;
+        }
+
+        .f04-run-label {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          color: #0b0d10;
+          font-size: 28px;
+          font-weight: 900;
+        }
+
+        .f04-run-badge {
+          display: grid;
+          width: 54px;
+          height: 54px;
+          place-items: center;
+          border-radius: 50%;
+          background: #f45b0b;
+          color: #0b0d10;
+        }
+
+        .f04-input {
+          color: #6b6b6b;
+          font-size: 18px;
           font-weight: 700;
           letter-spacing: 0.04em;
           text-transform: uppercase;
         }
 
-        .mini-track {
-          position: relative;
-          width: 100%;
-          height: 38px;
-          border-radius: 10px;
-          background: rgba(244, 91, 11, 0.055);
-          overflow: hidden;
+        .f04-input strong {
+          display: block;
+          margin-top: 7px;
+          color: #0b0d10;
+          font-size: 20px;
+          letter-spacing: 0;
+          text-transform: none;
         }
 
-        .mini-bar {
-          position: absolute;
-          top: 5px;
-          height: 28px;
-          border: 1.5px solid rgba(244, 91, 11, 0.42);
-          border-radius: 8px;
-          background: rgba(244, 91, 11, 0.13);
-          color: #0b0d10;
+        .f04-hash {
           display: flex;
           align-items: center;
-          padding: 0 12px;
-          font-size: 13px;
+          gap: 10px;
+          color: #0b0d10;
+          font-family: "Inter", sans-serif;
+          font-size: 22px;
           font-weight: 700;
-          transform-origin: 0 50%;
+          font-variant-numeric: tabular-nums;
+          letter-spacing: 0.015em;
+          white-space: nowrap;
+        }
+
+        .f04-hash-segment {
+          display: inline-block;
           will-change: transform, opacity;
         }
 
-        .bar-research {
-          left: 0;
-          width: 24%;
-        }
-
-        .bar-build {
-          left: 24%;
-          width: 40%;
-        }
-
-        .bar-verify {
-          left: 64%;
-          width: 15%;
-        }
-
-        .bar-ship {
-          left: 79%;
-          width: 12%;
-        }
-
-        .click-target {
-          position: absolute;
-          left: 23px;
-          top: 266px;
-          width: 126px;
-          height: 44px;
-          z-index: 4;
-          border: 2px solid rgba(244, 91, 11, 0.9);
-          border-radius: 8px;
-          background: rgba(244, 91, 11, 0.08);
-          transform-origin: 50% 50%;
-          will-change: transform;
-        }
-
-        .custom-cursor {
-          position: absolute;
-          left: 170px;
-          top: 740px;
-          z-index: 32;
-          width: 44px;
-          height: 52px;
-          pointer-events: none;
-          transform-origin: 8px 8px;
-          will-change: transform, opacity;
-        }
-
-        .custom-cursor svg {
-          display: block;
-          width: 44px;
-          height: 52px;
-        }
-
-        .click-ripple {
-          position: absolute;
-          left: 357px;
-          top: 301px;
-          z-index: 31;
-          width: 62px;
-          height: 62px;
-          border: 2px solid rgba(244, 91, 11, 0.72);
-          border-radius: 50%;
-          opacity: 0;
-          pointer-events: none;
-          transform-origin: 50% 50%;
-          will-change: transform, opacity;
-        }
-
-        .metrics-stage {
-          position: absolute;
-          left: 1042px;
-          top: 142px;
-          z-index: 15;
-          width: 746px;
-          height: 604px;
+        .f04-run-status {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
-          will-change: transform, opacity;
-        }
-
-        .metric-kicker {
-          margin-bottom: 20px;
-          color: #f45b0b;
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 10px;
+          color: #059669;
+          font-size: 20px;
+          font-weight: 900;
+          letter-spacing: 0.04em;
           text-transform: uppercase;
         }
 
-        .primary-metric {
+        .f04-status-check {
+          display: grid;
+          width: 34px;
+          height: 34px;
+          place-items: center;
+          border-radius: 50%;
+          background: #059669;
+          color: #ffffff;
+          font-size: 19px;
+        }
+
+        .f04-match {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 536px;
           display: flex;
-          align-items: flex-end;
-          min-height: 218px;
+          height: 126px;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          border: 2px solid rgba(5, 150, 105, 0.34);
+          border-radius: 14px;
+          background: rgba(5, 150, 105, 0.06);
         }
 
-        .depth-stack {
-          position: relative;
-          width: 430px;
-          height: 218px;
-          flex: 0 0 430px;
-          font-variant-numeric: tabular-nums;
-          transform-origin: 0 100%;
-          will-change: transform;
-        }
-
-        .depth-layer {
+        .f04-match-rule {
           position: absolute;
           left: 0;
           top: 0;
-          display: block;
-          width: 430px;
-          height: 218px;
-          font-weight: 900;
-          font-size: 208px;
-          line-height: 1;
-          letter-spacing: -0.055em;
-          color: #f45b0b;
-          transform-origin: 0 100%;
-          white-space: nowrap;
-        }
-
-        .depth-back-3 {
-          color: rgba(244, 91, 11, 0.12);
-          transform: translate(9px, 9px);
-        }
-
-        .depth-back-2 {
-          color: rgba(244, 91, 11, 0.18);
-          transform: translate(6px, 6px);
-        }
-
-        .depth-back-1 {
-          color: rgba(244, 91, 11, 0.26);
-          transform: translate(3px, 3px);
-        }
-
-        .depth-front {
-          z-index: 4;
-          color: #f45b0b;
-        }
-
-        .metric-unit {
-          margin: 0 0 33px 12px;
-          color: #0b0d10;
-          font-size: 54px;
-          font-weight: 700;
-          letter-spacing: -0.03em;
-        }
-
-        .metric-unit small {
-          display: block;
-          margin-top: 9px;
-          color: #6b6b6b;
-          font-size: 18px;
-          font-weight: 500;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-
-        .secondary-metric {
-          display: flex;
-          align-items: baseline;
-          gap: 24px;
-          min-height: 150px;
-          padding-top: 6px;
-          border-top: 1.5px solid rgba(244, 91, 11, 0.2);
-        }
-
-        .cost-number {
-          display: inline-block;
-          width: 360px;
-          color: #f45b0b;
-          font-size: 132px;
-          font-weight: 900;
-          line-height: 1;
-          letter-spacing: -0.045em;
-          font-variant-numeric: tabular-nums;
-          white-space: nowrap;
-          transform-origin: 0 100%;
+          width: 100%;
+          height: 6px;
+          background: #059669;
+          transform-origin: 0 50%;
           will-change: transform;
         }
 
-        .cost-label {
-          color: #6b6b6b;
-          font-size: 22px;
-          font-weight: 500;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-
-        .path-chip {
-          align-self: flex-start;
-          margin-top: 24px;
-          padding: 15px 22px;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 100px;
-          background: rgba(244, 91, 11, 0.04);
-          color: #0b0d10;
-          font-size: 22px;
-          font-weight: 700;
-          letter-spacing: 0.02em;
-          white-space: nowrap;
-          will-change: transform, opacity;
-        }
-
-        .path-chip b {
-          color: #f45b0b;
-        }
-
-        .explain-stage {
-          position: absolute;
-          left: 250px;
-          top: 152px;
-          z-index: 18;
-          width: 1420px;
-          height: 650px;
-          opacity: 0;
-          will-change: transform, opacity;
-        }
-
-        .explain-kicker {
-          margin-bottom: 24px;
-          color: #f45b0b;
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-        }
-
-        .explain-list {
-          display: grid;
-          gap: 20px;
-        }
-
-        .explain-line {
-          min-height: 136px;
-          display: grid;
-          grid-template-columns: 82px 1fr;
-          align-items: center;
-          padding: 20px 34px;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-left: 4px solid #f45b0b;
-          border-radius: 14px;
-          background: rgba(244, 91, 11, 0.04);
-          will-change: transform, opacity;
-        }
-
-        .explain-index {
-          color: #f45b0b;
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-        }
-
-        .explain-copy {
-          min-height: 58px;
-          color: #0b0d10;
-          font-size: 47px;
-          font-weight: 700;
-          line-height: 1.15;
-          letter-spacing: -0.025em;
-          white-space: nowrap;
-        }
-
-        .typed-char {
-          display: inline-block;
-          min-width: 0.01em;
-          will-change: transform, opacity;
-        }
-
-        .critical-word {
-          display: inline-block;
-          transform-origin: 50% 50%;
-          will-change: transform, text-shadow, color;
-        }
-
-        .hash-stage {
-          position: absolute;
-          left: 150px;
-          top: 202px;
-          z-index: 22;
-          width: 1620px;
-          height: 560px;
-          opacity: 0;
-          text-align: center;
-          will-change: transform, opacity;
-        }
-
-        .hash-kicker {
-          color: #f45b0b;
-          font-size: 18px;
-          font-weight: 700;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-        }
-
-        .hash-title {
-          margin: 24px auto 38px;
-          color: #0b0d10;
-          font-size: 62px;
-          font-weight: 700;
-          line-height: 1.08;
-          letter-spacing: -0.03em;
-        }
-
-        .hash-rail {
-          position: relative;
-          z-index: 3;
-          width: 1540px;
-          height: 98px;
-          margin: 0 auto;
+        .f04-match-copy {
           display: flex;
-          align-items: center;
-          justify-content: flex-start;
-          padding: 0 34px;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 14px;
-          background: rgba(244, 91, 11, 0.04);
+          align-items: baseline;
+          gap: 22px;
           color: #0b0d10;
-          font-family: "FrameMono";
-          font-size: 29px;
-          font-weight: 500;
-          font-variant-numeric: tabular-nums;
-          letter-spacing: 0.055em;
-          white-space: nowrap;
-        }
-
-        .hash-cursor {
-          display: inline-block;
-          width: 18px;
-          height: 34px;
-          margin-left: 9px;
-          border-radius: 4px;
-          background: #f45b0b;
-          will-change: opacity;
-        }
-
-        .pill-stage {
-          position: relative;
-          z-index: 4;
-          width: 430px;
-          height: 82px;
-          margin: 62px auto 0;
-          display: grid;
-          place-items: center;
-        }
-
-        .pill-shell {
-          position: absolute;
-          inset: 0;
-          z-index: 2;
-          border-radius: 100px;
-          background: #f45b0b;
-          transform-origin: 50% 50%;
-          will-change: transform, opacity;
-        }
-
-        .pill-label {
-          position: relative;
-          z-index: 3;
-          color: #ffffff;
-          font-size: 23px;
+          font-size: 26px;
           font-weight: 800;
-          letter-spacing: 0.13em;
+          letter-spacing: 0.05em;
           text-transform: uppercase;
           will-change: transform, opacity;
         }
 
-        .hash-glow {
-          position: absolute;
-          left: 465px;
-          right: 465px;
-          top: 338px;
-          z-index: 1;
-          height: 270px;
-          border-radius: 50%;
-          background: radial-gradient(
-            ellipse at center,
-            rgba(244, 91, 11, 0.34) 0%,
-            rgba(244, 91, 11, 0.11) 42%,
-            rgba(244, 91, 11, 0) 72%
-          );
-          opacity: 0;
-          transform-origin: 50% 50%;
-          pointer-events: none;
-          will-change: transform, opacity;
+        .f04-match-copy strong {
+          color: #059669;
+          font-size: 54px;
+          font-weight: 900;
+          letter-spacing: -0.035em;
         }
 
-        .frame-counter {
-          position: absolute;
-          right: 96px;
-          top: 850px;
-          z-index: 40;
-          color: #6b6b6b;
-          font-size: 13px;
-          font-weight: 700;
-          letter-spacing: 0.08em;
-        }
-
-        .progress-track {
+        .f04-footer {
           position: absolute;
           left: 96px;
-          top: 888px;
-          z-index: 40;
-          width: 1728px;
-          height: 3px;
-          overflow: hidden;
-          background: rgba(244, 91, 11, 0.08);
+          right: 96px;
+          top: 874px;
+          z-index: 30;
+          height: 18px;
         }
 
-        .progress-fill {
+        .f04-progress-track {
+          position: absolute;
+          left: 0;
+          right: 0;
+          top: 10px;
+          height: 4px;
+          overflow: hidden;
+          border-radius: 2px;
+          background: rgba(244, 91, 11, 0.1);
+        }
+
+        .f04-progress-fill {
           display: block;
           width: 66.6667%;
           height: 100%;
           background: #f45b0b;
           transform-origin: 0 50%;
+          will-change: transform;
         }
       </style>
-
-      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
 
       <div
         id="root"
@@ -644,482 +701,292 @@
         data-duration="12.155"
       >
         <div
-          id="f4-background"
-          class="clip frame-ground"
+          id="f04-ground"
+          class="clip f04-ground"
           data-start="0"
           data-duration="11.755"
           data-track-index="0"
-        ></div>
+        >
+          <div class="f04-ground-grid"></div>
+          <div class="f04-ground-number">04</div>
+        </div>
 
         <section
-          id="f4-scene"
-          class="clip scene-layer"
+          id="f04-scene"
+          class="clip f04-scene"
           data-start="0"
           data-duration="11.755"
           data-track-index="1"
         >
-          <div class="top-chrome">
-            <div class="chrome-eyebrow">Verifiable plan</div>
-            <div class="chrome-tag">04 · proof</div>
-          </div>
+          <header id="f04-header" class="f04-header">
+            <div class="f04-header-left">
+              <div class="f04-index">04</div>
+              <div class="f04-eyebrow">Verifiable plan</div>
+            </div>
+            <div class="f04-run-meta"><span class="f04-live-dot"></span> deterministic run</div>
+          </header>
 
-          <div id="f4-surface" class="surface-card">
-            <img src="assets/swarmshift-atlas.png" alt="SwarmShift scheduled execution plan" />
+          <div id="f04-plan-stage" class="f04-plan-stage">
+            <div class="f04-title-row">
+              <h1 class="f04-title">One mission. <span class="f04-title-accent">One provable plan.</span></h1>
+              <div id="f04-objective" class="f04-objective">fastest · deadline ≤ 90 min</div>
+            </div>
 
-            <div class="plan-overlay">
-              <div class="plan-overlay-header">
-                <span>Execution plan</span>
-                <span>DEPENDENCY ORDER</span>
+            <div id="f04-schedule" class="f04-schedule">
+              <div class="f04-schedule-head">
+                <span>Dependency schedule</span>
+                <span class="f04-critical-label">critical path · 80 min</span>
               </div>
-              <div class="plan-rows">
-                <div id="f4-row-research" class="plan-row">
-                  <div class="plan-row-label">Research</div>
-                  <div class="mini-track">
-                    <div id="f4-bar-research" class="mini-bar bar-research">Scout · 22 min</div>
-                  </div>
+
+              <div class="f04-axis" aria-hidden="true">
+                <span class="f04-tick" style="left: 0%">0</span>
+                <span class="f04-tick" style="left: 24.4444%">22</span>
+                <span class="f04-tick" style="left: 64.4444%">58</span>
+                <span class="f04-tick" style="left: 77.7777%">70</span>
+                <span class="f04-tick" style="left: 88.8888%">80</span>
+                <span class="f04-tick" style="left: 100%">90</span>
+              </div>
+
+              <div class="f04-task-track">
+                <div id="f04-task-research" class="f04-task f04-task-research">
+                  <strong>Research</strong><span>Scout · 22 min</span>
                 </div>
-                <div id="f4-row-build" class="plan-row">
-                  <div class="plan-row-label">Build</div>
-                  <div class="mini-track">
-                    <div id="f4-bar-build" class="mini-bar bar-build">Builder · 36 min</div>
-                  </div>
+                <div id="f04-task-build" class="f04-task f04-task-build">
+                  <strong>Build</strong><span>Builder · 36 min</span>
                 </div>
-                <div id="f4-row-verify" class="plan-row">
-                  <div class="plan-row-label">Verify</div>
-                  <div class="mini-track">
-                    <div id="f4-bar-verify" class="mini-bar bar-verify">Reviewer · 12 min</div>
-                  </div>
+                <div id="f04-task-verify" class="f04-task f04-task-verify">
+                  <strong>Verify</strong><span>Reviewer · 12 min</span>
                 </div>
-                <div id="f4-row-ship" class="plan-row">
-                  <div class="plan-row-label">Ship</div>
-                  <div class="mini-track">
-                    <div id="f4-bar-ship" class="mini-bar bar-ship">Scout · 10 min</div>
-                  </div>
+                <div id="f04-task-ship" class="f04-task f04-task-ship">
+                  <strong>Ship</strong><span>Scout · 10 min</span>
+                </div>
+                <div class="f04-buffer">10m buffer</div>
+              </div>
+              <div id="f04-deadline-line" class="f04-deadline-line"></div>
+
+              <div class="f04-trace">
+                <div id="f04-trace-capability" class="f04-trace-step">
+                  <span class="f04-trace-check">✓</span><span>Capability matched</span>
+                </div>
+                <div id="f04-trace-dependency" class="f04-trace-step">
+                  <span class="f04-trace-check">✓</span><span>Dependency safe</span>
+                </div>
+                <div id="f04-trace-cost" class="f04-trace-step">
+                  <span class="f04-trace-check">✓</span><span>Cost checked</span>
                 </div>
               </div>
             </div>
 
-            <div id="f4-click-target" class="click-target"></div>
-          </div>
-
-          <div id="f4-cursor" class="custom-cursor" aria-hidden="true">
-            <svg viewBox="0 0 44 52" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M4 3L36 28L21 30L14 46L4 3Z"
-                fill="#0b0d10"
-                stroke="#ffffff"
-                stroke-width="3"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-          <div id="f4-ripple-one" class="click-ripple"></div>
-          <div id="f4-ripple-two" class="click-ripple"></div>
-          <div id="f4-ripple-three" class="click-ripple"></div>
-
-          <div id="f4-metrics" class="metrics-stage">
-            <div class="metric-kicker">Verified output</div>
-            <div class="primary-metric">
-              <div class="depth-stack" aria-label="80 minutes">
-                <span id="f4-depth-three" class="depth-layer depth-back-3">0</span>
-                <span id="f4-depth-two" class="depth-layer depth-back-2">0</span>
-                <span id="f4-depth-one" class="depth-layer depth-back-1">0</span>
-                <span id="f4-count-minutes" class="depth-layer depth-front">0</span>
-              </div>
-              <div class="metric-unit">
-                MIN
-                <small>Critical path</small>
-              </div>
-            </div>
-            <div class="secondary-metric">
-              <span id="f4-count-cost" class="cost-number">$0.00</span>
-              <span class="cost-label">Total cost</span>
-            </div>
-            <div id="f4-path-chip" class="path-chip">
-              <b>RESEARCH</b> → BUILD → VERIFY → SHIP
+            <div class="f04-metrics">
+              <article id="f04-metric-time" class="f04-metric">
+                <div class="f04-metric-label">Critical path</div>
+                <div class="f04-metric-value">80<small>MIN</small></div>
+                <div class="f04-metric-note">Research → Build → Verify → Ship</div>
+              </article>
+              <article id="f04-metric-cost" class="f04-metric">
+                <div class="f04-metric-label">Total execution cost</div>
+                <div class="f04-metric-value">$1.04</div>
+                <div class="f04-metric-note">Lowest feasible assignment</div>
+              </article>
+              <article id="f04-metric-deadline" class="f04-metric f04-metric-deadline">
+                <div class="f04-metric-label">Constraint check</div>
+                <div class="f04-metric-value">DEADLINE MET</div>
+                <div class="f04-metric-note">10 minutes remain before the limit</div>
+              </article>
             </div>
           </div>
 
-          <div id="f4-explain" class="explain-stage">
-            <div class="explain-kicker">Why this plan</div>
-            <div class="explain-list">
-              <div id="f4-explain-one" class="explain-line">
-                <span class="explain-index">01</span>
-                <span id="f4-line-one" class="explain-copy"></span>
-              </div>
-              <div id="f4-explain-two" class="explain-line">
-                <span class="explain-index">02</span>
-                <span id="f4-line-two" class="explain-copy"></span>
-              </div>
-              <div id="f4-explain-three" class="explain-line">
-                <span class="explain-index">03</span>
-                <span id="f4-line-three" class="explain-copy"></span>
+          <div id="f04-repro-stage" class="f04-repro-stage">
+            <div class="f04-repro-kicker">Reproducibility proof · SHA-256</div>
+            <h2 class="f04-repro-title">Same input. Same plan hash.</h2>
+
+            <div class="f04-run-stack">
+              <article id="f04-run-a" class="f04-run-row">
+                <div class="f04-run-label"><span class="f04-run-badge">A</span>RUN A</div>
+                <div class="f04-input">Input fingerprint<strong>mission-v1</strong></div>
+                <div class="f04-hash" aria-label="Run A plan hash badfe8ee 10b0ec6e a9c1d1e5 26eb77c2 83a5b9d8 afc80a19 27b6fbf4 7fe61c44">
+                  <span class="f04-hash-segment f04-hash-a">badfe8ee</span>
+                  <span class="f04-hash-segment f04-hash-a">10b0ec6e</span>
+                  <span class="f04-hash-segment f04-hash-a">…</span>
+                  <span class="f04-hash-segment f04-hash-a">27b6fbf4</span>
+                  <span class="f04-hash-segment f04-hash-a">7fe61c44</span>
+                </div>
+                <div class="f04-run-status"><span class="f04-status-check">✓</span>verified</div>
+              </article>
+
+              <article id="f04-run-b" class="f04-run-row">
+                <div class="f04-run-label"><span class="f04-run-badge">B</span>RUN B</div>
+                <div class="f04-input">Input fingerprint<strong>mission-v1</strong></div>
+                <div class="f04-hash" aria-label="Run B plan hash badfe8ee 10b0ec6e a9c1d1e5 26eb77c2 83a5b9d8 afc80a19 27b6fbf4 7fe61c44">
+                  <span class="f04-hash-segment f04-hash-b">badfe8ee</span>
+                  <span class="f04-hash-segment f04-hash-b">10b0ec6e</span>
+                  <span class="f04-hash-segment f04-hash-b">…</span>
+                  <span class="f04-hash-segment f04-hash-b">27b6fbf4</span>
+                  <span class="f04-hash-segment f04-hash-b">7fe61c44</span>
+                </div>
+                <div class="f04-run-status"><span class="f04-status-check">✓</span>verified</div>
+              </article>
+            </div>
+
+            <div class="f04-match">
+              <div id="f04-match-rule" class="f04-match-rule"></div>
+              <div id="f04-match-copy" class="f04-match-copy">
+                <span>Run A hash</span><strong>=</strong><span>Run B hash</span><strong>100% MATCH</strong>
               </div>
             </div>
           </div>
 
-          <div id="f4-hash-stage" class="hash-stage">
-            <div class="hash-kicker">Plan hash · SHA-256</div>
-            <div class="hash-title">Same input. Same plan.</div>
-            <div class="hash-rail">
-              <span id="f4-hash-text"></span><span id="f4-hash-cursor" class="hash-cursor"></span>
-            </div>
-            <div id="f4-hash-glow" class="hash-glow"></div>
-            <div class="pill-stage">
-              <div id="f4-pill-shell" class="pill-shell"></div>
-              <div id="f4-pill-label" class="pill-label">Deterministic</div>
-            </div>
-          </div>
-
-          <div class="frame-counter">04 / 06</div>
-          <div class="progress-track"><span class="progress-fill"></span></div>
+          <footer class="f04-footer">
+            <div class="f04-progress-track"><span id="f04-progress-fill" class="f04-progress-fill"></span></div>
+          </footer>
         </section>
+
+        <script>
+          window.__timelines = window.__timelines || {};
+          const tl = gsap.timeline({ paused: true });
+
+          tl.fromTo(
+            "#f04-header",
+            { opacity: 0, y: -20 },
+            { opacity: 1, y: 0, duration: 0.48, ease: "power3.out" },
+            0.12,
+          );
+          tl.fromTo(
+            ".f04-title",
+            { opacity: 0, x: -48 },
+            { opacity: 1, x: 0, duration: 0.62, ease: "expo.out" },
+            0.22,
+          );
+          tl.fromTo(
+            "#f04-objective",
+            { opacity: 0, scale: 0.9 },
+            { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.35)" },
+            0.46,
+          );
+          tl.fromTo(
+            "#f04-schedule",
+            { opacity: 0, y: 34 },
+            { opacity: 1, y: 0, duration: 0.66, ease: "power4.out" },
+            0.72,
+          );
+
+          const taskCues = [
+            ["#f04-task-research", 1.34],
+            ["#f04-task-build", 2.02],
+            ["#f04-task-verify", 2.72],
+            ["#f04-task-ship", 3.26],
+          ];
+          taskCues.forEach(([selector, start], index) => {
+            tl.fromTo(
+              selector,
+              { opacity: 0, scaleX: 0 },
+              {
+                opacity: 1,
+                scaleX: 1,
+                duration: index === 1 ? 0.62 : 0.46,
+                ease: index === 1 ? "expo.out" : "power3.out",
+              },
+              start,
+            );
+          });
+          tl.fromTo(
+            "#f04-deadline-line",
+            { opacity: 0, scaleY: 0 },
+            { opacity: 1, scaleY: 1, duration: 0.48, ease: "power2.out" },
+            3.66,
+          );
+
+          tl.fromTo(
+            "#f04-metric-time",
+            { opacity: 0, x: -44 },
+            { opacity: 1, x: 0, duration: 0.58, ease: "power4.out" },
+            4.1,
+          );
+          tl.fromTo(
+            "#f04-metric-cost",
+            { opacity: 0, y: 42 },
+            { opacity: 1, y: 0, duration: 0.54, ease: "back.out(1.25)" },
+            4.72,
+          );
+          tl.fromTo(
+            "#f04-metric-deadline",
+            { opacity: 0, x: 44 },
+            { opacity: 1, x: 0, duration: 0.64, ease: "expo.out" },
+            5.4,
+          );
+
+          const traceCues = [
+            ["#f04-trace-capability", 6.18],
+            ["#f04-trace-dependency", 6.74],
+            ["#f04-trace-cost", 7.3],
+          ];
+          traceCues.forEach(([selector, start]) => {
+            tl.fromTo(
+              selector,
+              { opacity: 0, y: 14 },
+              { opacity: 1, y: 0, duration: 0.42, ease: "power3.out" },
+              start,
+            );
+          });
+
+          tl.to(
+            "#f04-plan-stage",
+            { opacity: 0, y: -58, duration: 0.4, ease: "power3.in" },
+            8.5,
+          );
+          tl.fromTo(
+            "#f04-repro-stage",
+            { opacity: 0, y: 52 },
+            { opacity: 1, y: 0, duration: 0.52, ease: "power4.out", immediateRender: false },
+            8.82,
+          );
+          tl.fromTo(
+            "#f04-run-a",
+            { opacity: 0, x: -62 },
+            { opacity: 1, x: 0, duration: 0.46, ease: "expo.out" },
+            9.04,
+          );
+          tl.fromTo(
+            "#f04-run-b",
+            { opacity: 0, x: 62 },
+            { opacity: 1, x: 0, duration: 0.46, ease: "expo.out" },
+            9.22,
+          );
+          tl.fromTo(
+            ".f04-hash-a",
+            { opacity: 0, y: 12 },
+            { opacity: 1, y: 0, duration: 0.28, ease: "power3.out", stagger: 0.075 },
+            9.46,
+          );
+          tl.fromTo(
+            ".f04-hash-b",
+            { opacity: 0, y: -12 },
+            { opacity: 1, y: 0, duration: 0.28, ease: "power3.out", stagger: 0.075 },
+            9.62,
+          );
+          tl.fromTo(
+            "#f04-match-rule",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 0.48, ease: "power3.out" },
+            10.02,
+          );
+          tl.fromTo(
+            "#f04-match-copy",
+            { opacity: 0, scale: 0.92 },
+            { opacity: 1, scale: 1, duration: 0.54, ease: "back.out(1.3)" },
+            10.2,
+          );
+
+          tl.fromTo(
+            "#f04-progress-fill",
+            { scaleX: 0 },
+            { scaleX: 1, duration: 10.8, ease: "none" },
+            0.18,
+          );
+
+          window.__timelines["04-verifiable-plan"] = tl;
+        </script>
       </div>
-
-      <script>
-        window.__timelines = window.__timelines || {};
-
-        const byId = (id) => document.getElementById(id);
-        const tl = gsap.timeline({ paused: true });
-
-        const surface = byId("f4-surface");
-        const clickTarget = byId("f4-click-target");
-        const cursor = byId("f4-cursor");
-        const ripples = [byId("f4-ripple-one"), byId("f4-ripple-two"), byId("f4-ripple-three")];
-        const bars = [
-          byId("f4-bar-research"),
-          byId("f4-bar-build"),
-          byId("f4-bar-verify"),
-          byId("f4-bar-ship"),
-        ];
-        const metrics = byId("f4-metrics");
-        const pathChip = byId("f4-path-chip");
-        const explain = byId("f4-explain");
-        const hashStage = byId("f4-hash-stage");
-
-        // Scene 1 — product surface, intentional cursor move, click depression, and ripple.
-        tl.fromTo(
-          surface,
-          { opacity: 0, y: 18, scale: 0.965, rotation: -1.65 },
-          { opacity: 1, y: 0, scale: 1, rotation: -1.15, duration: 0.62, ease: "power3.out" },
-          0.04,
-        );
-
-        tl.fromTo(
-          cursor,
-          { opacity: 0, x: 0, y: 0, scale: 0.92 },
-          { opacity: 1, x: 212, y: -410, scale: 1, duration: 0.78, ease: "power3.out" },
-          0.66,
-        );
-
-        tl.to(
-          cursor,
-          { scale: 0.84, duration: 0.085, ease: "power2.in" },
-          1.50,
-        );
-        tl.to(cursor, { scale: 1, duration: 0.085, ease: "power2.out" }, 1.585);
-        tl.to(
-          clickTarget,
-          { scale: 0.95, duration: 0.085, ease: "power2.in" },
-          1.50,
-        );
-        tl.to(clickTarget, { scale: 1, duration: 0.085, ease: "power2.out" }, 1.585);
-
-        ripples.forEach((ripple, index) => {
-          tl.fromTo(
-            ripple,
-            { opacity: 0.76, scale: 0.25 },
-            {
-              opacity: 0,
-              scale: 4.5,
-              duration: 0.7,
-              ease: "power2.out",
-              immediateRender: false,
-            },
-            1.51 + index * 0.085,
-          );
-        });
-
-        // Dependency-order assembly: each task gets its own cue and absolute start time.
-        const taskSequence = [
-          { bar: bars[0], start: 1.58 },
-          { bar: bars[1], start: 1.84 },
-          { bar: bars[2], start: 2.10 },
-          { bar: bars[3], start: 2.36 },
-        ];
-        taskSequence.forEach(({ bar, start }) => {
-          tl.fromTo(
-            bar,
-            { opacity: 0, scaleX: 0 },
-            { opacity: 1, scaleX: 1, duration: 0.36, ease: "power3.out" },
-            start,
-          );
-        });
-        tl.to(cursor, { opacity: 0, duration: 0.24, ease: "power1.out" }, 2.48);
-
-        // Scene 2 — the product yields left as the verified metrics take its former anchor.
-        tl.to(
-          surface,
-          { x: -400, y: -105, scale: 0.58, rotation: 0, duration: 0.9, ease: "power3.inOut" },
-          2.80,
-        );
-        tl.fromTo(
-          metrics,
-          { opacity: 0, x: 160, scale: 0.72 },
-          { opacity: 1, x: 0, scale: 1, duration: 0.78, ease: "back.out(1.45)" },
-          3.03,
-        );
-
-        const minuteLayers = [
-          byId("f4-depth-three"),
-          byId("f4-depth-two"),
-          byId("f4-depth-one"),
-          byId("f4-count-minutes"),
-        ];
-        const minuteStack = byId("f4-count-minutes").parentElement;
-        tl.fromTo(
-          minuteStack,
-          { scale: 0.5 },
-          { scale: 1, duration: 1.58, ease: "power3.out" },
-          3.10,
-        );
-        const minuteState = { value: 0 };
-        tl.to(
-          minuteState,
-          {
-            value: 80,
-            duration: 1.58,
-            ease: "power3.out",
-            onUpdate: () => {
-              const value = String(Math.round(minuteState.value));
-              minuteLayers.forEach((layer) => {
-                layer.textContent = value;
-              });
-            },
-          },
-          3.10,
-        );
-
-        const costEl = byId("f4-count-cost");
-        tl.fromTo(
-          costEl,
-          { scale: 0.56 },
-          { scale: 1, duration: 1.12, ease: "power3.out" },
-          4.68,
-        );
-        const costState = { value: 0 };
-        tl.to(
-          costState,
-          {
-            value: 1.04,
-            duration: 1.12,
-            ease: "power3.out",
-            onUpdate: () => {
-              costEl.textContent = `$${costState.value.toFixed(2)}`;
-            },
-          },
-          4.68,
-        );
-
-        tl.fromTo(
-          pathChip,
-          { opacity: 0, y: 20, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out" },
-          5.05,
-        );
-
-        // Build the three explanation cues synchronously, before the timeline is registered.
-        function appendChars(container, text, extraClass = "") {
-          const group = document.createElement("span");
-          if (extraClass) group.className = extraClass;
-          for (const character of text) {
-            const span = document.createElement("span");
-            span.className = "typed-char";
-            span.textContent = character === " " ? "\u00a0" : character;
-            group.appendChild(span);
-          }
-          container.appendChild(group);
-          return { group, chars: Array.from(group.querySelectorAll(".typed-char")) };
-        }
-
-        const lineOne = appendChars(byId("f4-line-one"), "CAPABILITY MATCHED");
-        const criticalPhrase = appendChars(byId("f4-line-two"), "CRITICAL PATH", "critical-word");
-        const lineTwoTail = appendChars(byId("f4-line-two"), "  ·  80 MIN");
-        const lineThree = appendChars(byId("f4-line-three"), "DEADLINE + COST CHECKED");
-
-        // Cut-the-curve seam into the explanation phase: same leftward path on both sides.
-        tl.to(surface, { x: -630, opacity: 0, duration: 0.34, ease: "power4.in" }, 6.20);
-        tl.to(metrics, { x: -230, opacity: 0, duration: 0.34, ease: "power4.in" }, 6.20);
-        tl.fromTo(
-          explain,
-          { x: 230, opacity: 0.35 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.34,
-            ease: "power4.out",
-            immediateRender: false,
-          },
-          6.54,
-        );
-
-        const explanationCueSpecs = [
-          {
-            card: byId("f4-explain-one"),
-            chars: lineOne.chars,
-          },
-          {
-            card: byId("f4-explain-two"),
-            chars: [...criticalPhrase.chars, ...lineTwoTail.chars],
-          },
-          {
-            card: byId("f4-explain-three"),
-            chars: lineThree.chars,
-          },
-        ];
-        let explanationCursor = 6.78;
-        const explanationCues = explanationCueSpecs.map((cue) => {
-          const timedCue = { ...cue, start: explanationCursor };
-          explanationCursor += 0.32 + cue.chars.length * 0.025;
-          return timedCue;
-        });
-
-        explanationCues.forEach(({ card, chars, start }) => {
-          tl.fromTo(
-            card,
-            { opacity: 0, y: 16 },
-            { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" },
-            start,
-          );
-          tl.fromTo(
-            chars,
-            { opacity: 0, y: 18 },
-            {
-              opacity: 1,
-              y: 0,
-              duration: 0.22,
-              ease: "power3.out",
-              stagger: 0.025,
-            },
-            start + 0.08,
-          );
-        });
-
-        // One ASR-style attack / sustain / release envelope on the critical-path keyword.
-        const glowDriver = { t: 6.20 };
-        const criticalEl = criticalPhrase.group;
-        const glowStart = 7.72;
-        const glowEnd = 8.12;
-        const attackDuration = 0.16;
-        const releaseDuration = 0.36;
-        const restLevel = 0.12;
-        function keywordEnvelope(time) {
-          if (time < glowStart) return 0;
-          if (time < glowEnd) return Math.min((time - glowStart) / attackDuration, 1);
-          if (time < glowEnd + releaseDuration) {
-            const decay = (time - glowEnd) / releaseDuration;
-            return 1 - decay * (1 - restLevel);
-          }
-          return restLevel;
-        }
-        tl.to(
-          glowDriver,
-          {
-            t: 9.60,
-            duration: 3.40,
-            ease: "none",
-            onUpdate: () => {
-              const env = keywordEnvelope(glowDriver.t);
-              criticalEl.style.color = `rgba(244, 91, 11, ${0.35 + env * 0.65})`;
-              criticalEl.style.textShadow = `0 0 ${18 * env}px rgba(244, 91, 11, ${0.08 + env * 0.34})`;
-              criticalEl.style.transform = `scale(${1 + env * 0.075})`;
-            },
-          },
-          6.20,
-        );
-
-        // Scene 4 — matched leftward cut, then the real SHA-256 resolves in discrete groups.
-        tl.to(explain, { x: -230, opacity: 0, duration: 0.34, ease: "power4.in" }, 9.60);
-        tl.fromTo(
-          hashStage,
-          { x: 230, opacity: 0.35 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.34,
-            ease: "power4.out",
-            immediateRender: false,
-          },
-          9.78,
-        );
-
-        const hashGroups = [
-          "badfe8ee",
-          "10b0ec6e",
-          "a9c1d1e5",
-          "26eb77c2",
-          "83a5b9d8",
-          "afc80a19",
-          "27b6fbf4",
-          "7fe61c44",
-        ];
-        const hashSequence = hashGroups.map((_, index) => ({
-          t: 9.80 + index * 0.058,
-          text: hashGroups.slice(0, index + 1).join(" "),
-        }));
-        function hashAt(time) {
-          for (let index = hashSequence.length - 1; index >= 0; index -= 1) {
-            if (time >= hashSequence[index].t) return hashSequence[index].text;
-          }
-          return "";
-        }
-
-        const hashText = byId("f4-hash-text");
-        const hashCursor = byId("f4-hash-cursor");
-        const hashDriver = { t: 9.78 };
-        tl.to(
-          hashDriver,
-          {
-            t: 11.755,
-            duration: 1.975,
-            ease: "none",
-            onUpdate: () => {
-              hashText.textContent = hashAt(hashDriver.t);
-              hashCursor.style.opacity =
-                hashDriver.t >= 10.24
-                  ? "0"
-                  : Math.sin((hashDriver.t - 9.78) * Math.PI * 6) > 0
-                    ? "1"
-                    : "0";
-            },
-          },
-          9.78,
-        );
-
-        const pillShell = byId("f4-pill-shell");
-        const pillLabel = byId("f4-pill-label");
-        const hashGlow = byId("f4-hash-glow");
-        tl.fromTo(
-          pillShell,
-          { opacity: 0.88, scaleX: 0 },
-          { opacity: 1, scaleX: 1, duration: 0.38, ease: "back.out(1.55)" },
-          10.24,
-        );
-        tl.fromTo(
-          pillLabel,
-          { opacity: 0, y: 12, scale: 0.96 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.34, ease: "power3.out" },
-          10.37,
-        );
-        tl.fromTo(
-          hashGlow,
-          { opacity: 0, scale: 0.86 },
-          { opacity: 0.26, scale: 1, duration: 0.60, ease: "power2.out" },
-          10.04,
-        );
-
-        window.__timelines["04-verifiable-plan"] = tl;
-      </script>
     </template>
   </body>
 </html>

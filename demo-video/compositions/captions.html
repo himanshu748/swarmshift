@@ -89,12 +89,12 @@
     border-radius: 0.32em;
     color: color-mix(in srgb, var(--cap-ink, #111111) 52%, var(--cap-canvas, #fdfae7));
   }
-  /* current word — THE solid cobalt chip (the single-accent gesture; pill-rounded
-     fill, NO shadow), cream reading on top */
+  /* current word — dark ink on a pale accent chip with an orange proof rule.
+     This preserves the active cue while keeping small-text contrast comfortably high. */
   .caption-word.is-active {
-    color: var(--cap-canvas, #fdfae7);
-    background: var(--cap-accent, #1e2bfa);
-    box-shadow: none;
+    color: var(--cap-ink, #111111);
+    background: color-mix(in srgb, var(--cap-accent, #f45b0b) 16%, var(--cap-canvas, #ffffff));
+    box-shadow: inset 0 -0.11em 0 var(--cap-accent, #f45b0b);
   }
   /* already spoken — solid near-black ink, chip cleared */
   .caption-word.is-spoken {

@@ -8,68 +8,28 @@
   <body>
     <template>
       <style>
-        @font-face {
-          font-family: "Inter";
-          src: url("assets/fonts/Inter-400.woff2") format("woff2");
-          font-style: normal;
-          font-weight: 400;
-          font-display: block;
-        }
-
-        @font-face {
-          font-family: "Inter";
-          src: url("assets/fonts/Inter-500.woff2") format("woff2");
-          font-style: normal;
-          font-weight: 500;
-          font-display: block;
-        }
-
-        @font-face {
-          font-family: "Inter";
-          src: url("assets/fonts/Inter-700.woff2") format("woff2");
-          font-style: normal;
-          font-weight: 700;
-          font-display: block;
-        }
-
-        @font-face {
-          font-family: "Inter";
-          src: url("assets/fonts/Inter-800.woff2") format("woff2");
-          font-style: normal;
-          font-weight: 800;
-          font-display: block;
-        }
-
-        @font-face {
-          font-family: "Inter";
-          src: url("assets/fonts/Inter-900.woff2") format("woff2");
-          font-style: normal;
-          font-weight: 900;
-          font-display: block;
-        }
-
+        @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-400.woff2") format("woff2"); font-weight: 400; }
+        @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-500.woff2") format("woff2"); font-weight: 500; }
+        @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-700.woff2") format("woff2"); font-weight: 700; }
+        @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-800.woff2") format("woff2"); font-weight: 800; }
+        @font-face { font-family: "Inter"; src: url("assets/fonts/Inter-900.woff2") format("woff2"); font-weight: 900; }
+        * { box-sizing: border-box; }
         #root {
           position: absolute;
           inset: 0;
           width: 1920px;
           height: 1080px;
           overflow: hidden;
-          color: #0b0d10;
+          color: #11110f;
           font-family: "Inter", sans-serif;
           container-type: size;
         }
-
-        * {
-          box-sizing: border-box;
-        }
-
         #f02-ground {
           position: absolute;
           inset: 0;
           z-index: 0;
-          background: #ffffff;
+          background: #f4f3ef;
         }
-
         #f02-stage {
           position: absolute;
           inset: 0 auto auto 0;
@@ -78,396 +38,242 @@
           overflow: hidden;
           z-index: 1;
         }
-
-        #f02-wordmark {
+        #f02-copy {
           position: absolute;
-          left: 96px;
-          top: 178px;
+          left: 72px;
+          top: 82px;
           width: 430px;
           z-index: 8;
         }
-
-        #f02-accent-line {
-          display: block;
-          width: 60px;
-          height: 4px;
-          margin-bottom: 28px;
-          border-radius: 2px;
-          background: #f45b0b;
-          transform-origin: 0% 50%;
-          will-change: transform, opacity;
-        }
-
-        .f02-word-row {
+        #f02-eyebrow {
           display: flex;
-          align-items: baseline;
-          width: 430px;
-          white-space: nowrap;
-        }
-
-        .f02-word {
-          display: inline-block;
-          font-size: 80px;
-          line-height: 0.98;
-          font-weight: 800;
-          letter-spacing: -0.048em;
-          color: #0b0d10;
-          will-change: transform, opacity;
-        }
-
-        #f02-surface-stage {
-          position: absolute;
-          left: 508px;
-          top: 88px;
-          width: 1332px;
-          height: 750px;
-          perspective: 1800px;
-          perspective-origin: 50% 46%;
-          z-index: 4;
-        }
-
-        #f02-surface-shell {
-          position: absolute;
-          inset: 0;
-          width: 1332px;
-          height: 750px;
-          overflow: hidden;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 14px;
-          background: rgba(244, 91, 11, 0.04);
-          transform-origin: 50% 50%;
-          transform-style: preserve-3d;
-          will-change: transform, opacity;
-        }
-
-        #f02-zoom-outer,
-        #f02-zoom-inner {
-          position: absolute;
-          inset: 0;
-          width: 1332px;
-          height: 750px;
-          transform-origin: 50% 50%;
-          will-change: transform;
-        }
-
-        #f02-zoom-outer {
-          overflow: visible;
-        }
-
-        .f02-product-image {
-          position: absolute;
-          inset: 0;
-          display: block;
-          width: 1332px;
-          height: 750px;
-          object-fit: cover;
-          object-position: 50% 72%;
-          user-select: none;
-          pointer-events: none;
-        }
-
-        #f02-product-base {
-          z-index: 1;
-          will-change: opacity;
-        }
-
-        .f02-focus-softener {
-          position: absolute;
-          z-index: 3;
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.28);
-          -webkit-backdrop-filter: blur(7px);
-          backdrop-filter: blur(7px);
-          pointer-events: none;
-          will-change: opacity;
-        }
-
-        .f02-off-focus-softener {
-          background: rgba(255, 255, 255, 0.34);
-          -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
-        }
-
-        #f02-soft-mission {
-          left: 0;
-          top: 0;
-          width: 440px;
-          height: 750px;
-          border-radius: 0;
-        }
-
-        #f02-soft-header {
-          left: 440px;
-          top: 0;
-          width: 892px;
-          height: 360px;
-          border-radius: 0;
-        }
-
-        #f02-soft-footer {
-          left: 440px;
-          top: 714px;
-          width: 892px;
-          height: 36px;
-          border-radius: 0;
-        }
-
-        .f02-row-softener {
-          left: 440px;
-          width: 879px;
-          height: 88px;
-        }
-
-        #f02-soft-row-research {
-          top: 368px;
-        }
-
-        #f02-soft-row-build {
-          top: 458px;
-        }
-
-        #f02-soft-row-verify {
-          top: 548px;
-        }
-
-        #f02-soft-row-ship {
-          top: 638px;
-          height: 76px;
-        }
-
-        #f02-run-overlay {
-          position: absolute;
-          left: 24px;
-          top: 205px;
-          z-index: 5;
-          width: 126px;
-          height: 46px;
-          border: 2px solid rgba(244, 91, 11, 0.72);
-          border-radius: 10px;
-          background: rgba(244, 91, 11, 0.08);
-          transform-origin: 50% 50%;
-          will-change: transform, opacity;
-        }
-
-        #f02-click-target {
-          position: absolute;
-          left: 586px;
-          top: 346px;
-          z-index: 8;
-          width: 160px;
-          height: 58px;
-          border: 2px solid rgba(244, 91, 11, 0.54);
-          border-radius: 12px;
-          background: rgba(244, 91, 11, 0.08);
-          transform-origin: 50% 50%;
-          will-change: transform, opacity;
-          pointer-events: none;
-        }
-
-        #f02-deterministic-label {
-          position: absolute;
-          left: 738px;
-          top: 306px;
-          z-index: 10;
-          display: inline-flex;
-          align-items: center;
-          min-height: 54px;
-          padding: 0 24px;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 100px;
-          background: rgba(255, 255, 255, 0.94);
-          color: #f45b0b;
-          font-size: 27px;
-          line-height: 1;
-          font-weight: 700;
-          letter-spacing: -0.01em;
-          white-space: nowrap;
-          will-change: transform, opacity;
-        }
-
-        #f02-replan-proof {
-          position: absolute;
-          right: 58px;
-          top: 84px;
-          z-index: 10;
-          display: inline-flex;
           align-items: center;
           gap: 12px;
-          min-height: 48px;
-          padding: 0 22px;
-          border: 1.5px solid rgba(244, 91, 11, 0.2);
-          border-radius: 100px;
-          background: rgba(244, 91, 11, 0.08);
-          color: #f45b0b;
-          font-size: 19px;
-          line-height: 1;
+          margin-bottom: 22px;
+          color: #c63d06;
+          font-size: 15px;
           font-weight: 800;
-          letter-spacing: 0.08em;
+          letter-spacing: .095em;
+          text-transform: uppercase;
+        }
+        #f02-eyebrow::before {
+          content: "";
+          width: 34px;
+          height: 3px;
+          background: #f05a18;
+          transform-origin: 0 50%;
+        }
+        #f02-wordmark {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          font-size: 82px;
+          font-weight: 900;
+          line-height: .95;
+          letter-spacing: -.06em;
+          white-space: nowrap;
+        }
+        #f02-mark {
+          position: relative;
+          width: 56px;
+          height: 48px;
+          flex: 0 0 56px;
+        }
+        #f02-mark::before, #f02-mark::after {
+          content: "";
+          position: absolute;
+          left: 10px;
+          top: 23px;
+          width: 38px;
+          height: 3px;
+          background: rgba(240,90,24,.35);
+        }
+        #f02-mark::before { transform: rotate(31deg); }
+        #f02-mark::after { transform: rotate(-31deg); }
+        #f02-mark i { position: absolute; width: 15px; height: 15px; border-radius: 50%; background: #f05a18; z-index: 1; }
+        #f02-mark i:nth-child(1) { top: 0; left: 21px; }
+        #f02-mark i:nth-child(2) { bottom: 0; left: 0; }
+        #f02-mark i:nth-child(3) { bottom: 0; right: 0; }
+        #f02-promise {
+          width: 385px;
+          margin: 35px 0 0;
+          color: #565b55;
+          font-size: 28px;
+          line-height: 1.35;
+          letter-spacing: -.025em;
+        }
+        #f02-promise strong { color: #11110f; font-weight: 800; }
+        #f02-mode-stack {
+          display: grid;
+          gap: 12px;
+          margin-top: 42px;
+          width: 374px;
+        }
+        .f02-mode {
+          min-height: 56px;
+          padding: 0 16px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border: 1.5px solid #d8d6cf;
+          border-radius: 12px;
+          background: rgba(255,254,250,.72);
+          color: #5f645e;
+          font-size: 14px;
+          font-weight: 800;
+          letter-spacing: .075em;
+          text-transform: uppercase;
+          transform-origin: 0 50%;
+        }
+        .f02-mode span:last-child {
+          color: #11110f;
+          font-family: "Inter", sans-serif;
+          letter-spacing: 0;
+        }
+        .f02-mode.active {
+          border-color: rgba(240,90,24,.38);
+          background: #fff0e8;
+          color: #c63d06;
+        }
+        #f02-product-stage {
+          position: absolute;
+          left: 518px;
+          top: 54px;
+          width: 1330px;
+          height: 786px;
+          z-index: 3;
+          perspective: 1600px;
+        }
+        #f02-product-shell {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          border: 1.5px solid #d8d6cf;
+          border-radius: 24px;
+          background: #fffefa;
+          box-shadow: 0 30px 65px rgba(35,31,24,.12);
           transform-origin: 50% 50%;
           will-change: transform, opacity;
         }
-
-        .f02-proof-dot {
-          display: block;
-          width: 9px;
-          height: 9px;
-          flex: 0 0 9px;
-          border-radius: 50%;
-          background: #f45b0b;
-        }
-
-        #f02-cursor {
+        #f02-product-image {
           position: absolute;
-          left: 1120px;
-          top: 600px;
-          z-index: 14;
-          width: 48px;
-          height: 58px;
+          left: 0;
+          top: -128px;
+          width: 1330px;
+          height: auto;
+          display: block;
+          user-select: none;
           pointer-events: none;
-          transform-origin: 10% 8%;
-          will-change: transform, opacity;
+          will-change: transform, filter;
         }
-
-        #f02-cursor svg {
-          display: block;
-          width: 48px;
-          height: 58px;
-          overflow: visible;
-        }
-
-        .f02-ripple {
+        #f02-product-shade {
           position: absolute;
-          left: 630px;
-          top: 339px;
-          z-index: 12;
-          width: 72px;
-          height: 72px;
-          border: 2px solid rgba(244, 91, 11, 0.72);
-          border-radius: 50%;
+          inset: 0;
+          background: rgba(244,243,239,.28);
           opacity: 0;
           pointer-events: none;
-          transform-origin: 50% 50%;
+          will-change: opacity;
+        }
+        #f02-live-pill {
+          position: absolute;
+          left: 26px;
+          top: 22px;
+          z-index: 6;
+          min-height: 42px;
+          padding: 0 16px;
+          display: inline-flex;
+          align-items: center;
+          gap: 9px;
+          border: 1px solid rgba(19,122,69,.24);
+          border-radius: 999px;
+          background: rgba(234,247,239,.94);
+          color: #137a45;
+          font-size: 12px;
+          font-weight: 900;
+          letter-spacing: .1em;
+          text-transform: uppercase;
+        }
+        #f02-live-pill::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #137a45; }
+        .f02-focus {
+          position: absolute;
+          z-index: 8;
+          border: 3px solid #f05a18;
+          border-radius: 16px;
+          background: rgba(255,240,232,.08);
+          box-shadow: 0 0 0 999px rgba(244,243,239,.36);
+          opacity: 0;
+          pointer-events: none;
           will-change: transform, opacity;
         }
+        #f02-focus-mission { left: 20px; top: 382px; width: 384px; height: 368px; }
+        #f02-focus-plan { left: 420px; top: 380px; width: 885px; height: 368px; }
+        #f02-focus-metrics { left: 700px; top: 384px; width: 585px; height: 116px; }
+        .f02-label {
+          position: absolute;
+          z-index: 12;
+          min-height: 48px;
+          padding: 0 18px;
+          display: flex;
+          align-items: center;
+          border-radius: 999px;
+          background: #11110f;
+          color: #fffefa;
+          font-size: 14px;
+          font-weight: 900;
+          letter-spacing: .085em;
+          text-transform: uppercase;
+          opacity: 0;
+        }
+        #f02-label-mission { left: 47px; top: 704px; }
+        #f02-label-plan { left: 1050px; top: 704px; }
+        #f02-replan-proof {
+          position: absolute;
+          z-index: 16;
+          right: 28px;
+          top: 24px;
+          min-height: 56px;
+          padding: 0 22px;
+          display: flex;
+          align-items: center;
+          gap: 13px;
+          border: 1.5px solid rgba(240,90,24,.35);
+          border-radius: 999px;
+          background: rgba(255,240,232,.96);
+          color: #c63d06;
+          font-size: 15px;
+          font-weight: 900;
+          letter-spacing: .07em;
+          text-transform: uppercase;
+          opacity: 0;
+          transform-origin: 100% 50%;
+        }
+        #f02-replan-proof b { color: #11110f; }
       </style>
 
-      <div
-        id="root"
-        data-composition-id="02-meet-swarmshift"
-        data-width="1920"
-        data-height="1080"
-        data-duration="9.46"
-      >
-        <div
-          id="f02-ground"
-          class="clip"
-          data-start="0"
-          data-duration="8.96"
-          data-track-index="0"
-          aria-hidden="true"
-        ></div>
-
-        <section
-          id="f02-stage"
-          class="clip"
-          data-start="0"
-          data-duration="8.96"
-          data-track-index="1"
-          aria-label="SwarmShift deterministic planner product introduction"
-        >
-          <div id="f02-wordmark">
-            <span id="f02-accent-line" aria-hidden="true"></span>
-            <div class="f02-word-row" aria-label="SwarmShift">
-              <span id="f02-word-swarm" class="f02-word">Swarm</span>
-              <span id="f02-word-shift" class="f02-word">Shift</span>
+      <div id="root" data-composition-id="02-meet-swarmshift" data-width="1920" data-height="1080" data-duration="9.46">
+        <div id="f02-ground" class="clip" data-start="0" data-duration="8.96" data-track-index="0" aria-hidden="true"></div>
+        <section id="f02-stage" class="clip" data-start="0" data-duration="8.96" data-track-index="1" aria-label="SwarmShift product introduction">
+          <div id="f02-copy">
+            <div id="f02-eyebrow">Meet the planner</div>
+            <div id="f02-wordmark"><span id="f02-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>SwarmShift</span></div>
+            <p id="f02-promise">A deterministic planner for <strong>multi-agent work.</strong></p>
+            <div id="f02-mode-stack">
+              <div id="f02-mode-schedule" class="f02-mode active"><span>Schedule</span><span>mission → plan</span></div>
+              <div id="f02-mode-recover" class="f02-mode"><span>Recover</span><span>failure → replan</span></div>
             </div>
           </div>
 
-          <div id="f02-surface-stage">
-            <div id="f02-surface-shell">
-              <div id="f02-zoom-outer">
-                <div id="f02-zoom-inner">
-                  <img
-                    id="f02-product-base"
-                    class="f02-product-image"
-                    src="assets/swarmshift-atlas.png"
-                    alt="SwarmShift planner showing mission inputs and an execution timeline"
-                  />
-                  <div
-                    id="f02-soft-mission"
-                    class="f02-focus-softener f02-off-focus-softener"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    id="f02-soft-header"
-                    class="f02-focus-softener f02-off-focus-softener"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    id="f02-soft-footer"
-                    class="f02-focus-softener f02-off-focus-softener"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    id="f02-soft-row-research"
-                    class="f02-focus-softener f02-row-softener"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    id="f02-soft-row-build"
-                    class="f02-focus-softener f02-row-softener"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    id="f02-soft-row-verify"
-                    class="f02-focus-softener f02-row-softener"
-                    aria-hidden="true"
-                  ></div>
-                  <div
-                    id="f02-soft-row-ship"
-                    class="f02-focus-softener f02-row-softener"
-                    aria-hidden="true"
-                  ></div>
-                  <div id="f02-run-overlay" aria-hidden="true"></div>
-                </div>
-              </div>
-
-              <div id="f02-click-target" aria-hidden="true"></div>
-              <div id="f02-deterministic-label">same input → same plan</div>
-
-              <div id="f02-replan-proof">
-                <span class="f02-proof-dot" aria-hidden="true"></span>
-                <span>REPLAN</span>
-              </div>
-
-              <div id="f02-ripple-1" class="f02-ripple" aria-hidden="true"></div>
-              <div id="f02-ripple-2" class="f02-ripple" aria-hidden="true"></div>
-
-              <div id="f02-cursor" aria-hidden="true">
-                <svg viewBox="0 0 48 58" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M3 2.5L39.5 28.4L23.7 31.1L16.4 51.8L3 2.5Z"
-                    fill="#f45b0b"
-                    stroke="#ffffff"
-                    stroke-width="4"
-                    stroke-linejoin="round"
-                  />
-                  <path
-                    d="M23.2 31.2L35.4 50.4"
-                    fill="none"
-                    stroke="#f45b0b"
-                    stroke-width="7"
-                    stroke-linecap="round"
-                  />
-                  <path
-                    d="M23.2 31.2L35.4 50.4"
-                    fill="none"
-                    stroke="#ffffff"
-                    stroke-width="2.5"
-                    stroke-linecap="round"
-                  />
-                </svg>
-              </div>
+          <div id="f02-product-stage">
+            <div id="f02-product-shell">
+              <img id="f02-product-image" src="assets/swarmshift-v2-baseline.png" alt="SwarmShift mission and execution plan interface" />
+              <div id="f02-product-shade" aria-hidden="true"></div>
+              <div id="f02-live-pill">Live product</div>
+              <div id="f02-focus-mission" class="f02-focus" aria-hidden="true"></div>
+              <div id="f02-focus-plan" class="f02-focus" aria-hidden="true"></div>
+              <div id="f02-focus-metrics" class="f02-focus" aria-hidden="true"></div>
+              <div id="f02-label-mission" class="f02-label">Explicit mission</div>
+              <div id="f02-label-plan" class="f02-label">Deterministic schedule</div>
+              <div id="f02-replan-proof"><span>When reality changes</span><b>REPLAN →</b></div>
             </div>
           </div>
         </section>
@@ -476,281 +282,33 @@
       <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
       <script>
         window.__timelines = window.__timelines || {};
-
         const tl = gsap.timeline({ paused: true });
 
-        // Scene 1 (0.0–2.0s): content-length-aware word pieces and the
-        // real planner surface settle together in a restrained 30/70 layout.
-        tl.fromTo(
-          "#f02-accent-line",
-          { scaleX: 0, opacity: 0 },
-          { scaleX: 1, opacity: 1, duration: 0.5, ease: "power3.out" },
-          0.02,
-        );
+        tl.fromTo("#f02-eyebrow", { x: -20, opacity: 0 }, { x: 0, opacity: 1, duration: .55, ease: "power3.out" }, .02);
+        tl.fromTo("#f02-wordmark", { y: 34, opacity: 0 }, { y: 0, opacity: 1, duration: .82, ease: "power3.out" }, .16);
+        tl.fromTo("#f02-promise", { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: .7, ease: "power3.out" }, .56);
+        tl.fromTo("#f02-product-shell", { x: 70, y: 24, scale: .94, rotationY: -4, opacity: 0 }, { x: 0, y: 0, scale: 1, rotationY: 0, opacity: 1, duration: 1.25, ease: "power3.out" }, .08);
+        tl.fromTo("#f02-live-pill", { y: -12, opacity: 0 }, { y: 0, opacity: 1, duration: .45, ease: "power3.out" }, 1.06);
+        tl.fromTo(".f02-mode", { x: -22, opacity: 0 }, { x: 0, opacity: 1, duration: .52, stagger: .16, ease: "power3.out" }, 1.18);
 
-        const wordParts = ["f02-word-swarm", "f02-word-shift"];
-        let wordAt = 0.06;
-        wordParts.forEach((id) => {
-          const el = document.getElementById(id);
-          const revealDuration = 0.34 + el.textContent.length * 0.025;
-          tl.fromTo(
-            `#${id}`,
-            { y: 42, opacity: 0 },
-            { y: 0, opacity: 1, duration: revealDuration, ease: "power3.out" },
-            wordAt,
-          );
-          wordAt += Math.min(0.14, revealDuration * 0.24);
-        });
+        tl.to("#f02-product-image", { y: -42, scale: 1.035, duration: 1.2, ease: "power2.inOut" }, 2.05);
+        tl.fromTo("#f02-focus-mission", { scale: .96, opacity: 0 }, { scale: 1, opacity: 1, duration: .45, ease: "power3.out" }, 2.18);
+        tl.fromTo("#f02-label-mission", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .42, ease: "power3.out" }, 2.42);
+        tl.to("#f02-focus-mission", { opacity: 0, duration: .3, ease: "power2.out" }, 3.62);
+        tl.to("#f02-label-mission", { opacity: 0, duration: .25, ease: "power2.out" }, 3.58);
 
-        tl.fromTo(
-          "#f02-surface-shell",
-          {
-            y: 30,
-            scale: 0.94,
-            rotationX: 3.2,
-            rotationY: -5.5,
-            opacity: 0,
-          },
-          {
-            y: 0,
-            scale: 1,
-            rotationX: 0,
-            rotationY: 0,
-            opacity: 1,
-            duration: 1.22,
-            ease: "power3.out",
-          },
-          0.04,
-        );
+        tl.fromTo("#f02-focus-plan", { scale: .97, opacity: 0 }, { scale: 1, opacity: 1, duration: .48, ease: "power3.out" }, 3.76);
+        tl.fromTo("#f02-label-plan", { y: 14, opacity: 0 }, { y: 0, opacity: 1, duration: .42, ease: "power3.out" }, 4.0);
+        tl.to("#f02-product-image", { x: -16, y: -68, scale: 1.065, duration: 1.15, ease: "power2.inOut" }, 4.72);
+        tl.to("#f02-focus-plan", { opacity: 0, duration: .3, ease: "power2.out" }, 5.42);
+        tl.to("#f02-label-plan", { opacity: 0, duration: .25, ease: "power2.out" }, 5.4);
+        tl.fromTo("#f02-focus-metrics", { scale: .96, opacity: 0 }, { scale: 1, opacity: 1, duration: .42, ease: "power3.out" }, 5.48);
+        tl.to("#f02-focus-metrics", { opacity: 0, duration: .32, ease: "power2.out" }, 6.44);
 
-        tl.fromTo(
-          "#f02-cursor",
-          { y: 26, scale: 0.86, opacity: 0 },
-          { y: 0, scale: 1, opacity: 1, duration: 0.46, ease: "power3.out" },
-          1.36,
-        );
-
-        // Scene 2 (2.0–4.8s): cursor and nested camera converge on the fixed
-        // Run plan coordinates baked from the supplied 1225x768 source image.
-        // Nested camera math uses counter-translation = -target offset.
-        const runTarget = { counterX: 579, counterY: 148, scale: 1.18 };
-        const runZoomStart = 2.0;
-        const runZoomDuration = 1.16;
-
-        tl.to(
-          "#f02-zoom-outer",
-          {
-            scale: runTarget.scale,
-            duration: runZoomDuration,
-            ease: "power3.inOut",
-          },
-          runZoomStart,
-        );
-        tl.to(
-          "#f02-zoom-inner",
-          {
-            x: runTarget.counterX,
-            y: runTarget.counterY,
-            duration: runZoomDuration,
-            ease: "power3.inOut",
-          },
-          runZoomStart,
-        );
-        tl.to(
-          "#f02-cursor",
-          {
-            x: -454,
-            y: -225,
-            duration: 1.04,
-            ease: "power3.out",
-          },
-          2.08,
-        );
-
-        tl.fromTo(
-          "#f02-run-overlay",
-          { opacity: 0, scale: 0.96 },
-          { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" },
-          2.88,
-        );
-        tl.fromTo(
-          "#f02-click-target",
-          { opacity: 0, scale: 0.94 },
-          { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" },
-          2.9,
-        );
-
-        // Crisp finite press/release chain: cursor compresses more than target.
-        tl.to(
-          "#f02-cursor",
-          { scale: 0.86, duration: 0.08, ease: "power2.in" },
-          3.22,
-        );
-        tl.to(
-          "#f02-click-target",
-          { scale: 0.95, duration: 0.08, ease: "power2.in" },
-          3.22,
-        );
-        tl.to(
-          "#f02-run-overlay",
-          { scale: 0.95, duration: 0.08, ease: "power2.in" },
-          3.22,
-        );
-        tl.to(
-          "#f02-cursor",
-          { scale: 1, duration: 0.11, ease: "power3.out" },
-          3.31,
-        );
-        tl.to(
-          "#f02-click-target",
-          { scale: 1, duration: 0.11, ease: "power3.out" },
-          3.31,
-        );
-        tl.to(
-          "#f02-run-overlay",
-          { scale: 1, duration: 0.11, ease: "power3.out" },
-          3.31,
-        );
-
-        tl.fromTo(
-          "#f02-ripple-1",
-          { scale: 0, opacity: 0.72 },
-          {
-            scale: 4.2,
-            opacity: 0,
-            duration: 0.72,
-            ease: "power2.out",
-            immediateRender: false,
-          },
-          3.24,
-        );
-        tl.fromTo(
-          "#f02-ripple-2",
-          { scale: 0, opacity: 0.58 },
-          {
-            scale: 4.8,
-            opacity: 0,
-            duration: 0.78,
-            ease: "power2.out",
-            immediateRender: false,
-          },
-          3.33,
-        );
-
-        tl.fromTo(
-          "#f02-deterministic-label",
-          { y: 14, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.48, ease: "power3.out" },
-          3.44,
-        );
-
-        tl.to(
-          "#f02-click-target",
-          { opacity: 0, duration: 0.3, ease: "power2.out" },
-          4.05,
-        );
-        tl.to(
-          "#f02-run-overlay",
-          { opacity: 0, duration: 0.3, ease: "power2.out" },
-          4.05,
-        );
-
-        // Scene 3 (4.8–6.6s): the camera chases the cursor rightward while the
-        // world counter-pans left into the timeline. Off-focus pixels soften;
-        // the four execution rows return to sharpness in dependency order.
-        const timelineTarget = { counterX: -204, counterY: -118, scale: 1.13 };
-        const timelinePanStart = 4.8;
-        const timelinePanDuration = 1.4;
-
-        tl.to(
-          "#f02-zoom-outer",
-          {
-            scale: timelineTarget.scale,
-            duration: timelinePanDuration,
-            ease: "power2.inOut",
-          },
-          timelinePanStart,
-        );
-        tl.to(
-          "#f02-zoom-inner",
-          {
-            x: timelineTarget.counterX,
-            y: timelineTarget.counterY,
-            duration: timelinePanDuration,
-            ease: "power2.inOut",
-          },
-          timelinePanStart,
-        );
-        tl.to(
-          "#f02-cursor",
-          {
-            x: -220,
-            y: -105,
-            duration: 1.3,
-            ease: "power2.inOut",
-          },
-          timelinePanStart,
-        );
-        tl.fromTo(
-          ".f02-off-focus-softener",
-          { opacity: 0 },
-          { opacity: 0.64, duration: 0.12, ease: "power2.out" },
-          4.82,
-        );
-        tl.fromTo(
-          ".f02-row-softener",
-          { opacity: 0 },
-          { opacity: 0.82, duration: 0.12, ease: "power2.out" },
-          4.82,
-        );
-
-        const timelineRows = [
-          "f02-soft-row-research",
-          "f02-soft-row-build",
-          "f02-soft-row-verify",
-          "f02-soft-row-ship",
-        ];
-        timelineRows.forEach((id, index) => {
-          tl.to(
-            `#${id}`,
-            {
-              opacity: 0,
-              duration: 0.56,
-              ease: "power2.out",
-            },
-            4.96 + index * 0.25,
-          );
-        });
-
-        // Scene 4 (6.6–8.96s): the camera returns to the complete product read,
-        // the full surface refocuses, and the REPLAN proof arrives then holds.
-        tl.to(
-          "#f02-zoom-outer",
-          { scale: 1, duration: 0.66, ease: "power2.inOut" },
-          6.58,
-        );
-        tl.to(
-          "#f02-zoom-inner",
-          { x: 0, y: 0, duration: 0.66, ease: "power2.inOut" },
-          6.58,
-        );
-        tl.to(
-          ".f02-off-focus-softener",
-          { opacity: 0, duration: 0.5, ease: "power2.inOut" },
-          6.56,
-        );
-        tl.fromTo(
-          "#f02-replan-proof",
-          { scale: 0, y: 16, opacity: 0 },
-          {
-            scale: 1,
-            y: 0,
-            opacity: 1,
-            duration: 0.56,
-            ease: "power3.out",
-          },
-          6.64,
-        );
+        tl.to("#f02-product-image", { x: 0, y: 0, scale: 1, duration: .62, ease: "power2.inOut" }, 6.42);
+        tl.to("#f02-mode-schedule", { backgroundColor: "rgba(255,254,250,.72)", borderColor: "#d8d6cf", color: "#5f645e", duration: .24 }, 6.54);
+        tl.to("#f02-mode-recover", { backgroundColor: "#fff0e8", borderColor: "rgba(240,90,24,.38)", color: "#c63d06", duration: .24 }, 6.54);
+        tl.fromTo("#f02-replan-proof", { x: 24, scale: .95, opacity: 0 }, { x: 0, scale: 1, opacity: 1, duration: .58, ease: "power3.out" }, 6.62);
 
         window.__timelines["02-meet-swarmshift"] = tl;
       </script>
