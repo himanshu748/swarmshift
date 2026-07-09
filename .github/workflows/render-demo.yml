@@ -1,0 +1,68 @@
+name: Demo video QA and render
+
+on:
+  workflow_dispatch:
+    inputs:
+      render:
+        description: Render the final MP4 after QA
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: read
+
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: demo-video
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: demo-video/package.json
+
+      - name: Install render dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+          npm install --no-save --package-lock=false hyperframes@0.7.45
+
+      - name: Lint composition
+        run: ./node_modules/.bin/hyperframes lint
+
+      - name: Validate composition
+        run: ./node_modules/.bin/hyperframes validate
+
+      - name: Inspect rendered layout
+        run: |
+          set -o pipefail
+          ./node_modules/.bin/hyperframes inspect --json | tee inspect.json
+
+      - name: Capture frame contact sheet
+        run: ./node_modules/.bin/hyperframes snapshot --at 2.4,9.28,19.4025,30.9225,42.688,52.2665
+
+      - name: Render final MP4
+        if: ${{ inputs.render == 'true' }}
+        run: ./node_modules/.bin/hyperframes render --skill=product-launch-video --quality high --workers 2 --output renders/video.mp4
+
+      - name: Upload QA and render artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: swarmshift-demo-${{ github.run_id }}
+          if-no-files-found: warn
+          path: |
+            demo-video/inspect.json
+            demo-video/snapshots/
+            demo-video/renders/video.mp4

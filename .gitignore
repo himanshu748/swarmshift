@@ -11,3 +11,6 @@ coverage.xml
 htmlcov/
 design/
 output/
+demo-video/node_modules/
+demo-video/renders/
+demo-video/snapshots/

@@ -1,0 +1,49 @@
+{
+  "lines": [
+    {
+      "id": "01",
+      "sfx": [
+        "soft impact"
+      ]
+    },
+    {
+      "id": "02",
+      "sfx": [
+        "ui whoosh",
+        "soft click"
+      ]
+    },
+    {
+      "id": "03",
+      "sfx": [
+        "subtle tick",
+        "soft click"
+      ]
+    },
+    {
+      "id": "04",
+      "sfx": [
+        "run click",
+        "metric impact"
+      ]
+    },
+    {
+      "id": "05",
+      "sfx": [
+        "alert soft",
+        "mechanical replan",
+        "success tick"
+      ]
+    },
+    {
+      "id": "06",
+      "sfx": [
+        "soft morph",
+        "click confirmation"
+      ]
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  }
+}

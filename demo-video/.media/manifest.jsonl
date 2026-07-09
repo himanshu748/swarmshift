@@ -1,0 +1,3 @@
+{"id":"bgm_001","type":"bgm","path":"assets/bgm/track.mp3","source":"existing","description":"track","duration":62,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_001","type":"image","path":"assets/swarmshift-atlas.png","source":"existing","description":"swarmshift atlas","width":1225,"height":768,"provenance":{"provider":"local","adopted":true}}
+{"id":"image_002","type":"image","path":"assets/swarmshift-incident.png","source":"existing","description":"swarmshift incident","width":1225,"height":768,"provenance":{"provider":"local","adopted":true}}

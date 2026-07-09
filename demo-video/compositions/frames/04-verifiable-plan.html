@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>SwarmShift — A plan you can verify</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-500.woff2") format("woff2");
+          font-weight: 500;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-700.woff2") format("woff2");
+          font-weight: 700;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-weight: 900;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        @font-face {
+          font-family: "FrameMono";
+          src: url("assets/fonts/Inter-500.woff2") format("woff2");
+          font-weight: 500;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          color: #0b0d10;
+          font-family: "Inter";
+          box-sizing: border-box;
+        }
+
+        *,
+        *::before,
+        *::after {
+          box-sizing: border-box;
+        }
+
+        .frame-ground {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          background:
+            radial-gradient(circle at 83% 18%, rgba(244, 91, 11, 0.075), transparent 31%),
+            linear-gradient(180deg, #ffffff 0%, #ffffff 83%, #fffaf7 100%);
+        }
+
+        .scene-layer {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          overflow: hidden;
+        }
+
+        .top-chrome {
+          position: absolute;
+          left: 96px;
+          right: 96px;
+          top: 54px;
+          z-index: 40;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          pointer-events: none;
+        }
+
+        .chrome-eyebrow {
+          color: #f45b0b;
+          font-size: 16px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .chrome-tag {
+          padding: 10px 18px;
+          border-radius: 100px;
+          background: rgba(244, 91, 11, 0.08);
+          color: #f45b0b;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+
+        .surface-card {
+          position: absolute;
+          left: 300px;
+          top: 38px;
+          z-index: 8;
+          width: 1320px;
+          height: 828px;
+          overflow: hidden;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 14px;
+          background: #ffffff;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .surface-card > img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+
+        .plan-overlay {
+          position: absolute;
+          left: 445px;
+          top: 309px;
+          width: 844px;
+          height: 486px;
+          padding: 22px 24px;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.975);
+          overflow: hidden;
+        }
+
+        .plan-overlay-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          height: 48px;
+          color: #0b0d10;
+          font-size: 21px;
+          font-weight: 700;
+        }
+
+        .plan-overlay-header span:last-child {
+          padding: 7px 12px;
+          border-radius: 100px;
+          background: rgba(244, 91, 11, 0.08);
+          color: #f45b0b;
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+        }
+
+        .plan-rows {
+          display: grid;
+          gap: 0;
+          height: 390px;
+        }
+
+        .plan-row {
+          display: grid;
+          grid-template-columns: 110px 1fr;
+          align-items: center;
+          border-top: 1px solid rgba(11, 13, 16, 0.08);
+        }
+
+        .plan-row-label {
+          color: #6b6b6b;
+          font-size: 14px;
+          font-weight: 700;
+          letter-spacing: 0.04em;
+          text-transform: uppercase;
+        }
+
+        .mini-track {
+          position: relative;
+          width: 100%;
+          height: 38px;
+          border-radius: 10px;
+          background: rgba(244, 91, 11, 0.055);
+          overflow: hidden;
+        }
+
+        .mini-bar {
+          position: absolute;
+          top: 5px;
+          height: 28px;
+          border: 1.5px solid rgba(244, 91, 11, 0.42);
+          border-radius: 8px;
+          background: rgba(244, 91, 11, 0.13);
+          color: #0b0d10;
+          display: flex;
+          align-items: center;
+          padding: 0 12px;
+          font-size: 13px;
+          font-weight: 700;
+          transform-origin: 0 50%;
+          will-change: transform, opacity;
+        }
+
+        .bar-research {
+          left: 0;
+          width: 24%;
+        }
+
+        .bar-build {
+          left: 24%;
+          width: 40%;
+        }
+
+        .bar-verify {
+          left: 64%;
+          width: 15%;
+        }
+
+        .bar-ship {
+          left: 79%;
+          width: 12%;
+        }
+
+        .click-target {
+          position: absolute;
+          left: 23px;
+          top: 266px;
+          width: 126px;
+          height: 44px;
+          z-index: 4;
+          border: 2px solid rgba(244, 91, 11, 0.9);
+          border-radius: 8px;
+          background: rgba(244, 91, 11, 0.08);
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        .custom-cursor {
+          position: absolute;
+          left: 170px;
+          top: 740px;
+          z-index: 32;
+          width: 44px;
+          height: 52px;
+          pointer-events: none;
+          transform-origin: 8px 8px;
+          will-change: transform, opacity;
+        }
+
+        .custom-cursor svg {
+          display: block;
+          width: 44px;
+          height: 52px;
+        }
+
+        .click-ripple {
+          position: absolute;
+          left: 357px;
+          top: 301px;
+          z-index: 31;
+          width: 62px;
+          height: 62px;
+          border: 2px solid rgba(244, 91, 11, 0.72);
+          border-radius: 50%;
+          opacity: 0;
+          pointer-events: none;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .metrics-stage {
+          position: absolute;
+          left: 1042px;
+          top: 142px;
+          z-index: 15;
+          width: 746px;
+          height: 604px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          will-change: transform, opacity;
+        }
+
+        .metric-kicker {
+          margin-bottom: 20px;
+          color: #f45b0b;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .primary-metric {
+          display: flex;
+          align-items: flex-end;
+          min-height: 218px;
+        }
+
+        .depth-stack {
+          position: relative;
+          width: 430px;
+          height: 218px;
+          flex: 0 0 430px;
+          font-variant-numeric: tabular-nums;
+          transform-origin: 0 100%;
+          will-change: transform;
+        }
+
+        .depth-layer {
+          position: absolute;
+          left: 0;
+          top: 0;
+          display: block;
+          width: 430px;
+          height: 218px;
+          font-weight: 900;
+          font-size: 208px;
+          line-height: 1;
+          letter-spacing: -0.055em;
+          color: #f45b0b;
+          transform-origin: 0 100%;
+          white-space: nowrap;
+        }
+
+        .depth-back-3 {
+          color: rgba(244, 91, 11, 0.12);
+          transform: translate(9px, 9px);
+        }
+
+        .depth-back-2 {
+          color: rgba(244, 91, 11, 0.18);
+          transform: translate(6px, 6px);
+        }
+
+        .depth-back-1 {
+          color: rgba(244, 91, 11, 0.26);
+          transform: translate(3px, 3px);
+        }
+
+        .depth-front {
+          z-index: 4;
+          color: #f45b0b;
+        }
+
+        .metric-unit {
+          margin: 0 0 33px 12px;
+          color: #0b0d10;
+          font-size: 54px;
+          font-weight: 700;
+          letter-spacing: -0.03em;
+        }
+
+        .metric-unit small {
+          display: block;
+          margin-top: 9px;
+          color: #6b6b6b;
+          font-size: 18px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .secondary-metric {
+          display: flex;
+          align-items: baseline;
+          gap: 24px;
+          min-height: 150px;
+          padding-top: 6px;
+          border-top: 1.5px solid rgba(244, 91, 11, 0.2);
+        }
+
+        .cost-number {
+          display: inline-block;
+          width: 360px;
+          color: #f45b0b;
+          font-size: 132px;
+          font-weight: 900;
+          line-height: 1;
+          letter-spacing: -0.045em;
+          font-variant-numeric: tabular-nums;
+          white-space: nowrap;
+          transform-origin: 0 100%;
+          will-change: transform;
+        }
+
+        .cost-label {
+          color: #6b6b6b;
+          font-size: 22px;
+          font-weight: 500;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .path-chip {
+          align-self: flex-start;
+          margin-top: 24px;
+          padding: 15px 22px;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 100px;
+          background: rgba(244, 91, 11, 0.04);
+          color: #0b0d10;
+          font-size: 22px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        .path-chip b {
+          color: #f45b0b;
+        }
+
+        .explain-stage {
+          position: absolute;
+          left: 250px;
+          top: 152px;
+          z-index: 18;
+          width: 1420px;
+          height: 650px;
+          opacity: 0;
+          will-change: transform, opacity;
+        }
+
+        .explain-kicker {
+          margin-bottom: 24px;
+          color: #f45b0b;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
+
+        .explain-list {
+          display: grid;
+          gap: 20px;
+        }
+
+        .explain-line {
+          min-height: 136px;
+          display: grid;
+          grid-template-columns: 82px 1fr;
+          align-items: center;
+          padding: 20px 34px;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-left: 4px solid #f45b0b;
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.04);
+          will-change: transform, opacity;
+        }
+
+        .explain-index {
+          color: #f45b0b;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+        }
+
+        .explain-copy {
+          min-height: 58px;
+          color: #0b0d10;
+          font-size: 47px;
+          font-weight: 700;
+          line-height: 1.15;
+          letter-spacing: -0.025em;
+          white-space: nowrap;
+        }
+
+        .typed-char {
+          display: inline-block;
+          min-width: 0.01em;
+          will-change: transform, opacity;
+        }
+
+        .critical-word {
+          display: inline-block;
+          transform-origin: 50% 50%;
+          will-change: transform, text-shadow, color;
+        }
+
+        .hash-stage {
+          position: absolute;
+          left: 150px;
+          top: 202px;
+          z-index: 22;
+          width: 1620px;
+          height: 560px;
+          opacity: 0;
+          text-align: center;
+          will-change: transform, opacity;
+        }
+
+        .hash-kicker {
+          color: #f45b0b;
+          font-size: 18px;
+          font-weight: 700;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+
+        .hash-title {
+          margin: 24px auto 38px;
+          color: #0b0d10;
+          font-size: 62px;
+          font-weight: 700;
+          line-height: 1.08;
+          letter-spacing: -0.03em;
+        }
+
+        .hash-rail {
+          position: relative;
+          z-index: 3;
+          width: 1540px;
+          height: 98px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 0 34px;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.04);
+          color: #0b0d10;
+          font-family: "FrameMono";
+          font-size: 29px;
+          font-weight: 500;
+          font-variant-numeric: tabular-nums;
+          letter-spacing: 0.055em;
+          white-space: nowrap;
+        }
+
+        .hash-cursor {
+          display: inline-block;
+          width: 18px;
+          height: 34px;
+          margin-left: 9px;
+          border-radius: 4px;
+          background: #f45b0b;
+          will-change: opacity;
+        }
+
+        .pill-stage {
+          position: relative;
+          z-index: 4;
+          width: 430px;
+          height: 82px;
+          margin: 62px auto 0;
+          display: grid;
+          place-items: center;
+        }
+
+        .pill-shell {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          border-radius: 100px;
+          background: #f45b0b;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .pill-label {
+          position: relative;
+          z-index: 3;
+          color: #ffffff;
+          font-size: 23px;
+          font-weight: 800;
+          letter-spacing: 0.13em;
+          text-transform: uppercase;
+          will-change: transform, opacity;
+        }
+
+        .hash-glow {
+          position: absolute;
+          left: 465px;
+          right: 465px;
+          top: 338px;
+          z-index: 1;
+          height: 270px;
+          border-radius: 50%;
+          background: radial-gradient(
+            ellipse at center,
+            rgba(244, 91, 11, 0.34) 0%,
+            rgba(244, 91, 11, 0.11) 42%,
+            rgba(244, 91, 11, 0) 72%
+          );
+          opacity: 0;
+          transform-origin: 50% 50%;
+          pointer-events: none;
+          will-change: transform, opacity;
+        }
+
+        .frame-counter {
+          position: absolute;
+          right: 96px;
+          top: 850px;
+          z-index: 40;
+          color: #6b6b6b;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+        }
+
+        .progress-track {
+          position: absolute;
+          left: 96px;
+          top: 888px;
+          z-index: 40;
+          width: 1728px;
+          height: 3px;
+          overflow: hidden;
+          background: rgba(244, 91, 11, 0.08);
+        }
+
+        .progress-fill {
+          display: block;
+          width: 66.6667%;
+          height: 100%;
+          background: #f45b0b;
+          transform-origin: 0 50%;
+        }
+      </style>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+
+      <div
+        id="root"
+        data-composition-id="04-verifiable-plan"
+        data-width="1920"
+        data-height="1080"
+        data-duration="12.155"
+      >
+        <div
+          id="f4-background"
+          class="clip frame-ground"
+          data-start="0"
+          data-duration="11.755"
+          data-track-index="0"
+        ></div>
+
+        <section
+          id="f4-scene"
+          class="clip scene-layer"
+          data-start="0"
+          data-duration="11.755"
+          data-track-index="1"
+        >
+          <div class="top-chrome">
+            <div class="chrome-eyebrow">Verifiable plan</div>
+            <div class="chrome-tag">04 · proof</div>
+          </div>
+
+          <div id="f4-surface" class="surface-card">
+            <img src="assets/swarmshift-atlas.png" alt="SwarmShift scheduled execution plan" />
+
+            <div class="plan-overlay">
+              <div class="plan-overlay-header">
+                <span>Execution plan</span>
+                <span>DEPENDENCY ORDER</span>
+              </div>
+              <div class="plan-rows">
+                <div id="f4-row-research" class="plan-row">
+                  <div class="plan-row-label">Research</div>
+                  <div class="mini-track">
+                    <div id="f4-bar-research" class="mini-bar bar-research">Scout · 22 min</div>
+                  </div>
+                </div>
+                <div id="f4-row-build" class="plan-row">
+                  <div class="plan-row-label">Build</div>
+                  <div class="mini-track">
+                    <div id="f4-bar-build" class="mini-bar bar-build">Builder · 36 min</div>
+                  </div>
+                </div>
+                <div id="f4-row-verify" class="plan-row">
+                  <div class="plan-row-label">Verify</div>
+                  <div class="mini-track">
+                    <div id="f4-bar-verify" class="mini-bar bar-verify">Reviewer · 12 min</div>
+                  </div>
+                </div>
+                <div id="f4-row-ship" class="plan-row">
+                  <div class="plan-row-label">Ship</div>
+                  <div class="mini-track">
+                    <div id="f4-bar-ship" class="mini-bar bar-ship">Scout · 10 min</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="f4-click-target" class="click-target"></div>
+          </div>
+
+          <div id="f4-cursor" class="custom-cursor" aria-hidden="true">
+            <svg viewBox="0 0 44 52" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M4 3L36 28L21 30L14 46L4 3Z"
+                fill="#0b0d10"
+                stroke="#ffffff"
+                stroke-width="3"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <div id="f4-ripple-one" class="click-ripple"></div>
+          <div id="f4-ripple-two" class="click-ripple"></div>
+          <div id="f4-ripple-three" class="click-ripple"></div>
+
+          <div id="f4-metrics" class="metrics-stage">
+            <div class="metric-kicker">Verified output</div>
+            <div class="primary-metric">
+              <div class="depth-stack" aria-label="80 minutes">
+                <span id="f4-depth-three" class="depth-layer depth-back-3">0</span>
+                <span id="f4-depth-two" class="depth-layer depth-back-2">0</span>
+                <span id="f4-depth-one" class="depth-layer depth-back-1">0</span>
+                <span id="f4-count-minutes" class="depth-layer depth-front">0</span>
+              </div>
+              <div class="metric-unit">
+                MIN
+                <small>Critical path</small>
+              </div>
+            </div>
+            <div class="secondary-metric">
+              <span id="f4-count-cost" class="cost-number">$0.00</span>
+              <span class="cost-label">Total cost</span>
+            </div>
+            <div id="f4-path-chip" class="path-chip">
+              <b>RESEARCH</b> → BUILD → VERIFY → SHIP
+            </div>
+          </div>
+
+          <div id="f4-explain" class="explain-stage">
+            <div class="explain-kicker">Why this plan</div>
+            <div class="explain-list">
+              <div id="f4-explain-one" class="explain-line">
+                <span class="explain-index">01</span>
+                <span id="f4-line-one" class="explain-copy"></span>
+              </div>
+              <div id="f4-explain-two" class="explain-line">
+                <span class="explain-index">02</span>
+                <span id="f4-line-two" class="explain-copy"></span>
+              </div>
+              <div id="f4-explain-three" class="explain-line">
+                <span class="explain-index">03</span>
+                <span id="f4-line-three" class="explain-copy"></span>
+              </div>
+            </div>
+          </div>
+
+          <div id="f4-hash-stage" class="hash-stage">
+            <div class="hash-kicker">Plan hash · SHA-256</div>
+            <div class="hash-title">Same input. Same plan.</div>
+            <div class="hash-rail">
+              <span id="f4-hash-text"></span><span id="f4-hash-cursor" class="hash-cursor"></span>
+            </div>
+            <div id="f4-hash-glow" class="hash-glow"></div>
+            <div class="pill-stage">
+              <div id="f4-pill-shell" class="pill-shell"></div>
+              <div id="f4-pill-label" class="pill-label">Deterministic</div>
+            </div>
+          </div>
+
+          <div class="frame-counter">04 / 06</div>
+          <div class="progress-track"><span class="progress-fill"></span></div>
+        </section>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const byId = (id) => document.getElementById(id);
+        const tl = gsap.timeline({ paused: true });
+
+        const surface = byId("f4-surface");
+        const clickTarget = byId("f4-click-target");
+        const cursor = byId("f4-cursor");
+        const ripples = [byId("f4-ripple-one"), byId("f4-ripple-two"), byId("f4-ripple-three")];
+        const bars = [
+          byId("f4-bar-research"),
+          byId("f4-bar-build"),
+          byId("f4-bar-verify"),
+          byId("f4-bar-ship"),
+        ];
+        const metrics = byId("f4-metrics");
+        const pathChip = byId("f4-path-chip");
+        const explain = byId("f4-explain");
+        const hashStage = byId("f4-hash-stage");
+
+        // Scene 1 — product surface, intentional cursor move, click depression, and ripple.
+        tl.fromTo(
+          surface,
+          { opacity: 0, y: 18, scale: 0.965, rotation: -1.65 },
+          { opacity: 1, y: 0, scale: 1, rotation: -1.15, duration: 0.62, ease: "power3.out" },
+          0.04,
+        );
+
+        tl.fromTo(
+          cursor,
+          { opacity: 0, x: 0, y: 0, scale: 0.92 },
+          { opacity: 1, x: 212, y: -410, scale: 1, duration: 0.78, ease: "power3.out" },
+          0.66,
+        );
+
+        tl.to(
+          cursor,
+          { scale: 0.84, duration: 0.085, ease: "power2.in" },
+          1.50,
+        );
+        tl.to(cursor, { scale: 1, duration: 0.085, ease: "power2.out" }, 1.585);
+        tl.to(
+          clickTarget,
+          { scale: 0.95, duration: 0.085, ease: "power2.in" },
+          1.50,
+        );
+        tl.to(clickTarget, { scale: 1, duration: 0.085, ease: "power2.out" }, 1.585);
+
+        ripples.forEach((ripple, index) => {
+          tl.fromTo(
+            ripple,
+            { opacity: 0.76, scale: 0.25 },
+            {
+              opacity: 0,
+              scale: 4.5,
+              duration: 0.7,
+              ease: "power2.out",
+              immediateRender: false,
+            },
+            1.51 + index * 0.085,
+          );
+        });
+
+        // Dependency-order assembly: each task gets its own cue and absolute start time.
+        const taskSequence = [
+          { bar: bars[0], start: 1.58 },
+          { bar: bars[1], start: 1.84 },
+          { bar: bars[2], start: 2.10 },
+          { bar: bars[3], start: 2.36 },
+        ];
+        taskSequence.forEach(({ bar, start }) => {
+          tl.fromTo(
+            bar,
+            { opacity: 0, scaleX: 0 },
+            { opacity: 1, scaleX: 1, duration: 0.36, ease: "power3.out" },
+            start,
+          );
+        });
+        tl.to(cursor, { opacity: 0, duration: 0.24, ease: "power1.out" }, 2.48);
+
+        // Scene 2 — the product yields left as the verified metrics take its former anchor.
+        tl.to(
+          surface,
+          { x: -400, y: -105, scale: 0.58, rotation: 0, duration: 0.9, ease: "power3.inOut" },
+          2.80,
+        );
+        tl.fromTo(
+          metrics,
+          { opacity: 0, x: 160, scale: 0.72 },
+          { opacity: 1, x: 0, scale: 1, duration: 0.78, ease: "back.out(1.45)" },
+          3.03,
+        );
+
+        const minuteLayers = [
+          byId("f4-depth-three"),
+          byId("f4-depth-two"),
+          byId("f4-depth-one"),
+          byId("f4-count-minutes"),
+        ];
+        const minuteStack = byId("f4-count-minutes").parentElement;
+        tl.fromTo(
+          minuteStack,
+          { scale: 0.5 },
+          { scale: 1, duration: 1.58, ease: "power3.out" },
+          3.10,
+        );
+        const minuteState = { value: 0 };
+        tl.to(
+          minuteState,
+          {
+            value: 80,
+            duration: 1.58,
+            ease: "power3.out",
+            onUpdate: () => {
+              const value = String(Math.round(minuteState.value));
+              minuteLayers.forEach((layer) => {
+                layer.textContent = value;
+              });
+            },
+          },
+          3.10,
+        );
+
+        const costEl = byId("f4-count-cost");
+        tl.fromTo(
+          costEl,
+          { scale: 0.56 },
+          { scale: 1, duration: 1.12, ease: "power3.out" },
+          4.68,
+        );
+        const costState = { value: 0 };
+        tl.to(
+          costState,
+          {
+            value: 1.04,
+            duration: 1.12,
+            ease: "power3.out",
+            onUpdate: () => {
+              costEl.textContent = `$${costState.value.toFixed(2)}`;
+            },
+          },
+          4.68,
+        );
+
+        tl.fromTo(
+          pathChip,
+          { opacity: 0, y: 20, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.55, ease: "power3.out" },
+          5.05,
+        );
+
+        // Build the three explanation cues synchronously, before the timeline is registered.
+        function appendChars(container, text, extraClass = "") {
+          const group = document.createElement("span");
+          if (extraClass) group.className = extraClass;
+          for (const character of text) {
+            const span = document.createElement("span");
+            span.className = "typed-char";
+            span.textContent = character === " " ? "\u00a0" : character;
+            group.appendChild(span);
+          }
+          container.appendChild(group);
+          return { group, chars: Array.from(group.querySelectorAll(".typed-char")) };
+        }
+
+        const lineOne = appendChars(byId("f4-line-one"), "CAPABILITY MATCHED");
+        const criticalPhrase = appendChars(byId("f4-line-two"), "CRITICAL PATH", "critical-word");
+        const lineTwoTail = appendChars(byId("f4-line-two"), "  ·  80 MIN");
+        const lineThree = appendChars(byId("f4-line-three"), "DEADLINE + COST CHECKED");
+
+        // Cut-the-curve seam into the explanation phase: same leftward path on both sides.
+        tl.to(surface, { x: -630, opacity: 0, duration: 0.34, ease: "power4.in" }, 6.20);
+        tl.to(metrics, { x: -230, opacity: 0, duration: 0.34, ease: "power4.in" }, 6.20);
+        tl.fromTo(
+          explain,
+          { x: 230, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.34,
+            ease: "power4.out",
+            immediateRender: false,
+          },
+          6.54,
+        );
+
+        const explanationCueSpecs = [
+          {
+            card: byId("f4-explain-one"),
+            chars: lineOne.chars,
+          },
+          {
+            card: byId("f4-explain-two"),
+            chars: [...criticalPhrase.chars, ...lineTwoTail.chars],
+          },
+          {
+            card: byId("f4-explain-three"),
+            chars: lineThree.chars,
+          },
+        ];
+        let explanationCursor = 6.78;
+        const explanationCues = explanationCueSpecs.map((cue) => {
+          const timedCue = { ...cue, start: explanationCursor };
+          explanationCursor += 0.32 + cue.chars.length * 0.025;
+          return timedCue;
+        });
+
+        explanationCues.forEach(({ card, chars, start }) => {
+          tl.fromTo(
+            card,
+            { opacity: 0, y: 16 },
+            { opacity: 1, y: 0, duration: 0.32, ease: "power3.out" },
+            start,
+          );
+          tl.fromTo(
+            chars,
+            { opacity: 0, y: 18 },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.22,
+              ease: "power3.out",
+              stagger: 0.025,
+            },
+            start + 0.08,
+          );
+        });
+
+        // One ASR-style attack / sustain / release envelope on the critical-path keyword.
+        const glowDriver = { t: 6.20 };
+        const criticalEl = criticalPhrase.group;
+        const glowStart = 7.72;
+        const glowEnd = 8.12;
+        const attackDuration = 0.16;
+        const releaseDuration = 0.36;
+        const restLevel = 0.12;
+        function keywordEnvelope(time) {
+          if (time < glowStart) return 0;
+          if (time < glowEnd) return Math.min((time - glowStart) / attackDuration, 1);
+          if (time < glowEnd + releaseDuration) {
+            const decay = (time - glowEnd) / releaseDuration;
+            return 1 - decay * (1 - restLevel);
+          }
+          return restLevel;
+        }
+        tl.to(
+          glowDriver,
+          {
+            t: 9.60,
+            duration: 3.40,
+            ease: "none",
+            onUpdate: () => {
+              const env = keywordEnvelope(glowDriver.t);
+              criticalEl.style.color = `rgba(244, 91, 11, ${0.35 + env * 0.65})`;
+              criticalEl.style.textShadow = `0 0 ${18 * env}px rgba(244, 91, 11, ${0.08 + env * 0.34})`;
+              criticalEl.style.transform = `scale(${1 + env * 0.075})`;
+            },
+          },
+          6.20,
+        );
+
+        // Scene 4 — matched leftward cut, then the real SHA-256 resolves in discrete groups.
+        tl.to(explain, { x: -230, opacity: 0, duration: 0.34, ease: "power4.in" }, 9.60);
+        tl.fromTo(
+          hashStage,
+          { x: 230, opacity: 0.35 },
+          {
+            x: 0,
+            opacity: 1,
+            duration: 0.34,
+            ease: "power4.out",
+            immediateRender: false,
+          },
+          9.78,
+        );
+
+        const hashGroups = [
+          "badfe8ee",
+          "10b0ec6e",
+          "a9c1d1e5",
+          "26eb77c2",
+          "83a5b9d8",
+          "afc80a19",
+          "27b6fbf4",
+          "7fe61c44",
+        ];
+        const hashSequence = hashGroups.map((_, index) => ({
+          t: 9.80 + index * 0.058,
+          text: hashGroups.slice(0, index + 1).join(" "),
+        }));
+        function hashAt(time) {
+          for (let index = hashSequence.length - 1; index >= 0; index -= 1) {
+            if (time >= hashSequence[index].t) return hashSequence[index].text;
+          }
+          return "";
+        }
+
+        const hashText = byId("f4-hash-text");
+        const hashCursor = byId("f4-hash-cursor");
+        const hashDriver = { t: 9.78 };
+        tl.to(
+          hashDriver,
+          {
+            t: 11.755,
+            duration: 1.975,
+            ease: "none",
+            onUpdate: () => {
+              hashText.textContent = hashAt(hashDriver.t);
+              hashCursor.style.opacity =
+                hashDriver.t >= 10.24
+                  ? "0"
+                  : Math.sin((hashDriver.t - 9.78) * Math.PI * 6) > 0
+                    ? "1"
+                    : "0";
+            },
+          },
+          9.78,
+        );
+
+        const pillShell = byId("f4-pill-shell");
+        const pillLabel = byId("f4-pill-label");
+        const hashGlow = byId("f4-hash-glow");
+        tl.fromTo(
+          pillShell,
+          { opacity: 0.88, scaleX: 0 },
+          { opacity: 1, scaleX: 1, duration: 0.38, ease: "back.out(1.55)" },
+          10.24,
+        );
+        tl.fromTo(
+          pillLabel,
+          { opacity: 0, y: 12, scale: 0.96 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.34, ease: "power3.out" },
+          10.37,
+        );
+        tl.fromTo(
+          hashGlow,
+          { opacity: 0, scale: 0.86 },
+          { opacity: 0.26, scale: 1, duration: 0.60, ease: "power2.out" },
+          10.04,
+        );
+
+        window.__timelines["04-verifiable-plan"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

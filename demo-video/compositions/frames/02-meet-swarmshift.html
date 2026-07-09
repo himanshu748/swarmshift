@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Meet SwarmShift</title>
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-500.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 500;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-700.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 700;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 800;
+          font-display: block;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 900;
+          font-display: block;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          color: #0b0d10;
+          font-family: "Inter", sans-serif;
+          container-type: size;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        #f02-ground {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          background: #ffffff;
+        }
+
+        #f02-stage {
+          position: absolute;
+          inset: 0 auto auto 0;
+          width: 1920px;
+          height: 896px;
+          overflow: hidden;
+          z-index: 1;
+        }
+
+        #f02-wordmark {
+          position: absolute;
+          left: 96px;
+          top: 178px;
+          width: 430px;
+          z-index: 8;
+        }
+
+        #f02-accent-line {
+          display: block;
+          width: 60px;
+          height: 4px;
+          margin-bottom: 28px;
+          border-radius: 2px;
+          background: #f45b0b;
+          transform-origin: 0% 50%;
+          will-change: transform, opacity;
+        }
+
+        .f02-word-row {
+          display: flex;
+          align-items: baseline;
+          width: 430px;
+          white-space: nowrap;
+        }
+
+        .f02-word {
+          display: inline-block;
+          font-size: 80px;
+          line-height: 0.98;
+          font-weight: 800;
+          letter-spacing: -0.048em;
+          color: #0b0d10;
+          will-change: transform, opacity;
+        }
+
+        #f02-surface-stage {
+          position: absolute;
+          left: 508px;
+          top: 88px;
+          width: 1332px;
+          height: 750px;
+          perspective: 1800px;
+          perspective-origin: 50% 46%;
+          z-index: 4;
+        }
+
+        #f02-surface-shell {
+          position: absolute;
+          inset: 0;
+          width: 1332px;
+          height: 750px;
+          overflow: hidden;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.04);
+          transform-origin: 50% 50%;
+          transform-style: preserve-3d;
+          will-change: transform, opacity;
+        }
+
+        #f02-zoom-outer,
+        #f02-zoom-inner {
+          position: absolute;
+          inset: 0;
+          width: 1332px;
+          height: 750px;
+          transform-origin: 50% 50%;
+          will-change: transform;
+        }
+
+        #f02-zoom-outer {
+          overflow: visible;
+        }
+
+        .f02-product-image {
+          position: absolute;
+          inset: 0;
+          display: block;
+          width: 1332px;
+          height: 750px;
+          object-fit: cover;
+          object-position: 50% 72%;
+          user-select: none;
+          pointer-events: none;
+        }
+
+        #f02-product-base {
+          z-index: 1;
+          will-change: opacity;
+        }
+
+        .f02-focus-softener {
+          position: absolute;
+          z-index: 3;
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.28);
+          -webkit-backdrop-filter: blur(7px);
+          backdrop-filter: blur(7px);
+          pointer-events: none;
+          will-change: opacity;
+        }
+
+        .f02-off-focus-softener {
+          background: rgba(255, 255, 255, 0.34);
+          -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+        }
+
+        #f02-soft-mission {
+          left: 0;
+          top: 0;
+          width: 440px;
+          height: 750px;
+          border-radius: 0;
+        }
+
+        #f02-soft-header {
+          left: 440px;
+          top: 0;
+          width: 892px;
+          height: 360px;
+          border-radius: 0;
+        }
+
+        #f02-soft-footer {
+          left: 440px;
+          top: 714px;
+          width: 892px;
+          height: 36px;
+          border-radius: 0;
+        }
+
+        .f02-row-softener {
+          left: 440px;
+          width: 879px;
+          height: 88px;
+        }
+
+        #f02-soft-row-research {
+          top: 368px;
+        }
+
+        #f02-soft-row-build {
+          top: 458px;
+        }
+
+        #f02-soft-row-verify {
+          top: 548px;
+        }
+
+        #f02-soft-row-ship {
+          top: 638px;
+          height: 76px;
+        }
+
+        #f02-run-overlay {
+          position: absolute;
+          left: 24px;
+          top: 205px;
+          z-index: 5;
+          width: 126px;
+          height: 46px;
+          border: 2px solid rgba(244, 91, 11, 0.72);
+          border-radius: 10px;
+          background: rgba(244, 91, 11, 0.08);
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        #f02-click-target {
+          position: absolute;
+          left: 586px;
+          top: 346px;
+          z-index: 8;
+          width: 160px;
+          height: 58px;
+          border: 2px solid rgba(244, 91, 11, 0.54);
+          border-radius: 12px;
+          background: rgba(244, 91, 11, 0.08);
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+          pointer-events: none;
+        }
+
+        #f02-deterministic-label {
+          position: absolute;
+          left: 738px;
+          top: 306px;
+          z-index: 10;
+          display: inline-flex;
+          align-items: center;
+          min-height: 54px;
+          padding: 0 24px;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 100px;
+          background: rgba(255, 255, 255, 0.94);
+          color: #f45b0b;
+          font-size: 27px;
+          line-height: 1;
+          font-weight: 700;
+          letter-spacing: -0.01em;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+
+        #f02-replan-proof {
+          position: absolute;
+          right: 58px;
+          top: 84px;
+          z-index: 10;
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+          min-height: 48px;
+          padding: 0 22px;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 100px;
+          background: rgba(244, 91, 11, 0.08);
+          color: #f45b0b;
+          font-size: 19px;
+          line-height: 1;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .f02-proof-dot {
+          display: block;
+          width: 9px;
+          height: 9px;
+          flex: 0 0 9px;
+          border-radius: 50%;
+          background: #f45b0b;
+        }
+
+        #f02-cursor {
+          position: absolute;
+          left: 1120px;
+          top: 600px;
+          z-index: 14;
+          width: 48px;
+          height: 58px;
+          pointer-events: none;
+          transform-origin: 10% 8%;
+          will-change: transform, opacity;
+        }
+
+        #f02-cursor svg {
+          display: block;
+          width: 48px;
+          height: 58px;
+          overflow: visible;
+        }
+
+        .f02-ripple {
+          position: absolute;
+          left: 630px;
+          top: 339px;
+          z-index: 12;
+          width: 72px;
+          height: 72px;
+          border: 2px solid rgba(244, 91, 11, 0.72);
+          border-radius: 50%;
+          opacity: 0;
+          pointer-events: none;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="02-meet-swarmshift"
+        data-width="1920"
+        data-height="1080"
+        data-duration="9.46"
+      >
+        <div
+          id="f02-ground"
+          class="clip"
+          data-start="0"
+          data-duration="8.96"
+          data-track-index="0"
+          aria-hidden="true"
+        ></div>
+
+        <section
+          id="f02-stage"
+          class="clip"
+          data-start="0"
+          data-duration="8.96"
+          data-track-index="1"
+          aria-label="SwarmShift deterministic planner product introduction"
+        >
+          <div id="f02-wordmark">
+            <span id="f02-accent-line" aria-hidden="true"></span>
+            <div class="f02-word-row" aria-label="SwarmShift">
+              <span id="f02-word-swarm" class="f02-word">Swarm</span>
+              <span id="f02-word-shift" class="f02-word">Shift</span>
+            </div>
+          </div>
+
+          <div id="f02-surface-stage">
+            <div id="f02-surface-shell">
+              <div id="f02-zoom-outer">
+                <div id="f02-zoom-inner">
+                  <img
+                    id="f02-product-base"
+                    class="f02-product-image"
+                    src="assets/swarmshift-atlas.png"
+                    alt="SwarmShift planner showing mission inputs and an execution timeline"
+                  />
+                  <div
+                    id="f02-soft-mission"
+                    class="f02-focus-softener f02-off-focus-softener"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    id="f02-soft-header"
+                    class="f02-focus-softener f02-off-focus-softener"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    id="f02-soft-footer"
+                    class="f02-focus-softener f02-off-focus-softener"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    id="f02-soft-row-research"
+                    class="f02-focus-softener f02-row-softener"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    id="f02-soft-row-build"
+                    class="f02-focus-softener f02-row-softener"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    id="f02-soft-row-verify"
+                    class="f02-focus-softener f02-row-softener"
+                    aria-hidden="true"
+                  ></div>
+                  <div
+                    id="f02-soft-row-ship"
+                    class="f02-focus-softener f02-row-softener"
+                    aria-hidden="true"
+                  ></div>
+                  <div id="f02-run-overlay" aria-hidden="true"></div>
+                </div>
+              </div>
+
+              <div id="f02-click-target" aria-hidden="true"></div>
+              <div id="f02-deterministic-label">same input → same plan</div>
+
+              <div id="f02-replan-proof">
+                <span class="f02-proof-dot" aria-hidden="true"></span>
+                <span>REPLAN</span>
+              </div>
+
+              <div id="f02-ripple-1" class="f02-ripple" aria-hidden="true"></div>
+              <div id="f02-ripple-2" class="f02-ripple" aria-hidden="true"></div>
+
+              <div id="f02-cursor" aria-hidden="true">
+                <svg viewBox="0 0 48 58" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M3 2.5L39.5 28.4L23.7 31.1L16.4 51.8L3 2.5Z"
+                    fill="#f45b0b"
+                    stroke="#ffffff"
+                    stroke-width="4"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M23.2 31.2L35.4 50.4"
+                    fill="none"
+                    stroke="#f45b0b"
+                    stroke-width="7"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M23.2 31.2L35.4 50.4"
+                    fill="none"
+                    stroke="#ffffff"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const tl = gsap.timeline({ paused: true });
+
+        // Scene 1 (0.0–2.0s): content-length-aware word pieces and the
+        // real planner surface settle together in a restrained 30/70 layout.
+        tl.fromTo(
+          "#f02-accent-line",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.5, ease: "power3.out" },
+          0.02,
+        );
+
+        const wordParts = ["f02-word-swarm", "f02-word-shift"];
+        let wordAt = 0.06;
+        wordParts.forEach((id) => {
+          const el = document.getElementById(id);
+          const revealDuration = 0.34 + el.textContent.length * 0.025;
+          tl.fromTo(
+            `#${id}`,
+            { y: 42, opacity: 0 },
+            { y: 0, opacity: 1, duration: revealDuration, ease: "power3.out" },
+            wordAt,
+          );
+          wordAt += Math.min(0.14, revealDuration * 0.24);
+        });
+
+        tl.fromTo(
+          "#f02-surface-shell",
+          {
+            y: 30,
+            scale: 0.94,
+            rotationX: 3.2,
+            rotationY: -5.5,
+            opacity: 0,
+          },
+          {
+            y: 0,
+            scale: 1,
+            rotationX: 0,
+            rotationY: 0,
+            opacity: 1,
+            duration: 1.22,
+            ease: "power3.out",
+          },
+          0.04,
+        );
+
+        tl.fromTo(
+          "#f02-cursor",
+          { y: 26, scale: 0.86, opacity: 0 },
+          { y: 0, scale: 1, opacity: 1, duration: 0.46, ease: "power3.out" },
+          1.36,
+        );
+
+        // Scene 2 (2.0–4.8s): cursor and nested camera converge on the fixed
+        // Run plan coordinates baked from the supplied 1225x768 source image.
+        // Nested camera math uses counter-translation = -target offset.
+        const runTarget = { counterX: 579, counterY: 148, scale: 1.18 };
+        const runZoomStart = 2.0;
+        const runZoomDuration = 1.16;
+
+        tl.to(
+          "#f02-zoom-outer",
+          {
+            scale: runTarget.scale,
+            duration: runZoomDuration,
+            ease: "power3.inOut",
+          },
+          runZoomStart,
+        );
+        tl.to(
+          "#f02-zoom-inner",
+          {
+            x: runTarget.counterX,
+            y: runTarget.counterY,
+            duration: runZoomDuration,
+            ease: "power3.inOut",
+          },
+          runZoomStart,
+        );
+        tl.to(
+          "#f02-cursor",
+          {
+            x: -454,
+            y: -225,
+            duration: 1.04,
+            ease: "power3.out",
+          },
+          2.08,
+        );
+
+        tl.fromTo(
+          "#f02-run-overlay",
+          { opacity: 0, scale: 0.96 },
+          { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" },
+          2.88,
+        );
+        tl.fromTo(
+          "#f02-click-target",
+          { opacity: 0, scale: 0.94 },
+          { opacity: 1, scale: 1, duration: 0.26, ease: "power2.out" },
+          2.9,
+        );
+
+        // Crisp finite press/release chain: cursor compresses more than target.
+        tl.to(
+          "#f02-cursor",
+          { scale: 0.86, duration: 0.08, ease: "power2.in" },
+          3.22,
+        );
+        tl.to(
+          "#f02-click-target",
+          { scale: 0.95, duration: 0.08, ease: "power2.in" },
+          3.22,
+        );
+        tl.to(
+          "#f02-run-overlay",
+          { scale: 0.95, duration: 0.08, ease: "power2.in" },
+          3.22,
+        );
+        tl.to(
+          "#f02-cursor",
+          { scale: 1, duration: 0.11, ease: "power3.out" },
+          3.31,
+        );
+        tl.to(
+          "#f02-click-target",
+          { scale: 1, duration: 0.11, ease: "power3.out" },
+          3.31,
+        );
+        tl.to(
+          "#f02-run-overlay",
+          { scale: 1, duration: 0.11, ease: "power3.out" },
+          3.31,
+        );
+
+        tl.fromTo(
+          "#f02-ripple-1",
+          { scale: 0, opacity: 0.72 },
+          {
+            scale: 4.2,
+            opacity: 0,
+            duration: 0.72,
+            ease: "power2.out",
+            immediateRender: false,
+          },
+          3.24,
+        );
+        tl.fromTo(
+          "#f02-ripple-2",
+          { scale: 0, opacity: 0.58 },
+          {
+            scale: 4.8,
+            opacity: 0,
+            duration: 0.78,
+            ease: "power2.out",
+            immediateRender: false,
+          },
+          3.33,
+        );
+
+        tl.fromTo(
+          "#f02-deterministic-label",
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.48, ease: "power3.out" },
+          3.44,
+        );
+
+        tl.to(
+          "#f02-click-target",
+          { opacity: 0, duration: 0.3, ease: "power2.out" },
+          4.05,
+        );
+        tl.to(
+          "#f02-run-overlay",
+          { opacity: 0, duration: 0.3, ease: "power2.out" },
+          4.05,
+        );
+
+        // Scene 3 (4.8–6.6s): the camera chases the cursor rightward while the
+        // world counter-pans left into the timeline. Off-focus pixels soften;
+        // the four execution rows return to sharpness in dependency order.
+        const timelineTarget = { counterX: -204, counterY: -118, scale: 1.13 };
+        const timelinePanStart = 4.8;
+        const timelinePanDuration = 1.4;
+
+        tl.to(
+          "#f02-zoom-outer",
+          {
+            scale: timelineTarget.scale,
+            duration: timelinePanDuration,
+            ease: "power2.inOut",
+          },
+          timelinePanStart,
+        );
+        tl.to(
+          "#f02-zoom-inner",
+          {
+            x: timelineTarget.counterX,
+            y: timelineTarget.counterY,
+            duration: timelinePanDuration,
+            ease: "power2.inOut",
+          },
+          timelinePanStart,
+        );
+        tl.to(
+          "#f02-cursor",
+          {
+            x: -220,
+            y: -105,
+            duration: 1.3,
+            ease: "power2.inOut",
+          },
+          timelinePanStart,
+        );
+        tl.fromTo(
+          ".f02-off-focus-softener",
+          { opacity: 0 },
+          { opacity: 0.64, duration: 0.12, ease: "power2.out" },
+          4.82,
+        );
+        tl.fromTo(
+          ".f02-row-softener",
+          { opacity: 0 },
+          { opacity: 0.82, duration: 0.12, ease: "power2.out" },
+          4.82,
+        );
+
+        const timelineRows = [
+          "f02-soft-row-research",
+          "f02-soft-row-build",
+          "f02-soft-row-verify",
+          "f02-soft-row-ship",
+        ];
+        timelineRows.forEach((id, index) => {
+          tl.to(
+            `#${id}`,
+            {
+              opacity: 0,
+              duration: 0.56,
+              ease: "power2.out",
+            },
+            4.96 + index * 0.25,
+          );
+        });
+
+        // Scene 4 (6.6–8.96s): the camera returns to the complete product read,
+        // the full surface refocuses, and the REPLAN proof arrives then holds.
+        tl.to(
+          "#f02-zoom-outer",
+          { scale: 1, duration: 0.66, ease: "power2.inOut" },
+          6.58,
+        );
+        tl.to(
+          "#f02-zoom-inner",
+          { x: 0, y: 0, duration: 0.66, ease: "power2.inOut" },
+          6.58,
+        );
+        tl.to(
+          ".f02-off-focus-softener",
+          { opacity: 0, duration: 0.5, ease: "power2.inOut" },
+          6.56,
+        );
+        tl.fromTo(
+          "#f02-replan-proof",
+          { scale: 0, y: 16, opacity: 0 },
+          {
+            scale: 1,
+            y: 0,
+            opacity: 1,
+            duration: 0.56,
+            ease: "power3.out",
+          },
+          6.64,
+        );
+
+        window.__timelines["02-meet-swarmshift"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

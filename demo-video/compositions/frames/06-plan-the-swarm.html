@@ -1,0 +1,614 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>SwarmShift — Plan the swarm</title>
+  </head>
+  <body>
+    <template id="06-plan-the-swarm-template">
+      <style>
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-500.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 500;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-700.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 700;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 800;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-900.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 900;
+        }
+
+        * {
+          box-sizing: border-box;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          color: #0b0d10;
+          font-family: "Inter", sans-serif;
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+        }
+
+        .ground {
+          z-index: 0;
+          background: #ffffff;
+        }
+
+        .scene {
+          z-index: 1;
+        }
+
+        .atmosphere-ring {
+          position: absolute;
+          border: 1.5px solid rgba(244, 91, 11, 0.1);
+          border-radius: 50%;
+          pointer-events: none;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .ring-one {
+          left: 830px;
+          top: 290px;
+          width: 260px;
+          height: 260px;
+        }
+
+        .ring-two {
+          left: 710px;
+          top: 170px;
+          width: 500px;
+          height: 500px;
+          border-color: rgba(244, 91, 11, 0.075);
+        }
+
+        .ring-three {
+          left: 560px;
+          top: 20px;
+          width: 800px;
+          height: 800px;
+          border-color: rgba(244, 91, 11, 0.045);
+        }
+
+        .center-slot {
+          position: absolute;
+          left: 460px;
+          top: 330px;
+          width: 1000px;
+          height: 180px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .wordmark-lockup {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 30px;
+        }
+
+        .swarm-mark {
+          position: relative;
+          width: 72px;
+          height: 72px;
+          flex: 0 0 72px;
+          will-change: transform;
+        }
+
+        .swarm-mark span {
+          position: absolute;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #f45b0b;
+        }
+
+        .swarm-mark span:nth-child(1) {
+          left: 26px;
+          top: 0;
+        }
+
+        .swarm-mark span:nth-child(2) {
+          left: 0;
+          top: 44px;
+        }
+
+        .swarm-mark span:nth-child(3) {
+          left: 52px;
+          top: 44px;
+        }
+
+        .swarm-mark::before,
+        .swarm-mark::after {
+          position: absolute;
+          left: 17px;
+          top: 35px;
+          width: 40px;
+          height: 2px;
+          border-radius: 2px;
+          background: rgba(244, 91, 11, 0.35);
+          content: "";
+          transform-origin: 50% 50%;
+        }
+
+        .swarm-mark::before {
+          transform: rotate(60deg);
+        }
+
+        .swarm-mark::after {
+          transform: rotate(-60deg);
+        }
+
+        .wordmark {
+          color: #0b0d10;
+          font-size: 112px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 1;
+        }
+
+        .access-label {
+          position: absolute;
+          height: 68px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 100px;
+          background: rgba(244, 91, 11, 0.04);
+          color: #f45b0b;
+          font-size: 27px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          line-height: 1;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        #f06-path-browser {
+          left: 338px;
+          top: 570px;
+          width: 260px;
+        }
+
+        #f06-path-api {
+          left: 830px;
+          top: 190px;
+          width: 260px;
+        }
+
+        #f06-path-skill {
+          left: 1320px;
+          top: 570px;
+          width: 280px;
+        }
+
+        .cta-button {
+          width: 650px;
+          height: 112px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 100px;
+          background: #f45b0b;
+          color: #ffffff;
+          font-size: 36px;
+          font-weight: 700;
+          letter-spacing: 0.055em;
+          line-height: 1;
+          transform-origin: 50% 50%;
+        }
+
+        .cursor {
+          position: absolute;
+          left: -92px;
+          top: 816px;
+          z-index: 8;
+          width: 68px;
+          height: 68px;
+          overflow: visible;
+          pointer-events: none;
+          transform-origin: 0 0;
+          will-change: transform, opacity;
+        }
+
+        .ripple {
+          position: absolute;
+          left: 1028px;
+          top: 398px;
+          z-index: 5;
+          width: 84px;
+          height: 84px;
+          border: 2px solid rgba(244, 91, 11, 0.52);
+          border-radius: 50%;
+          pointer-events: none;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        #f06-final-url {
+          color: #0b0d10;
+          font-size: 38px;
+          font-weight: 600;
+          letter-spacing: -0.02em;
+          line-height: 1.1;
+        }
+
+        .final-accent {
+          position: absolute;
+          left: 924px;
+          top: 514px;
+          width: 72px;
+          height: 5px;
+          border-radius: 6px;
+          background: #f45b0b;
+          transform-origin: 50% 50%;
+          will-change: transform, opacity;
+        }
+
+        .tagline {
+          position: absolute;
+          left: 190px;
+          top: 560px;
+          width: 1540px;
+          height: 110px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 28px;
+          color: #0b0d10;
+          font-size: 63px;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          line-height: 1.05;
+          text-align: center;
+        }
+
+        .tagline span {
+          display: block;
+          white-space: nowrap;
+          will-change: transform, opacity;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="06-plan-the-swarm"
+        data-width="1920"
+        data-height="1080"
+        data-duration="7.381"
+      >
+        <div
+          id="f06-ground"
+          class="clip ground"
+          data-start="0"
+          data-duration="7.381"
+          data-track-index="0"
+        >
+          <div id="f06-ring-one" class="atmosphere-ring ring-one" data-layout-ignore></div>
+          <div id="f06-ring-two" class="atmosphere-ring ring-two" data-layout-ignore></div>
+          <div id="f06-ring-three" class="atmosphere-ring ring-three" data-layout-ignore></div>
+        </div>
+
+        <section
+          id="f06-scene"
+          class="clip scene"
+          data-start="0"
+          data-duration="7.381"
+          data-track-index="1"
+        >
+          <div id="f06-wordmark" class="center-slot">
+            <div class="wordmark-lockup">
+              <div id="f06-swarm-mark" class="swarm-mark" aria-hidden="true">
+                <span></span><span></span><span></span>
+              </div>
+              <div class="wordmark">SwarmShift</div>
+            </div>
+          </div>
+
+          <div id="f06-path-browser" class="access-label">BROWSER</div>
+          <div id="f06-path-api" class="access-label">API</div>
+          <div id="f06-path-skill" class="access-label">SKILL.md</div>
+
+          <div id="f06-cta" class="center-slot">
+            <div class="cta-button">OPEN ON GITHUB</div>
+          </div>
+
+          <svg
+            id="f06-cursor"
+            class="cursor"
+            viewBox="0 0 68 68"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 3 L54 34 L34 38 L25 61 Z"
+              fill="#0b0d10"
+              stroke="#ffffff"
+              stroke-width="4"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <div id="f06-ripple-one" class="ripple" data-layout-ignore></div>
+          <div id="f06-ripple-two" class="ripple" data-layout-ignore></div>
+
+          <div id="f06-final-url" class="center-slot">github.com/himanshu748/swarmshift</div>
+          <div id="f06-final-accent" class="final-accent"></div>
+          <div class="tagline">
+            <span id="f06-tagline-one">PLAN THE SWARM.</span>
+            <span id="f06-tagline-two">KEEP THE DEADLINE.</span>
+          </div>
+        </section>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const tl = gsap.timeline({ paused: true });
+
+        const lateElements = [
+          "#f06-path-browser",
+          "#f06-path-api",
+          "#f06-path-skill",
+          "#f06-cta",
+          "#f06-cursor",
+          "#f06-final-url",
+          "#f06-final-accent",
+          "#f06-tagline-one",
+          "#f06-tagline-two",
+          "#f06-ripple-one",
+          "#f06-ripple-two",
+        ];
+
+        tl.set(lateElements, { opacity: 0 }, 0);
+        tl.set("#f06-cta", { scale: 0.68 }, 0);
+        tl.set("#f06-final-url", { scale: 0.72 }, 0);
+        tl.set("#f06-final-accent", { scaleX: 0 }, 0);
+        tl.set(["#f06-ripple-one", "#f06-ripple-two"], { scale: 0 }, 0);
+
+        tl.fromTo(
+          "#f06-wordmark",
+          { opacity: 0, y: 18, scale: 0.97 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.42, ease: "power3.out" },
+          0.02,
+        );
+
+        tl.fromTo(
+          ["#f06-ring-one", "#f06-ring-two", "#f06-ring-three"],
+          { opacity: 0, scale: 0.94 },
+          {
+            opacity: 1,
+            scale: 1,
+            duration: 0.72,
+            ease: "power3.out",
+            stagger: 0.08,
+          },
+          0,
+        );
+
+        // Content-aware cue spacing: longer labels receive a slightly longer read beat.
+        const accessPaths = [
+          { id: "#f06-path-browser", text: "BROWSER", dx: 492, dy: -184 },
+          { id: "#f06-path-api", text: "API", dx: 0, dy: 196 },
+          { id: "#f06-path-skill", text: "SKILL.md", dx: -500, dy: -184 },
+        ];
+        const baseRead = 0.16;
+        const secondsPerCharacter = 0.014;
+        const cueHold = 0.1;
+        let cumulativeCue = 0.16;
+        const sequencedPaths = accessPaths.map((path) => {
+          const start = cumulativeCue;
+          const readDuration = baseRead + path.text.length * secondsPerCharacter + cueHold;
+          cumulativeCue += readDuration;
+          return { ...path, start, end: cumulativeCue };
+        });
+
+        sequencedPaths.forEach((path) => {
+          tl.fromTo(
+            path.id,
+            { opacity: 0, y: 18, scale: 0.92 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.32,
+              ease: "back.out(1.4)",
+              immediateRender: false,
+            },
+            path.start,
+          );
+        });
+
+        // A rotation-only micro-breath keeps the small mark alive while the wordmark stays fixed.
+        const mark = document.getElementById("f06-swarm-mark");
+        const markPhase = { p: 0 };
+        tl.to(
+          markPhase,
+          {
+            p: Math.PI * 2,
+            duration: 1.25,
+            ease: "none",
+            onUpdate: () => {
+              mark.style.transform = `rotate(${Math.sin(markPhase.p) * 0.35}deg)`;
+            },
+          },
+          0.2,
+        );
+
+        // Scene 2: three paths converge, then the identity and CTA swap at one shared center.
+        sequencedPaths.forEach((path) => {
+          tl.to(
+            path.id,
+            {
+              x: path.dx,
+              y: path.dy,
+              scale: 0.62,
+              opacity: 0.15,
+              duration: 0.42,
+              ease: "power3.in",
+            },
+            1.6,
+          );
+          tl.to(path.id, { opacity: 0, duration: 0.12, ease: "none" }, 1.98);
+        });
+
+        tl.to(
+          "#f06-wordmark",
+          { scale: 0.68, opacity: 0, duration: 0.4, ease: "power2.in" },
+          1.72,
+        );
+        tl.fromTo(
+          "#f06-cta",
+          { scale: 0.68, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.62,
+            ease: "back.out(1.55)",
+            immediateRender: false,
+          },
+          1.95,
+        );
+
+        // Scene 3: a decisive, decelerating cursor approach lands slightly off-center.
+        tl.set("#f06-cursor", { opacity: 1 }, 3.3);
+        tl.fromTo(
+          "#f06-cursor",
+          { x: 0, y: 0, scale: 1 },
+          { x: 1162, y: -376, scale: 1, duration: 0.82, ease: "power3.out" },
+          3.3,
+        );
+
+        // Cursor and CTA depress and spring back as one physical system.
+        tl.to(
+          ["#f06-cta", "#f06-cursor"],
+          { scale: 0.92, duration: 0.12, ease: "power1.in" },
+          4.28,
+        );
+        tl.to(
+          ["#f06-cta", "#f06-cursor"],
+          { scale: 1, duration: 0.52, ease: "back.out(1.8)" },
+          4.43,
+        );
+
+        tl.fromTo(
+          ["#f06-ripple-one", "#f06-ripple-two"],
+          { scale: 0, opacity: 0.62 },
+          {
+            scale: 4.2,
+            opacity: 0,
+            duration: 0.7,
+            ease: "power2.out",
+            stagger: 0.08,
+            immediateRender: false,
+          },
+          4.28,
+        );
+
+        // Scene 4: the clicked CTA resolves to the URL, then the promise assembles and settles.
+        tl.to(
+          "#f06-cta",
+          { scale: 0.72, opacity: 0, duration: 0.36, ease: "power2.in" },
+          5.2,
+        );
+        tl.to(
+          "#f06-cursor",
+          { x: 1240, y: -410, opacity: 0, duration: 0.32, ease: "power2.out" },
+          5.2,
+        );
+        tl.fromTo(
+          "#f06-final-url",
+          { scale: 0.72, opacity: 0 },
+          {
+            scale: 1,
+            opacity: 1,
+            duration: 0.56,
+            ease: "back.out(1.45)",
+            immediateRender: false,
+          },
+          5.34,
+        );
+        tl.fromTo(
+          "#f06-final-accent",
+          { scaleX: 0, opacity: 0 },
+          {
+            scaleX: 1,
+            opacity: 1,
+            duration: 0.38,
+            ease: "power3.out",
+            immediateRender: false,
+          },
+          5.58,
+        );
+        tl.fromTo(
+          "#f06-tagline-one",
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.42,
+            ease: "power3.out",
+            immediateRender: false,
+          },
+          5.7,
+        );
+        tl.fromTo(
+          "#f06-tagline-two",
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.38,
+            ease: "power3.out",
+            immediateRender: false,
+          },
+          5.98,
+        );
+
+        window.__timelines["06-plan-the-swarm"] = tl;
+      </script>
+    </template>
+  </body>
+</html>

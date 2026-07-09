@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+  <body>
+    <template>
+      <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+      <style>
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-400.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 400;
+          font-display: swap;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-700.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 700;
+          font-display: swap;
+        }
+
+        @font-face {
+          font-family: "Inter";
+          src: url("assets/fonts/Inter-800.woff2") format("woff2");
+          font-style: normal;
+          font-weight: 800;
+          font-display: swap;
+        }
+
+        #root {
+          position: absolute;
+          inset: 0;
+          width: 1920px;
+          height: 1080px;
+          overflow: hidden;
+          container-type: size;
+          color: #0b0d10;
+          font-family: "Inter", sans-serif;
+        }
+
+        .clip {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          box-sizing: border-box;
+        }
+
+        .scene-ground {
+          background: #ffffff;
+          z-index: 0;
+        }
+
+        .content-plane {
+          z-index: 1;
+        }
+
+        .safe-stage {
+          position: relative;
+          width: 100%;
+          height: 896px;
+          overflow: hidden;
+        }
+
+        .setup-line {
+          position: absolute;
+          top: 15cqh;
+          left: 0;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 1.15cqw;
+          box-sizing: border-box;
+          color: #0b0d10;
+          font-size: 2.4cqw;
+          font-weight: 700;
+          line-height: 1;
+          letter-spacing: -0.02em;
+          text-align: center;
+          white-space: nowrap;
+        }
+
+        .setup-word {
+          display: inline-block;
+          min-width: 2px;
+        }
+
+        .variable-anchor {
+          position: absolute;
+          top: 27.5cqh;
+          left: 0;
+          width: 100%;
+          min-height: 15cqh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          gap: 1.25cqh;
+          box-sizing: border-box;
+          text-align: center;
+        }
+
+        .variable-token {
+          display: block;
+          width: 100%;
+          min-height: 6.2cqw;
+          color: #f45b0b;
+          font-size: 5.9cqw;
+          font-weight: 800;
+          line-height: 1;
+          letter-spacing: -0.035em;
+          white-space: nowrap;
+        }
+
+        .resolve-underline {
+          display: block;
+          width: 34cqw;
+          height: 10px;
+          border-radius: 6px;
+          background: #f45b0b;
+          transform-origin: left center;
+        }
+
+        .deadline-strip {
+          position: absolute;
+          top: 48cqh;
+          left: 4.7cqw;
+          width: 90.6cqw;
+          height: 21.5cqh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          box-sizing: border-box;
+          padding: 0 3.1cqw;
+          border: 1.5px solid rgba(244, 91, 11, 0.2);
+          border-radius: 14px;
+          background: rgba(244, 91, 11, 0.04);
+        }
+
+        .deadline-edge {
+          position: absolute;
+          top: 1.7cqh;
+          bottom: 1.7cqh;
+          left: 1.25cqw;
+          display: block;
+          width: 6px;
+          border-radius: 6px;
+          background: #f45b0b;
+        }
+
+        .deadline-copy {
+          display: block;
+          width: 100%;
+          color: #0b0d10;
+          font-size: 6cqw;
+          font-weight: 800;
+          line-height: 0.94;
+          letter-spacing: -0.045em;
+          text-align: center;
+          white-space: nowrap;
+        }
+      </style>
+
+      <div
+        id="root"
+        data-composition-id="01-deadline-survives"
+        data-width="1920"
+        data-height="1080"
+        data-duration="5.2"
+      >
+        <div
+          id="01-deadline-survives-ground"
+          class="clip scene-ground"
+          data-start="0"
+          data-duration="4.8"
+          data-track-index="0"
+        ></div>
+
+        <section
+          id="01-deadline-survives-content"
+          class="clip content-plane"
+          data-start="0"
+          data-duration="4.8"
+          data-track-index="1"
+        >
+          <div class="safe-stage">
+            <div class="setup-line" aria-label="When one agent">
+              <span id="01-deadline-survives-when" class="setup-word">WHEN</span>
+              <span id="01-deadline-survives-one" class="setup-word">ONE</span>
+              <span id="01-deadline-survives-agent" class="setup-word">AGENT</span>
+            </div>
+
+            <div class="variable-anchor">
+              <span id="01-deadline-survives-token" class="variable-token">IS READY</span>
+              <span
+                id="01-deadline-survives-underline"
+                class="resolve-underline"
+                aria-hidden="true"
+              ></span>
+            </div>
+
+            <div id="01-deadline-survives-deadline-strip" class="deadline-strip">
+              <span class="deadline-edge" aria-hidden="true"></span>
+              <span id="01-deadline-survives-deadline-copy" class="deadline-copy"
+                >YOUR DELIVERY DEADLINE</span
+              >
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <script>
+        window.__timelines = window.__timelines || {};
+
+        const tl = gsap.timeline({ paused: true });
+        const BEATS = [0.06, 0.28, 0.52, 1.1, 1.46, 2.4, 3.8];
+
+        const tokenEl = document.getElementById("01-deadline-survives-token");
+        const TOKEN_STATES = [
+          { t: 0, text: "IS READY" },
+          { t: BEATS[4], text: "GOES DOWN" },
+          { t: BEATS[6], text: "SHOULD NOT" },
+        ];
+        const tokenDriver = { t: 0 };
+        let lastToken = "IS READY";
+
+        function tokenAt(time) {
+          for (let i = TOKEN_STATES.length - 1; i >= 0; i -= 1) {
+            if (time >= TOKEN_STATES[i].t) return TOKEN_STATES[i].text;
+          }
+          return TOKEN_STATES[0].text;
+        }
+
+        tl.to(
+          tokenDriver,
+          {
+            t: 4.8,
+            duration: 4.8,
+            ease: "none",
+            onUpdate: () => {
+              const nextToken = tokenAt(tokenDriver.t);
+              if (nextToken !== lastToken) {
+                tokenEl.textContent = nextToken;
+                lastToken = nextToken;
+              }
+            },
+          },
+          0,
+        );
+
+        tl.fromTo(
+          "#01-deadline-survives-when",
+          { y: 34, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.38, ease: "power4.out" },
+          BEATS[0],
+        );
+        tl.fromTo(
+          "#01-deadline-survives-one",
+          { scale: 0.82, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.38, ease: "expo.out" },
+          BEATS[1],
+        );
+        tl.fromTo(
+          "#01-deadline-survives-agent",
+          { y: -24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.42, ease: "circ.out" },
+          BEATS[2],
+        );
+
+        tl.fromTo(
+          "#01-deadline-survives-token",
+          { scale: 0.88, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 0.36, ease: "power4.out" },
+          BEATS[3],
+        );
+
+        tl.fromTo(
+          "#01-deadline-survives-deadline-strip",
+          { scale: 1.1, y: 28, opacity: 0 },
+          { scale: 1, y: 0, opacity: 1, duration: 0.5, ease: "expo.out" },
+          BEATS[5],
+        );
+        tl.fromTo(
+          "#01-deadline-survives-deadline-copy",
+          { x: 120, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.46, ease: "circ.out" },
+          BEATS[5] + 0.04,
+        );
+
+        tl.fromTo(
+          "#01-deadline-survives-underline",
+          { scaleX: 0, opacity: 0 },
+          { scaleX: 1, opacity: 1, duration: 0.5, ease: "power2.out" },
+          BEATS[6] + 0.06,
+        );
+
+        window.__timelines["01-deadline-survives"] = tl;
+      </script>
+    </template>
+  </body>
+</html>
